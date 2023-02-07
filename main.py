@@ -62,9 +62,17 @@ class Piece(Sprite):
     return str(self)
 
 
-class SelectedPiece:
+class Selected:
   def __init__(self, piece, screen_pos):
-    pass
+    self.piece = piece
+    self.screen_pos = screen_pos
+    self.legal_moves = generate_legal_moves(piece)
+
+  def __str__(self):
+    return f"Selected(piece={self.piece}, screen_pos={self.screen_pos}, legal_moves={self.legal_moves})"
+
+  def __repr__(self):
+    return str(self)
 
 
 def init_board(fen):
@@ -88,14 +96,14 @@ class Globals:
   board = init_board(START_FEN)
 
 
-def draw_squares(selected_piece, selected_piece_legal_moves):
+def draw_squares(selected):
   for rank in range(8):
     for file in range(8):
       square_type = (rank + file) % 2
-      if selected_piece:
-        if (rank, file) == (selected_piece.rank, selected_piece.file):
+      if selected:
+        if (rank, file) == (selected.piece.rank, selected.piece.file):
           color = SELECTED_SQUARE_COLOR
-        elif (rank, file) in selected_piece_legal_moves:
+        elif (rank, file) in selected.legal_moves:
           color = LEGAL_MOVE_COLORS[square_type]
         else:
           color = BACKGROUND_COLORS[square_type]
@@ -104,16 +112,13 @@ def draw_squares(selected_piece, selected_piece_legal_moves):
       pygame.draw.rect(screen, color, Rect(get_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
 
 
-def draw_pieces(selected_piece, moving_selected_pos, screen):
+def draw_pieces(selected, screen):
   for rank in range(8):
     for file in range(8):
-      if selected_piece and (rank, file) == (selected_piece.rank, selected_piece.file):
-        if moving_selected_pos:
-          screen.blit(selected_piece.surface, (
-            moving_selected_pos[0] - (IMAGE_WIDTH // 2), moving_selected_pos[1] - (IMAGE_WIDTH // 2)
-          ))
-        else:
-          continue
+      if selected and (rank, file) == (selected.piece.rank, selected.piece.file):
+        screen.blit(selected.piece.surface, (
+          selected.screen_pos[0] - (IMAGE_WIDTH // 2), selected.screen_pos[1] - (IMAGE_WIDTH // 2)
+        ))
       elif piece := get_piece_on_board(rank, file):
         screen.blit(piece.surface, (
           piece.file * SQUARE_WIDTH + IMAGE_CORNER_OFFSET,
@@ -206,32 +211,27 @@ if __name__ == "__main__":
   pygame.init()
   screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
   running = True
-  # todo: group all this selected piece data somehow
-  selected_piece = None
-  moving_selected_pos = None
-  selected_piece_legal_moves = set()
+  selected = None
   while running:
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         running = False
       elif event.type == pygame.MOUSEBUTTONDOWN:
         rank, file = get_square(event.pos)
-        if selected_piece := get_piece_on_board(rank, file):
-          selected_piece_legal_moves = generate_legal_moves(selected_piece)
+        if piece := get_piece_on_board(rank, file):
+          selected = Selected(piece, event.pos)
       elif event.type == pygame.MOUSEBUTTONUP:
-        if selected_piece and event.pos:
+        if selected and event.pos:
           rank, file = get_square(event.pos)
-          if (rank, file) in selected_piece_legal_moves:
-            move(selected_piece, rank, file)
+          if (rank, file) in selected.legal_moves:
+            move(selected.piece, rank, file)
           else:
-            print(f"attempted move to ({rank}, {file}) is illegal for {selected_piece}!")
-          selected_piece = None
-          moving_selected_pos = None
-          selected_piece_legal_moves = set()
+            print(f"attempted move to ({rank}, {file}) is illegal for {selected}!")
+          selected = None
       elif event.type == pygame.MOUSEMOTION:
-        if selected_piece:
-          moving_selected_pos = event.pos
-    draw_squares(selected_piece, selected_piece_legal_moves)
-    draw_pieces(selected_piece, moving_selected_pos, screen)
+        if selected:
+          selected.screen_pos = event.pos
+    draw_squares(selected)
+    draw_pieces(selected, screen)
     pygame.display.flip()
   pygame.quit()
