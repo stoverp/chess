@@ -1,5 +1,5 @@
 import os
-from enum import Enum
+from enum import Enum, auto
 
 import pygame
 from pygame.display import set_mode
@@ -19,6 +19,9 @@ SQUARE_WIDTH = BOARD_PIXEL_WIDTH // 8
 IMAGE_WIDTH = 60
 IMAGE_CORNER_OFFSET = (SQUARE_WIDTH - IMAGE_WIDTH) // 2
 
+ROOK_DIRECTIONS = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+BISHOP_DIRECTIONS = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = "850, 500"
@@ -37,10 +40,29 @@ class Player(Enum):
     return 0 if self is Player.WHITE else 7
 
 
+class MoveType(Enum):
+  OUT_OF_BOUNDS = auto()
+  SELF_OCCUPIED = auto()
+  CAPTURE = auto()
+  OPEN_SQUARE = auto()
+
+  @classmethod
+  def get_type(cls, player, rank, file):
+    if not ((0 <= rank < 8) and (0 <= file < 8)):
+      return MoveType.OUT_OF_BOUNDS
+    if piece_on_new_square := Globals.board[rank][file]:
+      if player == piece_on_new_square.player:
+        return MoveType.SELF_OCCUPIED
+      else:
+        return MoveType.CAPTURE
+    else:
+      return MoveType.OPEN_SQUARE
+
+
 class PieceType(Enum):
   PAWN = 'p'
-  BISHOP = 'b'
   KNIGHT = 'n'
+  BISHOP = 'b'
   ROOK = 'r'
   QUEEN = 'q'
   KING = 'k'
@@ -119,7 +141,7 @@ def draw_pieces(selected, screen):
         screen.blit(selected.piece.surface, (
           selected.screen_pos[0] - (IMAGE_WIDTH // 2), selected.screen_pos[1] - (IMAGE_WIDTH // 2)
         ))
-      elif piece := get_piece_on_board(rank, file):
+      elif piece := Globals.board[rank][file]:
         screen.blit(piece.surface, (
           piece.file * SQUARE_WIDTH + IMAGE_CORNER_OFFSET,
           (7 - piece.rank) * SQUARE_WIDTH + IMAGE_CORNER_OFFSET
@@ -134,70 +156,82 @@ def get_pos(rank, file):
   return file * SQUARE_WIDTH, (7 - rank) * SQUARE_WIDTH
 
 
-def in_bounds(rank, file):
-  return (0 <= rank < 8) and (0 <= file < 8)
-
-
-def get_piece_on_board(rank, file):
-  if not in_bounds(rank, file):
-    return None
-  return Globals.board[rank][file]
-
-
 def generate_pawn_moves(piece):
   moves = set()
   direction = 1 if piece.player is Player.WHITE else -1
-  # non-capture moves
+  # one-square standard move
+  rank_candidates = [piece.rank + (1 * direction)]
+  # two-square opening move
   if piece.rank == piece.player.back_rank + direction:
-    new_rank = piece.rank + (2 * direction)
-    if not Globals.board[new_rank][piece.file]:
+    rank_candidates.append(piece.rank + (2 * direction))
+  for new_rank in rank_candidates:
+    if MoveType.get_type(piece.player, new_rank, piece.file) is MoveType.OPEN_SQUARE:
       moves.add((new_rank, piece.file))
-  new_rank = piece.rank + (1 * direction)
-  if not Globals.board[new_rank][piece.file]:
-    moves.add((new_rank, piece.file))
   # capture moves
   for rank_offset, file_offset in [(direction, 1), (direction, -1)]:
     new_rank, new_file = piece.rank + rank_offset, piece.file + file_offset
-    if piece_on_new_square := get_piece_on_board(new_rank, new_file):
-      if piece.player != piece_on_new_square.player:
-        moves.add((new_rank, new_file))
+    if MoveType.get_type(piece.player, new_rank, new_file) is MoveType.CAPTURE:
+      moves.add((new_rank, new_file))
   # todo: en passant
   return moves
 
 
-def generate_bishop_moves(piece):
+def generate_slide_moves(piece, directions):
   moves = set()
-  for rank_direction, file_direction in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
+  for rank_direction, file_direction in directions:
     collision = False
     distance = 1
     while not collision:
       new_rank, new_file = distance * rank_direction + piece.rank, distance * file_direction + piece.file
-      if in_bounds(new_rank, new_file):
-        if piece_on_new_square := get_piece_on_board(new_rank, new_file):
-          if piece_on_new_square.player != piece.player:
-            # capture
-            moves.add((new_rank, new_file))
-          collision = True
-        else:
-          moves.add((new_rank, new_file))
-      else:
-        # hit a wall
+      move_type = MoveType.get_type(piece.player, new_rank, new_file)
+      if move_type in (MoveType.SELF_OCCUPIED, MoveType.OUT_OF_BOUNDS):
         collision = True
+      else:
+        moves.add((new_rank, new_file))
+        if move_type is MoveType.CAPTURE:
+          collision = True
       distance += 1
+  return moves
+
+
+def generate_knight_moves(piece):
+  moves = set()
+  for far_rank in [True, False]:
+    for rank_direction in [1, -1]:
+      for file_direction in [1, -1]:
+        new_rank = (2 if far_rank else 1) * rank_direction + piece.rank
+        new_file = (1 if far_rank else 2) * file_direction + piece.file
+        move_type = MoveType.get_type(piece.player, new_rank, new_file)
+        if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
+          moves.add((new_rank, new_file))
+  return moves
+
+
+def generate_king_moves(piece):
+  moves = set()
+  for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
+    new_rank = rank_direction + piece.rank
+    new_file = file_direction + piece.file
+    move_type = MoveType.get_type(piece.player, new_rank, new_file)
+    if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
+      moves.add((new_rank, new_file))
+    # todo: don't put king in check!
   return moves
 
 
 def generate_legal_moves(piece):
   if piece.type is PieceType.PAWN:
     return generate_pawn_moves(piece)
+  elif piece.type is PieceType.KNIGHT:
+    return generate_knight_moves(piece)
   elif piece.type is PieceType.BISHOP:
-    return generate_bishop_moves(piece)
-  # elif piece.type is PieceType.KNIGHT:
-  #   return generate_knight_moves(piece)
-  # elif piece.type is PieceType.QUEEN:
-  #   return generate_queen_moves(piece)
-  # elif piece.type is PieceType.KING:
-  #   return generate_king_moves(piece)
+    return generate_slide_moves(piece, BISHOP_DIRECTIONS)
+  elif piece.type is PieceType.ROOK:
+    return generate_slide_moves(piece, ROOK_DIRECTIONS)
+  elif piece.type is PieceType.QUEEN:
+    return generate_slide_moves(piece, ROOK_DIRECTIONS + BISHOP_DIRECTIONS)
+  elif piece.type is PieceType.KING:
+    return generate_king_moves(piece)
 
 
 def move(piece, new_rank, new_file):
@@ -218,7 +252,7 @@ if __name__ == "__main__":
         running = False
       elif event.type == pygame.MOUSEBUTTONDOWN:
         rank, file = get_square(event.pos)
-        if piece := get_piece_on_board(rank, file):
+        if piece := Globals.board[rank][file]:
           selected = Selected(piece, event.pos)
       elif event.type == pygame.MOUSEBUTTONUP:
         if selected and event.pos:
