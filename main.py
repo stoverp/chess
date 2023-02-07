@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 
 import pygame
@@ -18,6 +19,8 @@ IMAGE_CORNER_OFFSET = (SQUARE_WIDTH - IMAGE_WIDTH) // 2
 
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
+os.environ['SDL_VIDEO_WINDOW_POS'] = "850, 500"
+
 
 class Player(Enum):
   WHITE = 1
@@ -26,6 +29,10 @@ class Player(Enum):
   @property
   def image_abbr(self):
     return "l" if self is Player.WHITE else "d"
+
+  @property
+  def back_rank(self):
+    return 0 if self is Player.WHITE else 7
 
 
 class PieceType(Enum):
@@ -91,7 +98,7 @@ def draw_pieces(board, selected_piece, moving_selected_pos, screen):
           ))
         else:
           continue
-      elif piece := board[rank][file]:
+      elif piece := get_piece_on_board(board, rank, file):
         screen.blit(piece.surface, (
           piece.file * SQUARE_WIDTH + IMAGE_CORNER_OFFSET,
           (7 - piece.rank) * SQUARE_WIDTH + IMAGE_CORNER_OFFSET
@@ -104,6 +111,72 @@ def get_square(pos):
 
 def get_pos(rank, file):
   return file * SQUARE_WIDTH, (7 - rank) * SQUARE_WIDTH
+
+
+def in_bounds(rank, file):
+  return (0 <= rank < 8) and (0 <= file < 8)
+
+
+def get_piece_on_board(board, rank, file):
+  if not in_bounds(rank, file):
+    return None
+  return board[rank][file]
+
+
+def generate_pawn_moves(piece, board):
+  moves = set()
+  direction = 1 if piece.player is Player.WHITE else -1
+  # non-capture moves
+  if piece.rank == piece.player.back_rank + direction:
+    new_rank = piece.rank + (2 * direction)
+    if not board[new_rank][piece.file]:
+      moves.add((new_rank, piece.file))
+  new_rank = piece.rank + (1 * direction)
+  if not board[new_rank][piece.file]:
+    moves.add((new_rank, piece.file))
+  # capture moves
+  for rank_offset, file_offset in [(direction, 1), (direction, -1)]:
+    new_rank, new_file = piece.rank + rank_offset, piece.file + file_offset
+    if piece_on_new_square := get_piece_on_board(board, new_rank, new_file):
+      if piece.player != piece_on_new_square.player:
+        moves.add((new_rank, new_file))
+  # todo: en passant
+  return moves
+
+
+def generate_bishop_moves(piece, board):
+  moves = set()
+  for rank_direction, file_direction in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
+    collision = False
+    distance = 1
+    while not collision:
+      new_rank, new_file = distance * rank_direction + piece.rank, distance * file_direction + piece.file
+      if in_bounds(new_rank, new_file):
+        if piece_on_new_square := get_piece_on_board(board, new_rank, new_file):
+          if piece_on_new_square.player != piece.player:
+            # capture
+            moves.add((new_rank, new_file))
+          collision = True
+        else:
+          moves.add((new_rank, new_file))
+      else:
+        # hit a wall
+        collision = True
+      distance += 1
+  return moves
+
+
+def generate_legal_moves(piece, board):
+  if piece.type is PieceType.PAWN:
+    return generate_pawn_moves(piece, board)
+  elif piece.type is PieceType.BISHOP:
+    return generate_bishop_moves(piece, board)
+  # elif piece.type is PieceType.KNIGHT:
+  #   return generate_knight_moves(piece, board)
+  # elif piece.type is PieceType.QUEEN:
+  #   return generate_queen_moves(piece, board)
+  # elif piece.type is PieceType.KING:
+  #   return generate_king_moves(piece, board)
 
 
 def move(piece, new_rank, new_file, board):
@@ -127,14 +200,17 @@ if __name__ == "__main__":
       elif event.type == pygame.MOUSEBUTTONDOWN:
         rank, file = get_square(event.pos)
         # print(f"mouse button pressed: {event.pos}. rank: {rank}, file: {file}")
-        if piece := board[rank][file]:
+        if piece := get_piece_on_board(board, rank, file):
           selected_piece = piece
         else:
           selected_piece = None
       elif event.type == pygame.MOUSEBUTTONUP:
-        rank, file = get_square(event.pos)
-        if selected_piece:
-          move(selected_piece, rank, file, board)
+        if selected_piece and event.pos:
+          rank, file = get_square(event.pos)
+          if (rank, file) in generate_legal_moves(selected_piece, board):
+            move(selected_piece, rank, file, board)
+          else:
+            print(f"attempted move to ({rank}, {file}) is illegal for {selected_piece}!")
           selected_piece = None
           moving_selected_pos = None
       elif event.type == pygame.MOUSEMOTION:
