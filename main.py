@@ -8,9 +8,11 @@ from pygame.rect import Rect
 from pygame.sprite import Sprite
 
 
-LIGHT_SQUARE_COLOR = (131, 163, 133)
-DARK_SQUARE_COLOR = (54, 74, 89)
+LIGHT_SQUARES = 0
+DARK_SQUARES = 1
+BACKGROUND_COLORS = [(242, 210, 133), (115, 99, 61)]
 SELECTED_SQUARE_COLOR = (252, 186, 3)
+LEGAL_MOVE_COLORS = [(235, 127, 132), (115, 61, 63)]
 
 BOARD_PIXEL_WIDTH = 640
 SQUARE_WIDTH = BOARD_PIXEL_WIDTH // 8
@@ -60,13 +62,19 @@ class Piece(Sprite):
     return str(self)
 
 
-def draw_squares(selected_piece):
+def draw_squares(selected_piece, selected_piece_legal_moves):
   for rank in range(8):
     for file in range(8):
-      if selected_piece and (rank, file) == (selected_piece.rank, selected_piece.file):
-        color = SELECTED_SQUARE_COLOR
+      square_type = (rank + file) % 2
+      if selected_piece:
+        if (rank, file) == (selected_piece.rank, selected_piece.file):
+          color = SELECTED_SQUARE_COLOR
+        elif (rank, file) in selected_piece_legal_moves:
+          color = LEGAL_MOVE_COLORS[square_type]
+        else:
+          color = BACKGROUND_COLORS[square_type]
       else:
-        color = LIGHT_SQUARE_COLOR if (rank + file) % 2 == 0 else DARK_SQUARE_COLOR
+        color = BACKGROUND_COLORS[square_type]
       pygame.draw.rect(screen, color, Rect(get_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
 
 
@@ -92,7 +100,6 @@ def draw_pieces(board, selected_piece, moving_selected_pos, screen):
     for file in range(8):
       if selected_piece and (rank, file) == (selected_piece.rank, selected_piece.file):
         if moving_selected_pos:
-          # print(f"drawing selected piece {selected_piece} at {moving_selected_pos} ...")
           screen.blit(selected_piece.surface, (
             moving_selected_pos[0] - (IMAGE_WIDTH // 2), moving_selected_pos[1] - (IMAGE_WIDTH // 2)
           ))
@@ -191,33 +198,35 @@ if __name__ == "__main__":
   pygame.init()
   screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
   running = True
+  # todo: group all this selected piece data somehow
   selected_piece = None
   moving_selected_pos = None
+  selected_piece_legal_moves = set()
   while running:
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         running = False
       elif event.type == pygame.MOUSEBUTTONDOWN:
         rank, file = get_square(event.pos)
-        # print(f"mouse button pressed: {event.pos}. rank: {rank}, file: {file}")
-        if piece := get_piece_on_board(board, rank, file):
-          selected_piece = piece
-        else:
-          selected_piece = None
+        if selected_piece := get_piece_on_board(board, rank, file):
+          selected_piece_legal_moves = generate_legal_moves(selected_piece, board)
+        # else:
+        #   selected_piece = None
+        #   selected_piece_legal_moves = set()
       elif event.type == pygame.MOUSEBUTTONUP:
         if selected_piece and event.pos:
           rank, file = get_square(event.pos)
-          if (rank, file) in generate_legal_moves(selected_piece, board):
+          if (rank, file) in selected_piece_legal_moves:
             move(selected_piece, rank, file, board)
           else:
             print(f"attempted move to ({rank}, {file}) is illegal for {selected_piece}!")
           selected_piece = None
           moving_selected_pos = None
+          selected_piece_legal_moves = set()
       elif event.type == pygame.MOUSEMOTION:
         if selected_piece:
           moving_selected_pos = event.pos
-          # print(f"mouse moved ({moving_selected_pos}) with selected piece: {selected_piece}")
-    draw_squares(selected_piece)
+    draw_squares(selected_piece, selected_piece_legal_moves)
     draw_pieces(board, selected_piece, moving_selected_pos, screen)
     pygame.display.flip()
   pygame.quit()
