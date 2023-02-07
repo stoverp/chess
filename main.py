@@ -62,20 +62,9 @@ class Piece(Sprite):
     return str(self)
 
 
-def draw_squares(selected_piece, selected_piece_legal_moves):
-  for rank in range(8):
-    for file in range(8):
-      square_type = (rank + file) % 2
-      if selected_piece:
-        if (rank, file) == (selected_piece.rank, selected_piece.file):
-          color = SELECTED_SQUARE_COLOR
-        elif (rank, file) in selected_piece_legal_moves:
-          color = LEGAL_MOVE_COLORS[square_type]
-        else:
-          color = BACKGROUND_COLORS[square_type]
-      else:
-        color = BACKGROUND_COLORS[square_type]
-      pygame.draw.rect(screen, color, Rect(get_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
+class SelectedPiece:
+  def __init__(self, piece, screen_pos):
+    pass
 
 
 def init_board(fen):
@@ -95,7 +84,27 @@ def init_board(fen):
   return board
 
 
-def draw_pieces(board, selected_piece, moving_selected_pos, screen):
+class Globals:
+  board = init_board(START_FEN)
+
+
+def draw_squares(selected_piece, selected_piece_legal_moves):
+  for rank in range(8):
+    for file in range(8):
+      square_type = (rank + file) % 2
+      if selected_piece:
+        if (rank, file) == (selected_piece.rank, selected_piece.file):
+          color = SELECTED_SQUARE_COLOR
+        elif (rank, file) in selected_piece_legal_moves:
+          color = LEGAL_MOVE_COLORS[square_type]
+        else:
+          color = BACKGROUND_COLORS[square_type]
+      else:
+        color = BACKGROUND_COLORS[square_type]
+      pygame.draw.rect(screen, color, Rect(get_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
+
+
+def draw_pieces(selected_piece, moving_selected_pos, screen):
   for rank in range(8):
     for file in range(8):
       if selected_piece and (rank, file) == (selected_piece.rank, selected_piece.file):
@@ -105,7 +114,7 @@ def draw_pieces(board, selected_piece, moving_selected_pos, screen):
           ))
         else:
           continue
-      elif piece := get_piece_on_board(board, rank, file):
+      elif piece := get_piece_on_board(rank, file):
         screen.blit(piece.surface, (
           piece.file * SQUARE_WIDTH + IMAGE_CORNER_OFFSET,
           (7 - piece.rank) * SQUARE_WIDTH + IMAGE_CORNER_OFFSET
@@ -124,34 +133,34 @@ def in_bounds(rank, file):
   return (0 <= rank < 8) and (0 <= file < 8)
 
 
-def get_piece_on_board(board, rank, file):
+def get_piece_on_board(rank, file):
   if not in_bounds(rank, file):
     return None
-  return board[rank][file]
+  return Globals.board[rank][file]
 
 
-def generate_pawn_moves(piece, board):
+def generate_pawn_moves(piece):
   moves = set()
   direction = 1 if piece.player is Player.WHITE else -1
   # non-capture moves
   if piece.rank == piece.player.back_rank + direction:
     new_rank = piece.rank + (2 * direction)
-    if not board[new_rank][piece.file]:
+    if not Globals.board[new_rank][piece.file]:
       moves.add((new_rank, piece.file))
   new_rank = piece.rank + (1 * direction)
-  if not board[new_rank][piece.file]:
+  if not Globals.board[new_rank][piece.file]:
     moves.add((new_rank, piece.file))
   # capture moves
   for rank_offset, file_offset in [(direction, 1), (direction, -1)]:
     new_rank, new_file = piece.rank + rank_offset, piece.file + file_offset
-    if piece_on_new_square := get_piece_on_board(board, new_rank, new_file):
+    if piece_on_new_square := get_piece_on_board(new_rank, new_file):
       if piece.player != piece_on_new_square.player:
         moves.add((new_rank, new_file))
   # todo: en passant
   return moves
 
 
-def generate_bishop_moves(piece, board):
+def generate_bishop_moves(piece):
   moves = set()
   for rank_direction, file_direction in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
     collision = False
@@ -159,7 +168,7 @@ def generate_bishop_moves(piece, board):
     while not collision:
       new_rank, new_file = distance * rank_direction + piece.rank, distance * file_direction + piece.file
       if in_bounds(new_rank, new_file):
-        if piece_on_new_square := get_piece_on_board(board, new_rank, new_file):
+        if piece_on_new_square := get_piece_on_board(new_rank, new_file):
           if piece_on_new_square.player != piece.player:
             # capture
             moves.add((new_rank, new_file))
@@ -173,28 +182,27 @@ def generate_bishop_moves(piece, board):
   return moves
 
 
-def generate_legal_moves(piece, board):
+def generate_legal_moves(piece):
   if piece.type is PieceType.PAWN:
-    return generate_pawn_moves(piece, board)
+    return generate_pawn_moves(piece)
   elif piece.type is PieceType.BISHOP:
-    return generate_bishop_moves(piece, board)
+    return generate_bishop_moves(piece)
   # elif piece.type is PieceType.KNIGHT:
-  #   return generate_knight_moves(piece, board)
+  #   return generate_knight_moves(piece)
   # elif piece.type is PieceType.QUEEN:
-  #   return generate_queen_moves(piece, board)
+  #   return generate_queen_moves(piece)
   # elif piece.type is PieceType.KING:
-  #   return generate_king_moves(piece, board)
+  #   return generate_king_moves(piece)
 
 
-def move(piece, new_rank, new_file, board):
-  board[piece.rank][piece.file] = None
+def move(piece, new_rank, new_file):
+  Globals.board[piece.rank][piece.file] = None
   piece.rank = new_rank
   piece.file = new_file
-  board[new_rank][new_file] = piece
+  Globals.board[new_rank][new_file] = piece
 
 
 if __name__ == "__main__":
-  board = init_board(START_FEN)
   pygame.init()
   screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
   running = True
@@ -208,16 +216,13 @@ if __name__ == "__main__":
         running = False
       elif event.type == pygame.MOUSEBUTTONDOWN:
         rank, file = get_square(event.pos)
-        if selected_piece := get_piece_on_board(board, rank, file):
-          selected_piece_legal_moves = generate_legal_moves(selected_piece, board)
-        # else:
-        #   selected_piece = None
-        #   selected_piece_legal_moves = set()
+        if selected_piece := get_piece_on_board(rank, file):
+          selected_piece_legal_moves = generate_legal_moves(selected_piece)
       elif event.type == pygame.MOUSEBUTTONUP:
         if selected_piece and event.pos:
           rank, file = get_square(event.pos)
           if (rank, file) in selected_piece_legal_moves:
-            move(selected_piece, rank, file, board)
+            move(selected_piece, rank, file)
           else:
             print(f"attempted move to ({rank}, {file}) is illegal for {selected_piece}!")
           selected_piece = None
@@ -227,6 +232,6 @@ if __name__ == "__main__":
         if selected_piece:
           moving_selected_pos = event.pos
     draw_squares(selected_piece, selected_piece_legal_moves)
-    draw_pieces(board, selected_piece, moving_selected_pos, screen)
+    draw_pieces(selected_piece, moving_selected_pos, screen)
     pygame.display.flip()
   pygame.quit()
