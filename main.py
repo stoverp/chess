@@ -1,5 +1,6 @@
 import os
 from enum import Enum, auto
+import random
 
 import pygame
 from pygame.display import set_mode
@@ -109,13 +110,20 @@ def init_board(fen):
         file += int(piece_char)
       else:
         player = Player.WHITE if piece_char.isupper() else Player.BLACK
-        board[rank][file] = (Piece(player, PieceType(piece_char.lower()), rank, file))
+        piece = Piece(player, PieceType(piece_char.lower()), rank, file)
+        if player is Player.WHITE:
+          Globals.white_pieces.add(piece)
+        else:
+          Globals.black_pieces.add(piece)
+        board[rank][file] = piece
         file += 1
   return board
 
 
 class Globals:
-  board = init_board(START_FEN)
+  white_pieces = set()
+  black_pieces = set()
+  board = None
 
 
 def draw_squares(selected):
@@ -216,6 +224,7 @@ def generate_king_moves(piece):
     if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
       moves.add((new_rank, new_file))
     # todo: don't put king in check!
+    # todo: castling
   return moves
 
 
@@ -234,37 +243,63 @@ def generate_legal_moves(piece):
     return generate_king_moves(piece)
 
 
+def generate_all_legal_moves(pieces):
+  all_legal_moves = []
+  for piece in pieces:
+    for move in generate_legal_moves(piece):
+      all_legal_moves.append((piece, move[0], move[1]))
+  return all_legal_moves
+
+
 def move(piece, new_rank, new_file):
   Globals.board[piece.rank][piece.file] = None
   piece.rank = new_rank
   piece.file = new_file
+  game_over = False
+  if captured_piece := Globals.board[new_rank][new_file]:
+    player_pieces = Globals.white_pieces if captured_piece.player is Player.WHITE else Globals.black_pieces
+    player_pieces.remove(captured_piece)
+    if captured_piece.type is PieceType.KING:
+      game_over = True
   Globals.board[new_rank][new_file] = piece
+  return game_over
 
 
 if __name__ == "__main__":
   pygame.init()
   screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
-  running = True
+  Globals.board = init_board(START_FEN)
+  active_player = Player.WHITE
   selected = None
+  running = True
   while running:
-    for event in pygame.event.get():
-      if event.type == pygame.QUIT:
+    if active_player is Player.BLACK:
+      piece, rank, file = random.choice(generate_all_legal_moves(Globals.black_pieces))
+      if move(piece, rank, file):
         running = False
-      elif event.type == pygame.MOUSEBUTTONDOWN:
-        rank, file = get_square(event.pos)
-        if piece := Globals.board[rank][file]:
-          selected = Selected(piece, event.pos)
-      elif event.type == pygame.MOUSEBUTTONUP:
-        if selected and event.pos:
+      active_player = Player.WHITE
+    else:
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
           rank, file = get_square(event.pos)
-          if (rank, file) in selected.legal_moves:
-            move(selected.piece, rank, file)
-          else:
-            print(f"attempted move to ({rank}, {file}) is illegal for {selected}!")
-          selected = None
-      elif event.type == pygame.MOUSEMOTION:
-        if selected:
-          selected.screen_pos = event.pos
+          if piece := Globals.board[rank][file]:
+            if piece.player is Player.WHITE:
+              selected = Selected(piece, event.pos)
+        elif event.type == pygame.MOUSEBUTTONUP:
+          if selected and event.pos:
+            rank, file = get_square(event.pos)
+            if (rank, file) in selected.legal_moves:
+              if move(selected.piece, rank, file):
+                running = False
+              active_player = Player.BLACK
+            else:
+              print(f"attempted move to ({rank}, {file}) is illegal for {selected}!")
+            selected = None
+        elif event.type == pygame.MOUSEMOTION:
+          if selected:
+            selected.screen_pos = event.pos
     draw_squares(selected)
     draw_pieces(selected, screen)
     pygame.display.flip()
