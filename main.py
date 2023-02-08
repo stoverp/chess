@@ -118,6 +118,22 @@ class Move:
   def __hash__(self):
     return hash(repr(self))
 
+  def apply(self):
+    if self.captured_piece:
+      Globals.players[self.captured_piece.player].pieces[self.captured_piece.type].remove(self.captured_piece)
+    self.piece.rank = self.rank
+    self.piece.file = self.file
+    Globals.board[self.old_rank][self.old_file] = None
+    Globals.board[self.rank][self.file] = self.piece
+
+  def unapply(self):
+    if self.captured_piece:
+      Globals.players[self.captured_piece.player].pieces[self.captured_piece.type].add(self.captured_piece)
+    self.piece.rank = self.old_rank
+    self.piece.file = self.old_file
+    Globals.board[self.rank][self.file] = self.captured_piece
+    Globals.board[self.old_rank][self.old_file] = self.piece
+
 
 class Selected:
   def __init__(self, piece, screen_pos):
@@ -289,26 +305,20 @@ def generate_all_legal_moves(player):
   return all_legal_moves
 
 
-def make_move(move):
-  if move.captured_piece:
-    Globals.players[move.captured_piece.player].pieces[move.captured_piece.type].remove(move.captured_piece)
-  move.piece.rank = move.rank
-  move.piece.file = move.file
-  Globals.board[move.old_rank][move.old_file] = None
-  Globals.board[move.rank][move.file] = move.piece
-
-
 if __name__ == "__main__":
   pygame.init()
   screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
   Globals.board = init_board(START_FEN)
+  # todo: highlight last move on board
+  move_history = []
   active_player = Player.WHITE
   selected = None
   running = True
   while running:
     if active_player is Player.BLACK:
       move = random.choice(generate_all_legal_moves(Globals.players[active_player]))
-      make_move(move)
+      move.apply()
+      move_history.append(move)
       active_player = Player.WHITE
     else:
       for event in pygame.event.get():
@@ -324,7 +334,8 @@ if __name__ == "__main__":
             rank, file = get_square(event.pos)
             move = Move(selected.piece, rank, file)
             if move in selected.legal_moves:
-              make_move(move)
+              move.apply()
+              move_history.append(move)
               active_player = Player.BLACK
             else:
               print(f"attempted move to ({rank}, {file}) is illegal for {selected}!")
@@ -332,6 +343,11 @@ if __name__ == "__main__":
         elif event.type == pygame.MOUSEMOTION:
           if selected:
             selected.screen_pos = event.pos
+        elif event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_u:
+            if move_history:
+              move = move_history.pop()
+              move.unapply()
     draw_squares(selected)
     draw_pieces(selected, screen)
     pygame.display.flip()
