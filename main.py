@@ -43,10 +43,16 @@ class Player(Enum):
 
 
 class PlayerState:
-  def __init__(self, player):
-    self.player = player
-    # todo: PieceType -> piece set
+  def __init__(self, player_color):
+    self.player_color = player_color
     self.pieces = defaultdict(set)
+
+  def in_check(self):
+    opponent = Globals.players[Player.BLACK if self.player_color is Player.WHITE else Player.WHITE]
+    for move in generate_all_legal_moves(opponent, filter_checks=False):
+      if move.captured_piece and move.captured_piece.type is PieceType.KING:
+        return True
+    return False
 
 
 class MoveType(Enum):
@@ -60,7 +66,7 @@ class MoveType(Enum):
     if not ((0 <= rank < 8) and (0 <= file < 8)):
       return MoveType.OUT_OF_BOUNDS
     if piece_on_new_square := Globals.board[rank][file]:
-      if player == piece_on_new_square.player:
+      if player == piece_on_new_square.player_color:
         return MoveType.SELF_OCCUPIED
       else:
         return MoveType.CAPTURE
@@ -78,17 +84,17 @@ class PieceType(Enum):
 
 
 class Piece(Sprite):
-  def __init__(self, player, type, rank, file):
+  def __init__(self, player_color, type, rank, file):
     super(Piece, self).__init__()
-    self.player = player
+    self.player_color = player_color
     self.type = type
     self.rank = rank
     self.file = file
     self.has_moved = False
-    self.surface = load(f"images/Chess_{type.value}{player.image_abbr}t60.png")
+    self.surface = load(f"images/Chess_{type.value}{player_color.image_abbr}t60.png")
 
   def __str__(self):
-    return f"Piece(player={self.player}, type={self.type}, rank={self.rank}, file={self.file})"
+    return f"Piece(player_color={self.player_color}, type={self.type}, rank={self.rank}, file={self.file})"
 
   def __repr__(self):
     return str(self)
@@ -120,7 +126,7 @@ class Move:
 
   def apply(self):
     if self.captured_piece:
-      Globals.players[self.captured_piece.player].pieces[self.captured_piece.type].remove(self.captured_piece)
+      Globals.players[self.captured_piece.player_color].pieces[self.captured_piece.type].remove(self.captured_piece)
     self.piece.rank = self.rank
     self.piece.file = self.file
     Globals.board[self.old_rank][self.old_file] = None
@@ -128,7 +134,7 @@ class Move:
 
   def unapply(self):
     if self.captured_piece:
-      Globals.players[self.captured_piece.player].pieces[self.captured_piece.type].add(self.captured_piece)
+      Globals.players[self.captured_piece.player_color].pieces[self.captured_piece.type].add(self.captured_piece)
     self.piece.rank = self.old_rank
     self.piece.file = self.old_file
     Globals.board[self.rank][self.file] = self.captured_piece
@@ -159,10 +165,10 @@ def init_board(fen):
       if piece_char.isdigit():
         file += int(piece_char)
       else:
-        player = Player.WHITE if piece_char.isupper() else Player.BLACK
+        player_color = Player.WHITE if piece_char.isupper() else Player.BLACK
         piece_type = PieceType(piece_char.lower())
-        piece = Piece(player, piece_type, rank, file)
-        Globals.players[player].pieces[piece_type].add(piece)
+        piece = Piece(player_color, piece_type, rank, file)
+        Globals.players[player_color].pieces[piece_type].add(piece)
         board[rank][file] = piece
         file += 1
   return board
@@ -216,19 +222,19 @@ def get_pos(rank, file):
 
 def generate_pawn_moves(piece):
   moves = set()
-  direction = 1 if piece.player is Player.WHITE else -1
+  direction = 1 if piece.player_color is Player.WHITE else -1
   # one-square standard move
   rank_candidates = [piece.rank + (1 * direction)]
   # two-square opening move
-  if piece.rank == piece.player.back_rank + direction:
+  if piece.rank == piece.player_color.back_rank + direction:
     rank_candidates.append(piece.rank + (2 * direction))
   for new_rank in rank_candidates:
-    if MoveType.get_type(piece.player, new_rank, piece.file) is MoveType.OPEN_SQUARE:
+    if MoveType.get_type(piece.player_color, new_rank, piece.file) is MoveType.OPEN_SQUARE:
       moves.add(Move(piece, new_rank, piece.file))
   # capture moves
   for rank_offset, file_offset in [(direction, 1), (direction, -1)]:
     new_rank, new_file = piece.rank + rank_offset, piece.file + file_offset
-    if MoveType.get_type(piece.player, new_rank, new_file) is MoveType.CAPTURE:
+    if MoveType.get_type(piece.player_color, new_rank, new_file) is MoveType.CAPTURE:
       moves.add(Move(piece, new_rank, new_file))
   # todo: en passant
   return moves
@@ -241,7 +247,7 @@ def generate_slide_moves(piece, directions):
     distance = 1
     while not collision:
       new_rank, new_file = distance * rank_direction + piece.rank, distance * file_direction + piece.file
-      move_type = MoveType.get_type(piece.player, new_rank, new_file)
+      move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
       if move_type in (MoveType.SELF_OCCUPIED, MoveType.OUT_OF_BOUNDS):
         collision = True
       else:
@@ -259,7 +265,7 @@ def generate_knight_moves(piece):
       for file_direction in [1, -1]:
         new_rank = (2 if far_rank else 1) * rank_direction + piece.rank
         new_file = (1 if far_rank else 2) * file_direction + piece.file
-        move_type = MoveType.get_type(piece.player, new_rank, new_file)
+        move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
         if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
           moves.add(Move(piece, new_rank, new_file))
   return moves
@@ -270,7 +276,7 @@ def generate_king_moves(piece):
   for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
     new_rank = rank_direction + piece.rank
     new_file = file_direction + piece.file
-    move_type = MoveType.get_type(piece.player, new_rank, new_file)
+    move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
     if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
       moves.add(Move(piece, new_rank, new_file))
     # todo: don't put king in check!
@@ -278,31 +284,47 @@ def generate_king_moves(piece):
   return moves
 
 
-def generate_legal_moves(piece):
+def generate_legal_moves(piece, filter_checks=True):
   if piece.type is PieceType.PAWN:
-    return generate_pawn_moves(piece)
+    moves = generate_pawn_moves(piece)
   elif piece.type is PieceType.KNIGHT:
-    return generate_knight_moves(piece)
+    moves = generate_knight_moves(piece)
   elif piece.type is PieceType.BISHOP:
-    return generate_slide_moves(piece, BISHOP_DIRECTIONS)
+    moves = generate_slide_moves(piece, BISHOP_DIRECTIONS)
   elif piece.type is PieceType.ROOK:
-    return generate_slide_moves(piece, ROOK_DIRECTIONS)
+    moves = generate_slide_moves(piece, ROOK_DIRECTIONS)
   elif piece.type is PieceType.QUEEN:
-    return generate_slide_moves(piece, ROOK_DIRECTIONS + BISHOP_DIRECTIONS)
-  elif piece.type is PieceType.KING:
-    return generate_king_moves(piece)
+    moves = generate_slide_moves(piece, ROOK_DIRECTIONS + BISHOP_DIRECTIONS)
+  else:  # piece.type is PieceType.KING:
+    moves = generate_king_moves(piece)
+  if filter_checks:
+    player = Globals.players[piece.player_color]
+    legal_moves = []
+    for move in moves:
+      move.apply()
+      if filter_checks and player.in_check():
+        print(f"{move} not legal, puts {player.player_color} in check!")
+      else:
+        legal_moves.append(move)
+      move.unapply()
+    return legal_moves
+  else:
+    return moves
 
 
-def generate_all_legal_moves(player):
+def generate_all_legal_moves(player, filter_checks=True):
   all_legal_moves = []
   for pieces in player.pieces.values():
     for piece in pieces:
-      for move in generate_legal_moves(piece):
-        # move(piece, rank, file)
-        # todo
-        # if not in_check():
+      for move in generate_legal_moves(piece, filter_checks):
         all_legal_moves.append(move)
   return all_legal_moves
+
+
+def undo_last_move(move_history):
+  if move_history:
+    move = move_history.pop()
+    move.unapply()
 
 
 if __name__ == "__main__":
@@ -327,7 +349,7 @@ if __name__ == "__main__":
         elif event.type == pygame.MOUSEBUTTONDOWN:
           rank, file = get_square(event.pos)
           if piece := Globals.board[rank][file]:
-            if piece.player is Player.WHITE:
+            if piece.player_color is Player.WHITE:
               selected = Selected(piece, event.pos)
         elif event.type == pygame.MOUSEBUTTONUP:
           if selected and event.pos:
@@ -344,10 +366,10 @@ if __name__ == "__main__":
           if selected:
             selected.screen_pos = event.pos
         elif event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_u:
-            if move_history:
-              move = move_history.pop()
-              move.unapply()
+          if event.key == pygame.K_u and active_player is Player.WHITE:
+            # undo last black + white moves, so white is still active
+            undo_last_move(move_history)
+            undo_last_move(move_history)
     draw_squares(selected)
     draw_pieces(selected, screen)
     pygame.display.flip()
