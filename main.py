@@ -1,4 +1,5 @@
 import os
+import time
 from collections import defaultdict
 from enum import Enum, auto
 import random
@@ -15,7 +16,9 @@ DARK_SQUARES = 1
 BACKGROUND_COLORS = [(242, 210, 133), (115, 99, 61)]
 SELECTED_SQUARE_COLOR = (252, 186, 3)
 LEGAL_MOVE_COLORS = [(235, 127, 132), (115, 61, 63)]
+LAST_MOVE_COLORS = [(127, 235, 226), (61, 113, 115)]
 
+# todo: allow screen resizing
 BOARD_PIXEL_WIDTH = 640
 SQUARE_WIDTH = BOARD_PIXEL_WIDTH // 8
 IMAGE_WIDTH = 60
@@ -41,6 +44,10 @@ class Player(Enum):
   def back_rank(self):
     return 0 if self is Player.WHITE else 7
 
+  @property
+  def opponent(self):
+    return Player.BLACK if self is Player.WHITE else Player.WHITE
+
 
 class PlayerState:
   def __init__(self, player_color):
@@ -48,7 +55,7 @@ class PlayerState:
     self.pieces = defaultdict(set)
 
   def in_check(self):
-    opponent = Globals.players[Player.BLACK if self.player_color is Player.WHITE else Player.WHITE]
+    opponent = Globals.players[self.player_color.opponent]
     for move in generate_all_legal_moves(opponent, filter_checks=False):
       if move.captured_piece and move.captured_piece.type is PieceType.KING:
         return True
@@ -179,14 +186,24 @@ class Globals:
     Player.WHITE: PlayerState(Player.WHITE),
     Player.BLACK: PlayerState(Player.BLACK)
   }
+  # initialize board later to avoid startup race conditions
+  # todo: can we inline this?
   board = None
+  active_player_color = Player.WHITE
+  move_history = []
+
+  @classmethod
+  def active_player_state(cls):
+    return cls.players[cls.active_player_color]
 
 
 def draw_squares(selected):
   for rank in range(8):
     for file in range(8):
       square_type = (rank + file) % 2
-      if selected:
+      if Globals.move_history and (rank, file) == (Globals.move_history[-1].old_rank, Globals.move_history[-1].old_file):
+        color = LAST_MOVE_COLORS[square_type]
+      elif selected:
         if (rank, file) == (selected.piece.rank, selected.piece.file):
           color = SELECTED_SQUARE_COLOR
         elif Move(selected.piece, rank, file) in selected.legal_moves:
@@ -279,7 +296,6 @@ def generate_king_moves(piece):
     move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
     if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
       moves.add(Move(piece, new_rank, new_file))
-    # todo: don't put king in check!
     # todo: castling
   return moves
 
@@ -321,10 +337,16 @@ def generate_all_legal_moves(player, filter_checks=True):
   return all_legal_moves
 
 
-def undo_last_move(move_history):
-  if move_history:
-    move = move_history.pop()
+def undo_last_move():
+  if Globals.move_history:
+    move = Globals.move_history.pop()
     move.unapply()
+
+
+def make_move(move):
+  move.apply()
+  Globals.move_history.append(move)
+  Globals.active_player_color = Globals.active_player_color.opponent
 
 
 if __name__ == "__main__":
@@ -332,16 +354,21 @@ if __name__ == "__main__":
   screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
   Globals.board = init_board(START_FEN)
   # todo: highlight last move on board
-  move_history = []
-  active_player = Player.WHITE
   selected = None
   running = True
   while running:
-    if active_player is Player.BLACK:
-      move = random.choice(generate_all_legal_moves(Globals.players[active_player]))
-      move.apply()
-      move_history.append(move)
-      active_player = Player.WHITE
+    active_player_legal_moves = generate_all_legal_moves(Globals.active_player_state())
+    if not active_player_legal_moves:
+      print(f"GAME OVER!")
+      if Globals.active_player_state().in_check():
+        print(f"CHECKMATE: {Globals.active_player_color.opponent}")
+      else:
+        print(f"STALEMATE")
+      break
+    if Globals.active_player_color is Player.BLACK:
+      time.sleep(1)
+      move = random.choice(active_player_legal_moves)
+      make_move(move)
     else:
       for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -356,9 +383,7 @@ if __name__ == "__main__":
             rank, file = get_square(event.pos)
             move = Move(selected.piece, rank, file)
             if move in selected.legal_moves:
-              move.apply()
-              move_history.append(move)
-              active_player = Player.BLACK
+              make_move(move)
             else:
               print(f"attempted move to ({rank}, {file}) is illegal for {selected}!")
             selected = None
@@ -366,11 +391,17 @@ if __name__ == "__main__":
           if selected:
             selected.screen_pos = event.pos
         elif event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_u and active_player is Player.WHITE:
+          if event.key == pygame.K_u and Globals.active_player_color is Player.WHITE:
             # undo last black + white moves, so white is still active
-            undo_last_move(move_history)
-            undo_last_move(move_history)
+            undo_last_move()
+            undo_last_move()
     draw_squares(selected)
     draw_pieces(selected, screen)
     pygame.display.flip()
+  waiting = True
+  print("Press any key to exit.")
+  while waiting:
+    for event in pygame.event.get():
+      if event.type == pygame.KEYDOWN:
+        waiting = False
   pygame.quit()
