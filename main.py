@@ -1,5 +1,7 @@
 import math
 import os
+import time
+from argparse import ArgumentParser
 from collections import defaultdict
 from enum import Enum, auto
 
@@ -9,7 +11,7 @@ from pygame.image import load
 from pygame.rect import Rect
 from pygame.sprite import Sprite
 
-SEARCH_DEPTH = 2
+SEARCH_DEPTH = 3
 
 LIGHT_SQUARES = 0
 DARK_SQUARES = 1
@@ -112,6 +114,10 @@ class Piece(Sprite):
   def __repr__(self):
     return str(self)
 
+  def fen(self):
+    abbr = self.type.value
+    return abbr.upper() if self.player_color is PlayerColor.WHITE else abbr
+
 
 class Move:
   def __init__(self, piece, rank, file):
@@ -196,9 +202,11 @@ class Globals:
     PlayerColor.WHITE: PlayerState(PlayerColor.WHITE),
     PlayerColor.BLACK: PlayerState(PlayerColor.BLACK)
   }
+  screen = None
   # initialize board later to avoid startup race conditions
   # todo: can we inline this?
   board = None
+  selected = None
   active_player_color = PlayerColor.WHITE
   move_history = []
 
@@ -207,33 +215,33 @@ class Globals:
     return cls.players[cls.active_player_color]
 
 
-def draw_squares(selected):
+def draw_squares():
   for rank in range(8):
     for file in range(8):
       square_type = (rank + file) % 2
       if Globals.move_history and (rank, file) == (Globals.move_history[-1].old_rank, Globals.move_history[-1].old_file):
         color = LAST_MOVE_COLORS[square_type]
-      elif selected:
-        if (rank, file) == (selected.piece.rank, selected.piece.file):
+      elif Globals.selected:
+        if (rank, file) == (Globals.selected.piece.rank, Globals.selected.piece.file):
           color = SELECTED_SQUARE_COLOR
-        elif Move(selected.piece, rank, file) in selected.legal_moves:
+        elif Move(Globals.selected.piece, rank, file) in Globals.selected.legal_moves:
           color = LEGAL_MOVE_COLORS[square_type]
         else:
           color = BACKGROUND_COLORS[square_type]
       else:
         color = BACKGROUND_COLORS[square_type]
-      pygame.draw.rect(screen, color, Rect(get_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
+      pygame.draw.rect(Globals.screen, color, Rect(get_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
 
 
-def draw_pieces(selected, screen):
+def draw_pieces():
   for rank in range(8):
     for file in range(8):
-      if selected and (rank, file) == (selected.piece.rank, selected.piece.file):
-        screen.blit(selected.piece.surface, (
-          selected.screen_pos[0] - (IMAGE_WIDTH // 2), selected.screen_pos[1] - (IMAGE_WIDTH // 2)
+      if Globals.selected and (rank, file) == (Globals.selected.piece.rank, Globals.selected.piece.file):
+        Globals.screen.blit(Globals.selected.piece.surface, (
+          Globals.selected.screen_pos[0] - (IMAGE_WIDTH // 2), Globals.selected.screen_pos[1] - (IMAGE_WIDTH // 2)
         ))
       elif piece := Globals.board[rank][file]:
-        screen.blit(piece.surface, (
+        Globals.screen.blit(piece.surface, (
           piece.file * SQUARE_WIDTH + IMAGE_CORNER_OFFSET,
           (7 - piece.rank) * SQUARE_WIDTH + IMAGE_CORNER_OFFSET
         ))
@@ -254,7 +262,10 @@ def generate_pawn_moves(piece):
   rank_candidates = [piece.rank + (1 * direction)]
   # two-square opening move
   if piece.rank == piece.player_color.back_rank + direction:
-    rank_candidates.append(piece.rank + (2 * direction))
+    new_rank = piece.rank + (2 * direction)
+    if not Globals.board[new_rank][piece.file]:
+      # can't move two squares through pieces
+      rank_candidates.append(new_rank)
   for new_rank in rank_candidates:
     if MoveType.get_type(piece.player_color, new_rank, piece.file) is MoveType.OPEN_SQUARE:
       moves.add(Move(piece, new_rank, piece.file))
@@ -360,32 +371,36 @@ def make_move(move):
   Globals.active_player_color = Globals.active_player_color.opponent
 
 
-def evaluate_board():
+def evaluate_board(active_player_color):
   score = 0
   for player in Globals.players.values():
-    perspective = 1 if player.player_color == Globals.active_player().player_color else -1
+    perspective = 1 if player.player_color == active_player_color else -1
     for pieces in player.pieces.values():
       for piece in pieces:
         score += perspective * piece.type.score
   return score
 
 
-def search_moves(depth, alpha, beta):
+def search_moves(active_player_color, depth, alpha, beta):
   if depth == 0:
     # todo: quiescence search
-    return None, evaluate_board()
-  moves = generate_all_legal_moves(Globals.active_player())
+    return None, evaluate_board(active_player_color)
+  moves = generate_all_legal_moves(Globals.players[active_player_color])
   if not moves:
     if Globals.active_player().in_check():
-      return -math.inf
+      return None, -math.inf
     else:
-      return 0
+      return None, 0
   top_move = None
   for move in moves:
+    # if move.rank == 5 and move.file == 0 and move.captured_piece:
+    #   print(f"evaluating {move} ...")
     move.apply()
-    _, score = search_moves(depth - 1, -beta, -alpha)
+    _, score = search_moves(active_player_color.opponent, depth - 1, -beta, -alpha)
     # negate score to reflect opponent's perspective
     score = -score
+    # if move.rank == 5 and move.file == 0 and move.captured_piece:
+    #   print(f"evaluated score {score} for {move}")
     move.unapply()
     if score >= beta:
       # beta limit tells us opponent can prevent this scenario
@@ -396,8 +411,9 @@ def search_moves(depth, alpha, beta):
   return top_move, alpha
 
 
-def best_active_player_move():
-  move, score = search_moves(SEARCH_DEPTH, -math.inf, math.inf)
+def best_move(active_player_color):
+  move, score = search_moves(active_player_color, SEARCH_DEPTH, -math.inf, math.inf)
+  print(f"evaluated top score {score} for {move}.")
   return move
 
 
@@ -415,51 +431,85 @@ def endgame():
         waiting = False
 
 
-if __name__ == "__main__":
+def generate_fen():
+  fen_ranks = []
+  for rank in range(7, -1, -1):
+    n_empty_squares = 0
+    fen_line = []
+    for file in range(8):
+      piece = Globals.board[rank][file]
+      if piece:
+        if n_empty_squares > 0:
+          fen_line.append(str(n_empty_squares))
+          n_empty_squares = 0
+        fen_line.append(piece.fen())
+      else:
+        n_empty_squares += 1
+    if n_empty_squares > 0:
+      fen_line.append(str(n_empty_squares))
+    fen_ranks.append("".join(fen_line))
+  return "/".join(fen_ranks)
+
+
+def handle_event(event):
+  if event.type == pygame.QUIT:
+    return False
+  elif event.type == pygame.MOUSEBUTTONDOWN:
+    rank, file = get_square(event.pos)
+    if in_bounds(rank, file):
+      if piece := Globals.board[rank][file]:
+        if piece.player_color is PlayerColor.WHITE:
+          Globals.selected = Selected(piece, event.pos)
+  elif event.type == pygame.MOUSEBUTTONUP:
+    if Globals.selected and event.pos:
+      rank, file = get_square(event.pos)
+      move = Move(Globals.selected.piece, rank, file)
+      if move in Globals.selected.legal_moves:
+        make_move(move)
+      else:
+        print(f"attempted move to ({rank}, {file}) is illegal for {Globals.selected}!")
+      Globals.selected = None
+  elif event.type == pygame.MOUSEMOTION:
+    if Globals.selected:
+      Globals.selected.screen_pos = event.pos
+  elif event.type == pygame.KEYDOWN:
+    if event.key == pygame.K_u and Globals.active_player_color is PlayerColor.WHITE:
+      # undo last black + white moves, so white is still active
+      undo_last_move()
+      undo_last_move()
+    if event.key == pygame.K_f:
+      print(f"\nCURRENT BOARD FEN: {generate_fen()}")
+  return True
+
+
+def main(fen):
   pygame.init()
-  screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
-  Globals.board = init_board(START_FEN)
-  # todo: highlight last move on board
-  selected = None
+  Globals.screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
+  Globals.board = init_board(fen)
   running = True
   while running:
     active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
     if not active_player_legal_moves:
       endgame()
-      break
+      running = False
     if Globals.active_player_color is PlayerColor.BLACK:
-      # time.sleep(1)
-      # move = random.choice(active_player_legal_moves)
-      move = best_active_player_move()
+      print(f"\ncalculating black's move ...")
+      start_time = time.time()
+      move = best_move(Globals.active_player_color)
+      print(f"{time.time() - start_time} seconds to calculate {move}")
       make_move(move)
     else:
       for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if not handle_event(event):
           running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-          rank, file = get_square(event.pos)
-          if in_bounds(rank, file):
-            if piece := Globals.board[rank][file]:
-              if piece.player_color is PlayerColor.WHITE:
-                selected = Selected(piece, event.pos)
-        elif event.type == pygame.MOUSEBUTTONUP:
-          if selected and event.pos:
-            rank, file = get_square(event.pos)
-            move = Move(selected.piece, rank, file)
-            if move in selected.legal_moves:
-              make_move(move)
-            else:
-              print(f"attempted move to ({rank}, {file}) is illegal for {selected}!")
-            selected = None
-        elif event.type == pygame.MOUSEMOTION:
-          if selected:
-            selected.screen_pos = event.pos
-        elif event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_u and Globals.active_player_color is PlayerColor.WHITE:
-            # undo last black + white moves, so white is still active
-            undo_last_move()
-            undo_last_move()
-    draw_squares(selected)
-    draw_pieces(selected, screen)
+    draw_squares()
+    draw_pieces()
     pygame.display.flip()
   pygame.quit()
+
+
+if __name__ == "__main__":
+  parser = ArgumentParser()
+  parser.add_argument("--fen", default=START_FEN)
+  args = parser.parse_args()
+  main(args.fen)
