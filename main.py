@@ -1,8 +1,7 @@
+import math
 import os
-import time
 from collections import defaultdict
 from enum import Enum, auto
-import random
 
 import pygame
 from pygame.display import set_mode
@@ -10,6 +9,7 @@ from pygame.image import load
 from pygame.rect import Rect
 from pygame.sprite import Sprite
 
+SEARCH_DEPTH = 2
 
 LIGHT_SQUARES = 0
 DARK_SQUARES = 1
@@ -32,21 +32,21 @@ START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 os.environ['SDL_VIDEO_WINDOW_POS'] = "850, 200"
 
 
-class Player(Enum):
+class PlayerColor(Enum):
   WHITE = 1
   BLACK = 2
 
   @property
   def image_abbr(self):
-    return "l" if self is Player.WHITE else "d"
+    return "l" if self is PlayerColor.WHITE else "d"
 
   @property
   def back_rank(self):
-    return 0 if self is Player.WHITE else 7
+    return 0 if self is PlayerColor.WHITE else 7
 
   @property
   def opponent(self):
-    return Player.BLACK if self is Player.WHITE else Player.WHITE
+    return PlayerColor.BLACK if self is PlayerColor.WHITE else PlayerColor.WHITE
 
 
 class PlayerState:
@@ -70,7 +70,7 @@ class MoveType(Enum):
 
   @classmethod
   def get_type(cls, player, rank, file):
-    if not ((0 <= rank < 8) and (0 <= file < 8)):
+    if not in_bounds(rank, file):
       return MoveType.OUT_OF_BOUNDS
     if piece_on_new_square := Globals.board[rank][file]:
       if player == piece_on_new_square.player_color:
@@ -82,12 +82,18 @@ class MoveType(Enum):
 
 
 class PieceType(Enum):
-  PAWN = 'p'
-  KNIGHT = 'n'
-  BISHOP = 'b'
-  ROOK = 'r'
-  QUEEN = 'q'
-  KING = 'k'
+  PAWN = 'p', 1
+  KNIGHT = 'n', 3
+  BISHOP = 'b', 3
+  ROOK = 'r', 5
+  QUEEN = 'q', 9
+  KING = 'k', 0
+
+  def __new__(cls, value, score):
+    obj = object.__new__(cls)
+    obj._value_ = value
+    obj.score = score
+    return obj
 
 
 class Piece(Sprite):
@@ -161,6 +167,10 @@ class Selected:
     return str(self)
 
 
+def in_bounds(rank, file):
+  return (0 <= rank < 8) and (0 <= file < 8)
+
+
 def init_board(fen):
   board = [[None for _ in range(8)] for _ in range(8)]
   # for now, ignore extra metadata after board repr
@@ -172,7 +182,7 @@ def init_board(fen):
       if piece_char.isdigit():
         file += int(piece_char)
       else:
-        player_color = Player.WHITE if piece_char.isupper() else Player.BLACK
+        player_color = PlayerColor.WHITE if piece_char.isupper() else PlayerColor.BLACK
         piece_type = PieceType(piece_char.lower())
         piece = Piece(player_color, piece_type, rank, file)
         Globals.players[player_color].pieces[piece_type].add(piece)
@@ -183,17 +193,17 @@ def init_board(fen):
 
 class Globals:
   players = {
-    Player.WHITE: PlayerState(Player.WHITE),
-    Player.BLACK: PlayerState(Player.BLACK)
+    PlayerColor.WHITE: PlayerState(PlayerColor.WHITE),
+    PlayerColor.BLACK: PlayerState(PlayerColor.BLACK)
   }
   # initialize board later to avoid startup race conditions
   # todo: can we inline this?
   board = None
-  active_player_color = Player.WHITE
+  active_player_color = PlayerColor.WHITE
   move_history = []
 
   @classmethod
-  def active_player_state(cls):
+  def active_player(cls):
     return cls.players[cls.active_player_color]
 
 
@@ -239,7 +249,7 @@ def get_pos(rank, file):
 
 def generate_pawn_moves(piece):
   moves = set()
-  direction = 1 if piece.player_color is Player.WHITE else -1
+  direction = 1 if piece.player_color is PlayerColor.WHITE else -1
   # one-square standard move
   rank_candidates = [piece.rank + (1 * direction)]
   # two-square opening move
@@ -319,7 +329,8 @@ def generate_legal_moves(piece, filter_checks=True):
     for move in moves:
       move.apply()
       if filter_checks and player.in_check():
-        print(f"{move} not legal, puts {player.player_color} in check!")
+        # print(f"{move} not legal, puts {player.player_color} in check!")
+        pass
       else:
         legal_moves.append(move)
       move.unapply()
@@ -349,6 +360,61 @@ def make_move(move):
   Globals.active_player_color = Globals.active_player_color.opponent
 
 
+def evaluate_board():
+  score = 0
+  for player in Globals.players.values():
+    perspective = 1 if player.player_color == Globals.active_player().player_color else -1
+    for pieces in player.pieces.values():
+      for piece in pieces:
+        score += perspective * piece.type.score
+  return score
+
+
+def search_moves(depth, alpha, beta):
+  if depth == 0:
+    # todo: quiescence search
+    return None, evaluate_board()
+  moves = generate_all_legal_moves(Globals.active_player())
+  if not moves:
+    if Globals.active_player().in_check():
+      return -math.inf
+    else:
+      return 0
+  top_move = None
+  for move in moves:
+    move.apply()
+    _, score = search_moves(depth - 1, -beta, -alpha)
+    # negate score to reflect opponent's perspective
+    score = -score
+    move.unapply()
+    if score >= beta:
+      # beta limit tells us opponent can prevent this scenario
+      return None, beta
+    if score > alpha:
+      top_move = move
+      alpha = score
+  return top_move, alpha
+
+
+def best_active_player_move():
+  move, score = search_moves(SEARCH_DEPTH, -math.inf, math.inf)
+  return move
+
+
+def endgame():
+  print(f"GAME OVER!")
+  if Globals.active_player().in_check():
+    print(f"CHECKMATE: {Globals.active_player_color.opponent}")
+  else:
+    print(f"STALEMATE")
+  waiting = True
+  print("Press any key to exit.")
+  while waiting:
+    for event in pygame.event.get():
+      if event.type == pygame.KEYDOWN:
+        waiting = False
+
+
 if __name__ == "__main__":
   pygame.init()
   screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
@@ -357,17 +423,14 @@ if __name__ == "__main__":
   selected = None
   running = True
   while running:
-    active_player_legal_moves = generate_all_legal_moves(Globals.active_player_state())
+    active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
     if not active_player_legal_moves:
-      print(f"GAME OVER!")
-      if Globals.active_player_state().in_check():
-        print(f"CHECKMATE: {Globals.active_player_color.opponent}")
-      else:
-        print(f"STALEMATE")
+      endgame()
       break
-    if Globals.active_player_color is Player.BLACK:
-      time.sleep(1)
-      move = random.choice(active_player_legal_moves)
+    if Globals.active_player_color is PlayerColor.BLACK:
+      # time.sleep(1)
+      # move = random.choice(active_player_legal_moves)
+      move = best_active_player_move()
       make_move(move)
     else:
       for event in pygame.event.get():
@@ -375,9 +438,10 @@ if __name__ == "__main__":
           running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
           rank, file = get_square(event.pos)
-          if piece := Globals.board[rank][file]:
-            if piece.player_color is Player.WHITE:
-              selected = Selected(piece, event.pos)
+          if in_bounds(rank, file):
+            if piece := Globals.board[rank][file]:
+              if piece.player_color is PlayerColor.WHITE:
+                selected = Selected(piece, event.pos)
         elif event.type == pygame.MOUSEBUTTONUP:
           if selected and event.pos:
             rank, file = get_square(event.pos)
@@ -391,17 +455,11 @@ if __name__ == "__main__":
           if selected:
             selected.screen_pos = event.pos
         elif event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_u and Globals.active_player_color is Player.WHITE:
+          if event.key == pygame.K_u and Globals.active_player_color is PlayerColor.WHITE:
             # undo last black + white moves, so white is still active
             undo_last_move()
             undo_last_move()
     draw_squares(selected)
     draw_pieces(selected, screen)
     pygame.display.flip()
-  waiting = True
-  print("Press any key to exit.")
-  while waiting:
-    for event in pygame.event.get():
-      if event.type == pygame.KEYDOWN:
-        waiting = False
   pygame.quit()
