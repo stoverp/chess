@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 from collections import defaultdict
 from enum import Enum, auto
 
-import pygame
+import pygame as pg
 from pygame.display import set_mode
 from pygame.image import load
 from pygame.rect import Rect
@@ -20,8 +20,8 @@ SELECTED_SQUARE_COLOR = (252, 186, 3)
 LEGAL_MOVE_COLORS = [(235, 127, 132), (115, 61, 63)]
 LAST_MOVE_COLORS = [(127, 235, 226), (61, 113, 115)]
 
-# todo: allow screen resizing
-BOARD_PIXEL_WIDTH = 640
+# todo: limit window resizing to preserve aspect ratio
+BOARD_PIXEL_WIDTH = 560
 SQUARE_WIDTH = BOARD_PIXEL_WIDTH // 8
 IMAGE_WIDTH = 60
 IMAGE_CORNER_OFFSET = (SQUARE_WIDTH - IMAGE_WIDTH) // 2
@@ -160,10 +160,17 @@ class Move:
     Globals.board[self.old_rank][self.old_file] = self.piece
 
 
+def display_to_screen(display_pos):
+  window_width, window_height = pg.display.get_window_size()
+  width_scale = window_width / BOARD_PIXEL_WIDTH
+  height_scale = window_height / BOARD_PIXEL_WIDTH
+  return display_pos[0] / width_scale, display_pos[1] / height_scale
+s
+
 class Selected:
-  def __init__(self, piece, screen_pos):
+  def __init__(self, piece, display_pos):
     self.piece = piece
-    self.screen_pos = screen_pos
+    self.update_screen_pos(display_pos)
     self.legal_moves = generate_legal_moves(piece)
 
   def __str__(self):
@@ -171,6 +178,9 @@ class Selected:
 
   def __repr__(self):
     return str(self)
+
+  def update_screen_pos(self, display_pos):
+    self.screen_pos = display_to_screen(display_pos)
 
 
 def in_bounds(rank, file):
@@ -202,6 +212,7 @@ class Globals:
     PlayerColor.WHITE: PlayerState(PlayerColor.WHITE),
     PlayerColor.BLACK: PlayerState(PlayerColor.BLACK)
   }
+  displayed_screen = None
   screen = None
   # initialize board later to avoid startup race conditions
   # todo: can we inline this?
@@ -230,7 +241,7 @@ def draw_squares():
           color = BACKGROUND_COLORS[square_type]
       else:
         color = BACKGROUND_COLORS[square_type]
-      pygame.draw.rect(Globals.screen, color, Rect(get_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
+      pg.draw.rect(Globals.screen, color, Rect(get_screen_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
 
 
 def draw_pieces():
@@ -247,11 +258,12 @@ def draw_pieces():
         ))
 
 
-def get_square(pos):
-  return (BOARD_PIXEL_WIDTH - pos[1]) // SQUARE_WIDTH, pos[0] // SQUARE_WIDTH
+def get_square(display_pos):
+  screen_pos = display_to_screen(display_pos)
+  return int((BOARD_PIXEL_WIDTH - screen_pos[1]) / SQUARE_WIDTH), int(screen_pos[0] / SQUARE_WIDTH)
 
 
-def get_pos(rank, file):
+def get_screen_pos(rank, file):
   return file * SQUARE_WIDTH, (7 - rank) * SQUARE_WIDTH
 
 
@@ -262,10 +274,9 @@ def generate_pawn_moves(piece):
   rank_candidates = [piece.rank + (1 * direction)]
   # two-square opening move
   if piece.rank == piece.player_color.back_rank + direction:
-    new_rank = piece.rank + (2 * direction)
-    if not Globals.board[new_rank][piece.file]:
-      # can't move two squares through pieces
-      rank_candidates.append(new_rank)
+    # can't move through pieces
+    if not Globals.board[piece.rank + (1 * direction)][piece.file]:
+      rank_candidates.append(piece.rank + (2 * direction))
   for new_rank in rank_candidates:
     if MoveType.get_type(piece.player_color, new_rank, piece.file) is MoveType.OPEN_SQUARE:
       moves.add(Move(piece, new_rank, piece.file))
@@ -426,8 +437,8 @@ def endgame():
   waiting = True
   print("Press any key to exit.")
   while waiting:
-    for event in pygame.event.get():
-      if event.type == pygame.KEYDOWN:
+    for event in pg.event.get():
+      if event.type == pg.KEYDOWN:
         waiting = False
 
 
@@ -452,15 +463,15 @@ def generate_fen():
 
 
 def handle_event(event):
-  if event.type == pygame.QUIT:
+  if event.type == pg.QUIT:
     return False
-  elif event.type == pygame.MOUSEBUTTONDOWN:
+  elif event.type == pg.MOUSEBUTTONDOWN:
     rank, file = get_square(event.pos)
     if in_bounds(rank, file):
       if piece := Globals.board[rank][file]:
         if piece.player_color is PlayerColor.WHITE:
           Globals.selected = Selected(piece, event.pos)
-  elif event.type == pygame.MOUSEBUTTONUP:
+  elif event.type == pg.MOUSEBUTTONUP:
     if Globals.selected and event.pos:
       rank, file = get_square(event.pos)
       move = Move(Globals.selected.piece, rank, file)
@@ -469,22 +480,23 @@ def handle_event(event):
       else:
         print(f"attempted move to ({rank}, {file}) is illegal for {Globals.selected}!")
       Globals.selected = None
-  elif event.type == pygame.MOUSEMOTION:
+  elif event.type == pg.MOUSEMOTION:
     if Globals.selected:
-      Globals.selected.screen_pos = event.pos
-  elif event.type == pygame.KEYDOWN:
-    if event.key == pygame.K_u and Globals.active_player_color is PlayerColor.WHITE:
+      Globals.selected.update_screen_pos(event.pos)
+  elif event.type == pg.KEYDOWN:
+    if event.key == pg.K_u and Globals.active_player_color is PlayerColor.WHITE:
       # undo last black + white moves, so white is still active
       undo_last_move()
       undo_last_move()
-    if event.key == pygame.K_f:
+    if event.key == pg.K_f:
       print(f"\nCURRENT BOARD FEN: {generate_fen()}")
   return True
 
 
 def main(fen):
-  pygame.init()
-  Globals.screen = set_mode([BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH])
+  pg.init()
+  Globals.displayed_screen = set_mode((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH), pg.RESIZABLE)
+  Globals.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
   Globals.board = init_board(fen)
   running = True
   while running:
@@ -499,13 +511,14 @@ def main(fen):
       print(f"{time.time() - start_time} seconds to calculate {move}")
       make_move(move)
     else:
-      for event in pygame.event.get():
+      for event in pg.event.get():
         if not handle_event(event):
           running = False
     draw_squares()
     draw_pieces()
-    pygame.display.flip()
-  pygame.quit()
+    Globals.displayed_screen.blit(pg.transform.scale(Globals.screen, pg.display.get_window_size()), (0, 0))
+    pg.display.flip()
+  pg.quit()
 
 
 if __name__ == "__main__":
