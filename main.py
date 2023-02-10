@@ -21,6 +21,7 @@ LEGAL_MOVE_COLORS = [(235, 127, 132), (115, 61, 63)]
 LAST_MOVE_COLORS = [(127, 235, 226), (61, 113, 115)]
 
 # todo: limit window resizing to preserve aspect ratio
+DISPLAY_WIDTH = 1120
 BOARD_PIXEL_WIDTH = 560
 SQUARE_WIDTH = BOARD_PIXEL_WIDTH // 8
 IMAGE_WIDTH = 60
@@ -31,12 +32,16 @@ BISHOP_DIRECTIONS = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
-os.environ['SDL_VIDEO_WINDOW_POS'] = "850, 200"
+os.environ['SDL_VIDEO_WINDOW_POS'] = "300, 100"
 
 
 class PlayerColor(Enum):
   WHITE = 1
   BLACK = 2
+
+  @property
+  def abbr(self):
+    return "w" if self is PlayerColor.WHITE else "b"
 
   @property
   def image_abbr(self):
@@ -62,6 +67,24 @@ class PlayerState:
       if move.captured_piece and move.captured_piece.type is PieceType.KING:
         return True
     return False
+
+  def find_rook(self, king_side: bool):
+    # warning: this currently returns None if a rook has been moved out of its home
+    # todo: okay for now since this method is only used for castling rights, but perhaps revisit
+    for rook in self.pieces[PieceType.ROOK]:
+      if king_side:
+        if rook.file == 7:
+          return rook
+      else:
+        if rook.file == 0:
+          return rook
+    return None
+
+  def find(self, piece_type):
+    piece_set = self.pieces[piece_type]
+    if not piece_set:
+      return None
+    return next(iter(piece_set))
 
 
 class MoveType(Enum):
@@ -105,7 +128,7 @@ class Piece(Sprite):
     self.type = type
     self.rank = rank
     self.file = file
-    self.has_moved = False
+    self.n_times_moved = 0
     self.surface = load(f"images/Chess_{type.value}{player_color.image_abbr}t60.png")
 
   def __str__(self):
@@ -128,6 +151,7 @@ class Move:
     self.captured_piece = Globals.board[rank][file]
     self.old_rank = piece.rank
     self.old_file = piece.file
+    self.castling_rook_move = None
 
   def __str__(self):
     return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file})"
@@ -150,6 +174,17 @@ class Move:
     self.piece.file = self.file
     Globals.board[self.old_rank][self.old_file] = None
     Globals.board[self.rank][self.file] = self.piece
+    self.piece.n_times_moved += 1
+    # handle castling special case
+    file_diff = self.file - self.old_file
+    if self.piece.type is PieceType.KING and abs(file_diff) == 2:
+      is_king_side = file_diff == 2  # king moving two to the right
+      self.castling_rook_move = Move(
+        Globals.players[self.piece.player_color].find_rook(king_side=is_king_side),
+        self.piece.rank,
+        self.piece.file - 1 if is_king_side else self.piece.file + 1
+      )
+      self.castling_rook_move.apply()
 
   def unapply(self):
     if self.captured_piece:
@@ -158,6 +193,10 @@ class Move:
     self.piece.file = self.old_file
     Globals.board[self.rank][self.file] = self.captured_piece
     Globals.board[self.old_rank][self.old_file] = self.piece
+    self.piece.n_times_moved -= 1
+    # handle castling special case
+    if self.castling_rook_move:
+      self.castling_rook_move.unapply()
 
 
 def display_to_screen(display_pos):
@@ -165,7 +204,7 @@ def display_to_screen(display_pos):
   width_scale = window_width / BOARD_PIXEL_WIDTH
   height_scale = window_height / BOARD_PIXEL_WIDTH
   return display_pos[0] / width_scale, display_pos[1] / height_scale
-s
+
 
 class Selected:
   def __init__(self, piece, display_pos):
@@ -187,24 +226,42 @@ def in_bounds(rank, file):
   return (0 <= rank < 8) and (0 <= file < 8)
 
 
-def init_board(fen):
-  board = [[None for _ in range(8)] for _ in range(8)]
-  # for now, ignore extra metadata after board repr
-  fen = fen.split(" ")[0]
-  for inverse_rank, rank_line in enumerate(fen.split("/")):
+def parse_piece_char(piece_char):
+  return PieceType(piece_char.lower()), PlayerColor.WHITE if piece_char.isupper() else PlayerColor.BLACK
+
+
+def init_castling_ability(castling_ability):
+  # first assume that nobody can castle by setting the king and rook move counts to something nonzero
+  for color in PlayerColor:
+    for piece_type in [PieceType.KING, PieceType.ROOK]:
+      for piece in Globals.players[color].pieces[piece_type]:
+        piece.n_times_moved = 1
+  if castling_ability != "-":
+    for piece_char in castling_ability:
+      piece_type, piece_color = parse_piece_char(piece_char)
+      # king definitely hasn't moved
+      Globals.players[piece_color].find(PieceType.KING).n_times_moved = 0
+      # find and mark appropriate rook ("k"-side or "q"-side)
+      Globals.players[piece_color].find_rook(king_side=piece_type is PieceType.KING).n_times_moved = 0
+
+
+def init_state(fen):
+  Globals.board = [[None for _ in range(8)] for _ in range(8)]
+  piece_placement, side_to_move, castling_ability, en_passant_target_square, halfmove_clock, fullmove_counter = fen.split(" ")
+  for inverse_rank, rank_line in enumerate(piece_placement.split("/")):
     rank = 7 - inverse_rank
     file = 0
     for piece_char in rank_line:
       if piece_char.isdigit():
         file += int(piece_char)
       else:
-        player_color = PlayerColor.WHITE if piece_char.isupper() else PlayerColor.BLACK
-        piece_type = PieceType(piece_char.lower())
-        piece = Piece(player_color, piece_type, rank, file)
-        Globals.players[player_color].pieces[piece_type].add(piece)
-        board[rank][file] = piece
+        piece_type, piece_color = parse_piece_char(piece_char)
+        piece = Piece(piece_color, piece_type, rank, file)
+        Globals.players[piece_color].pieces[piece_type].add(piece)
+        Globals.board[rank][file] = piece
         file += 1
-  return board
+  Globals.active_player_color = PlayerColor.WHITE if side_to_move == "w" else PlayerColor.BLACK
+  init_castling_ability(castling_ability)
 
 
 class Globals:
@@ -214,11 +271,10 @@ class Globals:
   }
   displayed_screen = None
   screen = None
-  # initialize board later to avoid startup race conditions
-  # todo: can we inline this?
-  board = None
+  board = [[None for _ in range(8)] for _ in range(8)]
   selected = None
   active_player_color = PlayerColor.WHITE
+  active_player_legal_moves = []
   move_history = []
 
   @classmethod
@@ -286,6 +342,7 @@ def generate_pawn_moves(piece):
     if MoveType.get_type(piece.player_color, new_rank, new_file) is MoveType.CAPTURE:
       moves.add(Move(piece, new_rank, new_file))
   # todo: en passant
+  # todo: promotion
   return moves
 
 
@@ -320,7 +377,7 @@ def generate_knight_moves(piece):
   return moves
 
 
-def generate_king_moves(piece):
+def generate_king_moves(piece: Piece, filter_checks=True):
   moves = set()
   for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
     new_rank = rank_direction + piece.rank
@@ -328,7 +385,32 @@ def generate_king_moves(piece):
     move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
     if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
       moves.add(Move(piece, new_rank, new_file))
-    # todo: castling
+  # can we castle?
+  if piece.n_times_moved == 0:
+    player = Globals.players[piece.player_color]
+    for rook in player.pieces[PieceType.ROOK]:
+      if rook.n_times_moved == 0:
+        can_castle = True
+        new_file = piece.file + 2 if rook.file - piece.file > 0 else piece.file - 2
+        small_file, big_file = sorted([piece.file, rook.file])
+        for file_between in range(small_file + 1, big_file):
+          if Globals.board[piece.rank][file_between]:
+            can_castle = False
+            break
+        if can_castle:
+          if filter_checks:
+            if player.in_check():
+              can_castle = False
+            else:
+              # make a fake king move to the space between
+              fake_move = Move(piece, piece.rank, piece.file + 1 if rook.file - piece.file > 0 else piece.file - 1)
+              fake_move.apply()
+              if player.in_check():
+                # player would be castling through check
+                can_castle = False
+              fake_move.unapply()
+          if can_castle:
+            moves.add(Move(piece, piece.rank, new_file))
   return moves
 
 
@@ -344,7 +426,7 @@ def generate_legal_moves(piece, filter_checks=True):
   elif piece.type is PieceType.QUEEN:
     moves = generate_slide_moves(piece, ROOK_DIRECTIONS + BISHOP_DIRECTIONS)
   else:  # piece.type is PieceType.KING:
-    moves = generate_king_moves(piece)
+    moves = generate_king_moves(piece, filter_checks)
   if filter_checks:
     player = Globals.players[piece.player_color]
     legal_moves = []
@@ -374,12 +456,15 @@ def undo_last_move():
   if Globals.move_history:
     move = Globals.move_history.pop()
     move.unapply()
+    Globals.active_player_color = Globals.active_player_color.opponent
+    Globals.active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
 
 
 def make_move(move):
   move.apply()
   Globals.move_history.append(move)
   Globals.active_player_color = Globals.active_player_color.opponent
+  Globals.active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
 
 
 def evaluate_board(active_player_color):
@@ -423,9 +508,16 @@ def search_moves(active_player_color, depth, alpha, beta):
 
 
 def best_move(active_player_color):
+  print(f"\ncalculating {active_player_color} move ...")
+  start_time = time.time()
   move, score = search_moves(active_player_color, SEARCH_DEPTH, -math.inf, math.inf)
-  print(f"evaluated top score {score} for {move}.")
-  return move
+  print(f"evaluated score {score} in {time.time() - start_time} seconds for {move}")
+  if move:
+    return move
+  else:
+    move = Globals.active_player_legal_moves[0]
+    print(f"{active_player_color} has no moves that avoid checkmate! just make first legal move: {move}")
+    return move
 
 
 def endgame():
@@ -442,8 +534,19 @@ def endgame():
         waiting = False
 
 
+def generate_castling_ability_fen():
+  castling_ability = ""
+  for color in PlayerColor:
+    if Globals.players[color].find(PieceType.KING).n_times_moved == 0:
+      for char, king_side in [("k", True), ("q", False)]:
+        rook = Globals.players[color].find_rook(king_side)
+        if rook and rook.n_times_moved == 0:
+          castling_ability += char.upper() if color is PlayerColor.WHITE else char
+  return castling_ability or "-"
+
+
 def generate_fen():
-  fen_ranks = []
+  piece_placement_ranks = []
   for rank in range(7, -1, -1):
     n_empty_squares = 0
     fen_line = []
@@ -458,18 +561,18 @@ def generate_fen():
         n_empty_squares += 1
     if n_empty_squares > 0:
       fen_line.append(str(n_empty_squares))
-    fen_ranks.append("".join(fen_line))
-  return "/".join(fen_ranks)
+    piece_placement_ranks.append("".join(fen_line))
+  return f"{'/'.join(piece_placement_ranks)} {Globals.active_player_color.abbr} {generate_castling_ability_fen()} - - -"
 
 
-def handle_event(event):
+def handle_event(event, vs_human):
   if event.type == pg.QUIT:
     return False
   elif event.type == pg.MOUSEBUTTONDOWN:
     rank, file = get_square(event.pos)
     if in_bounds(rank, file):
       if piece := Globals.board[rank][file]:
-        if piece.player_color is PlayerColor.WHITE:
+        if piece.player_color == Globals.active_player_color:
           Globals.selected = Selected(piece, event.pos)
   elif event.type == pg.MOUSEBUTTONUP:
     if Globals.selected and event.pos:
@@ -477,6 +580,7 @@ def handle_event(event):
       move = Move(Globals.selected.piece, rank, file)
       if move in Globals.selected.legal_moves:
         make_move(move)
+        print(f"\nCURRENT BOARD FEN: {generate_fen()}")
       else:
         print(f"attempted move to ({rank}, {file}) is illegal for {Globals.selected}!")
       Globals.selected = None
@@ -484,35 +588,37 @@ def handle_event(event):
     if Globals.selected:
       Globals.selected.update_screen_pos(event.pos)
   elif event.type == pg.KEYDOWN:
-    if event.key == pg.K_u and Globals.active_player_color is PlayerColor.WHITE:
-      # undo last black + white moves, so white is still active
-      undo_last_move()
-      undo_last_move()
+    if event.key == pg.K_u:
+      if vs_human:
+        undo_last_move()
+      else:
+        # disable undo while computer is thinking
+        if Globals.active_player_color is PlayerColor.WHITE:
+          # undo last black + white moves, so white is still active
+          undo_last_move()
+          undo_last_move()
     if event.key == pg.K_f:
       print(f"\nCURRENT BOARD FEN: {generate_fen()}")
   return True
 
 
-def main(fen):
+def main(fen, vs_human):
   pg.init()
-  Globals.displayed_screen = set_mode((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH), pg.RESIZABLE)
+  Globals.displayed_screen = set_mode((DISPLAY_WIDTH, DISPLAY_WIDTH), pg.RESIZABLE)
   Globals.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
-  Globals.board = init_board(fen)
+  init_state(fen)
+  Globals.active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
   running = True
   while running:
-    active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
-    if not active_player_legal_moves:
+    if not Globals.active_player_legal_moves:
       endgame()
       running = False
-    if Globals.active_player_color is PlayerColor.BLACK:
-      print(f"\ncalculating black's move ...")
-      start_time = time.time()
+    if Globals.active_player_color is PlayerColor.BLACK and not vs_human:
       move = best_move(Globals.active_player_color)
-      print(f"{time.time() - start_time} seconds to calculate {move}")
       make_move(move)
     else:
       for event in pg.event.get():
-        if not handle_event(event):
+        if not handle_event(event, vs_human):
           running = False
     draw_squares()
     draw_pieces()
@@ -524,5 +630,6 @@ def main(fen):
 if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("--fen", default=START_FEN)
+  parser.add_argument("--vs-human", action="store_true", default=False)
   args = parser.parse_args()
-  main(args.fen)
+  main(args.fen, args.vs_human)
