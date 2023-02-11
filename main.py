@@ -68,6 +68,7 @@ class PlayerState:
   def __init__(self, player_color):
     self.player_color = player_color
     self.pieces = defaultdict(set)
+    # self.attacks_calculated = False
     self.reset_attack_boards()
 
   def in_check(self):
@@ -76,6 +77,10 @@ class PlayerState:
       if move.captured_piece and move.captured_piece.type is PieceType.KING:
         return True
     return False
+    # if not opponent.attacks_calculated:
+    #   generate_and_mark_all_legal_moves(opponent, filter_checks=False)
+    # king = self.find(PieceType.KING)
+    # return Globals.players[self.player_color.opponent].attack_board[king.rank][king.file]
 
   def find_rook(self, king_side: bool):
     # warning: this currently returns None if a rook has been moved out of its home
@@ -96,6 +101,7 @@ class PlayerState:
     return next(iter(piece_set))
 
   def reset_attack_boards(self):
+    # self.attacks_calculated = False
     self.attack_board = clear_board(False)
     self.calculate_pawn_attack_board()
 
@@ -110,6 +116,9 @@ class PlayerState:
           piece_on_square = Globals.board[new_rank][new_file]
           if not piece_on_square or piece_on_square.player_color is self.player_color.opponent:
             self.pawn_attack_board[new_rank][new_file] = True
+
+  def opponent(self):
+    return Globals.players[self.player_color.opponent]
 
 
 class MoveType(Enum):
@@ -209,6 +218,7 @@ class Move:
       return MoveType.OPEN_SQUARE
 
   def apply(self):
+    player = Globals.players[self.piece.player_color]
     if self.captured_piece:
       Globals.players[self.captured_piece.player_color].pieces[self.captured_piece.type].remove(self.captured_piece)
     self.piece.rank = self.rank
@@ -223,11 +233,15 @@ class Move:
     if self.piece.type is PieceType.KING and abs(file_diff) == 2:
       is_king_side = file_diff == 2  # king moving two to the right
       self.castling_rook_move = Move(
-        Globals.players[self.piece.player_color].find_rook(king_side=is_king_side),
+        player.find_rook(king_side=is_king_side),
         self.piece.rank,
         self.piece.file - 1 if is_king_side else self.piece.file + 1
       )
       self.castling_rook_move.apply()
+    # we have to clear the current player's attack map after the move
+    # todo: any way to optimize this?
+    # player.reset_attack_boards()
+    # generate_and_mark_all_legal_moves(player, filter_checks=False)
 
   def unapply(self):
     if self.captured_piece:
@@ -433,7 +447,6 @@ def generate_slide_moves(piece, directions):
     distance = 1
     while not collision:
       move = Move(piece, distance * rank_direction + piece.rank, distance * file_direction + piece.file)
-      # move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
       if move.move_type in (MoveType.SELF_OCCUPIED, MoveType.OUT_OF_BOUNDS):
         collision = True
       else:
@@ -454,29 +467,42 @@ def generate_knight_moves(piece):
           (2 if far_rank else 1) * rank_direction + piece.rank,
           (1 if far_rank else 2) * file_direction + piece.file
         )
-        # move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
         if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
           moves.add(move)
   return moves
 
 
-def generate_king_moves(piece: Piece, filter_checks=True):
+def generate_king_moves(king: Piece, filter_checks=True):
   moves = set()
   for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
-    move = Move(piece, rank_direction + piece.rank, file_direction + piece.file)
-    # move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
+    move = Move(king, rank_direction + king.rank, file_direction + king.file)
     if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
       moves.add(move)
+  # # can we castle?
+  # player = Globals.players[king.player_color]
+  # if not player.in_check() and king.n_times_moved == 0:
+  #   for rook in player.pieces[PieceType.ROOK]:
+  #     if rook.n_times_moved == 0:
+  #       new_file = king.file + 2 if rook.file - king.file > 0 else king.file - 2
+  #       small_file, big_file = sorted([king.file, rook.file])
+  #       can_castle = True
+  #       for file_between in range(small_file + 1, big_file):
+  #         if Globals.board[king.rank][file_between] or player.opponent().attack_board[king.rank][file_between]:
+  #           can_castle = False
+  #           break
+  #       if can_castle:
+  #         moves.add(Move(king, king.rank, new_file))
+  # return moves
   # can we castle?
-  if piece.n_times_moved == 0:
-    player = Globals.players[piece.player_color]
+  if king.n_times_moved == 0:
+    player = Globals.players[king.player_color]
     for rook in player.pieces[PieceType.ROOK]:
       if rook.n_times_moved == 0:
         can_castle = True
-        new_file = piece.file + 2 if rook.file - piece.file > 0 else piece.file - 2
-        small_file, big_file = sorted([piece.file, rook.file])
+        new_file = king.file + 2 if rook.file - king.file > 0 else king.file - 2
+        small_file, big_file = sorted([king.file, rook.file])
         for file_between in range(small_file + 1, big_file):
-          if Globals.board[piece.rank][file_between]:
+          if Globals.board[king.rank][file_between]:
             can_castle = False
             break
         if can_castle:
@@ -485,14 +511,14 @@ def generate_king_moves(piece: Piece, filter_checks=True):
               can_castle = False
             else:
               # make a fake king move to the space between
-              fake_move = Move(piece, piece.rank, piece.file + 1 if rook.file - piece.file > 0 else piece.file - 1)
+              fake_move = Move(king, king.rank, king.file + 1 if rook.file - king.file > 0 else king.file - 1)
               fake_move.apply()
               if player.in_check():
                 # player would be castling through check
                 can_castle = False
               fake_move.unapply()
           if can_castle:
-            moves.add(Move(piece, piece.rank, new_file))
+            moves.add(Move(king, king.rank, new_file))
   return moves
 
 
@@ -703,19 +729,19 @@ def handle_event(event, vs_human):
     elif event.unicode.lower() == "w":
       Globals.display_pawn_attacks = None
       Globals.display_player_attacking = PlayerColor.WHITE
-      print(f"\nDISPLAYING {Globals.display_player_attacking} ATTACK MAP.")
+      print(f"\nDISPLAYING WHITE ATTACK MAP.")
     elif event.unicode.lower() == "b":
       Globals.display_pawn_attacks = None
       Globals.display_player_attacking = PlayerColor.BLACK
-      print(f"\nDISPLAYING {Globals.display_player_attacking} ATTACK MAP.")
+      print(f"\nDISPLAYING BLACK ATTACK MAP.")
     elif event.unicode == "P":
       Globals.display_player_attacking = None
       Globals.display_pawn_attacks = PlayerColor.WHITE
-      print(f"\nDISPLAYING {Globals.display_pawn_attacks} PAWN ATTACK MAP.")
+      print(f"\nDISPLAYING WHITE PAWN ATTACK MAP.")
     elif event.unicode == "p":
       Globals.display_player_attacking = None
       Globals.display_pawn_attacks = PlayerColor.BLACK
-      print(f"\nDISPLAYING {Globals.display_pawn_attacks} PAWN ATTACK MAP.")
+      print(f"\nDISPLAYING BLACK PAWN ATTACK MAP.")
   return True
 
 
