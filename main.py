@@ -20,8 +20,9 @@ DARK_SQUARES = 1
 BACKGROUND_COLORS = [(242, 210, 133), (115, 99, 61)]
 SELECTED_SQUARE_COLOR = (252, 186, 3)
 LEGAL_MOVE_COLORS = [(235, 127, 132), (115, 61, 63)]
-LAST_MOVE_START_COLORS = [(127, 235, 226), (61, 113, 115)]
-LAST_MOVE_DEST_COLORS = [(127, 235, 165), (61, 115, 78)]
+LAST_MOVE_COLORS = [(127, 235, 226), (61, 113, 115)]
+# LAST_MOVE_DEST_COLORS = [(127, 235, 165), (61, 115, 78)]
+ATTACKING_COLORS = [(235, 127, 201), (115, 61, 98)]
 
 # todo: limit window resizing to preserve aspect ratio
 DISPLAY_WIDTH = 1120
@@ -55,6 +56,10 @@ class PlayerColor(Enum):
     return 0 if self is PlayerColor.WHITE else 7
 
   @property
+  def pawn_direction(self):
+    return 1 if self is PlayerColor.WHITE else -1
+
+  @property
   def opponent(self):
     return PlayerColor.BLACK if self is PlayerColor.WHITE else PlayerColor.WHITE
 
@@ -63,10 +68,11 @@ class PlayerState:
   def __init__(self, player_color):
     self.player_color = player_color
     self.pieces = defaultdict(set)
+    self.reset_attack_boards()
 
   def in_check(self):
     opponent = Globals.players[self.player_color.opponent]
-    for move in generate_all_legal_moves(opponent, filter_checks=False):
+    for move in generate_and_mark_all_legal_moves(opponent, filter_checks=False):
       if move.captured_piece and move.captured_piece.type is PieceType.KING:
         return True
     return False
@@ -89,6 +95,22 @@ class PlayerState:
       return None
     return next(iter(piece_set))
 
+  def reset_attack_boards(self):
+    self.attack_board = clear_board(False)
+    self.calculate_pawn_attack_board()
+
+  def calculate_pawn_attack_board(self):
+    # show squares pawns *could* capture if an opposing piece were there
+    self.pawn_attack_board = clear_board(False)
+    pawn_direction = self.player_color.pawn_direction
+    for pawn in self.pieces[PieceType.PAWN]:
+      new_rank = pawn.rank + pawn_direction
+      for new_file in [pawn.file + 1, pawn.file - 1]:
+        if in_bounds(new_rank, new_file):
+          piece_on_square = Globals.board[new_rank][new_file]
+          if not piece_on_square or piece_on_square.player_color is self.player_color.opponent:
+            self.pawn_attack_board[new_rank][new_file] = True
+
 
 class MoveType(Enum):
   OUT_OF_BOUNDS = auto()
@@ -97,16 +119,8 @@ class MoveType(Enum):
   OPEN_SQUARE = auto()
 
   @classmethod
-  def get_type(cls, player, rank, file):
-    if not in_bounds(rank, file):
-      return MoveType.OUT_OF_BOUNDS
-    if piece_on_new_square := Globals.board[rank][file]:
-      if player == piece_on_new_square.player_color:
-        return MoveType.SELF_OCCUPIED
-      else:
-        return MoveType.CAPTURE
-    else:
-      return MoveType.OPEN_SQUARE
+  def legal_types(cls):
+    return [MoveType.OPEN_SQUARE, MoveType.CAPTURE]
 
 
 class PieceType(Enum):
@@ -161,12 +175,13 @@ class Move:
     self.rank = rank
     self.file = file
     self.promote_type = promote_type
-    # todo: this assumes that a Move is created only when the board is in the appropriate state
-    self.captured_piece = Globals.board[rank][file]
     self.old_rank = piece.rank
     self.old_file = piece.file
+    self.move_type = self.get_type()
     self.castling_rook_move = None
-    self.guess_score()
+    if self.move_type in MoveType.legal_types():
+      self.captured_piece = Globals.board[rank][file]
+      self.guess_score()
 
   def __str__(self):
     return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file})"
@@ -181,6 +196,17 @@ class Move:
 
   def __hash__(self):
     return hash(repr(self))
+
+  def get_type(self):
+    if not in_bounds(self.rank, self.file):
+      return MoveType.OUT_OF_BOUNDS
+    if piece_on_new_square := Globals.board[self.rank][self.file]:
+      if self.piece.player_color == piece_on_new_square.player_color:
+        return MoveType.SELF_OCCUPIED
+      else:
+        return MoveType.CAPTURE
+    else:
+      return MoveType.OPEN_SQUARE
 
   def apply(self):
     if self.captured_piece:
@@ -271,8 +297,12 @@ def init_castling_ability(castling_ability):
       Globals.players[piece_color].find_rook(king_side=piece_type is PieceType.KING).n_times_moved = 0
 
 
+def clear_board(default_value=None):
+  return [[default_value for _ in range(8)] for _ in range(8)]
+
+
 def init_state(fen):
-  Globals.board = [[None for _ in range(8)] for _ in range(8)]
+  Globals.board = clear_board()
   piece_placement, side_to_move, castling_ability, en_passant_target_square, halfmove_clock, fullmove_counter = fen.split(" ")
   for inverse_rank, rank_line in enumerate(piece_placement.split("/")):
     rank = 7 - inverse_rank
@@ -303,6 +333,8 @@ class Globals:
   active_player_legal_moves = []
   move_history = []
   n_moves_searched = 0
+  display_player_attacking = None
+  display_pawn_attacks = None
 
   @classmethod
   def active_player(cls):
@@ -314,10 +346,8 @@ def draw_squares():
   for rank in range(8):
     for file in range(8):
       square_type = (rank + file) % 2
-      if last_move and (rank, file) == (last_move.old_rank, last_move.old_file):
-        color = LAST_MOVE_START_COLORS[square_type]
-      elif last_move and (rank, file) == (last_move.rank, last_move.file):
-        color = LAST_MOVE_DEST_COLORS[square_type]
+      if last_move and (rank, file) in [(last_move.old_rank, last_move.old_file), (last_move.rank, last_move.file)]:
+        color = LAST_MOVE_COLORS[square_type]
       elif Globals.selected:
         if (rank, file) == (Globals.selected.piece.rank, Globals.selected.piece.file):
           color = SELECTED_SQUARE_COLOR
@@ -325,6 +355,12 @@ def draw_squares():
           color = LEGAL_MOVE_COLORS[square_type]
         else:
           color = BACKGROUND_COLORS[square_type]
+      elif Globals.display_player_attacking and \
+          Globals.players[Globals.display_player_attacking].attack_board[rank][file]:
+        color = ATTACKING_COLORS[square_type]
+      elif Globals.display_pawn_attacks and \
+          Globals.players[Globals.display_pawn_attacks].pawn_attack_board[rank][file]:
+        color = ATTACKING_COLORS[square_type]
       else:
         color = BACKGROUND_COLORS[square_type]
       pg.draw.rect(Globals.screen, color, Rect(get_screen_pos(rank, file), (SQUARE_WIDTH, SQUARE_WIDTH)))
@@ -357,32 +393,35 @@ def is_promoting_pawn(piece, new_rank):
   return piece.type is PieceType.PAWN and new_rank == piece.player_color.opponent.back_rank
 
 
-def include_promotion_moves(pawn, rank, file, moves):
-  if is_promoting_pawn(pawn, rank):
+def include_promotion_moves(move):
+  moves = set()
+  if is_promoting_pawn(move.piece, move.rank):
     for promote_type in [PieceType.QUEEN, PieceType.KNIGHT]:
-      moves.add(Move(pawn, rank, file, promote_type=promote_type))
+      moves.add(Move(move.piece, move.rank, move.file, promote_type=promote_type))
   else:
-    moves.add(Move(pawn, rank, file))
+    moves.add(move)
+  return moves
 
 
 def generate_pawn_moves(piece):
   moves = set()
-  direction = 1 if piece.player_color is PlayerColor.WHITE else -1
+  pawn_direction = piece.player_color.pawn_direction
   # one-square standard move
-  rank_candidates = [piece.rank + (1 * direction)]
+  rank_candidates = [piece.rank + (1 * pawn_direction)]
   # two-square opening move
-  if piece.rank == piece.player_color.back_rank + direction:
+  if piece.rank == piece.player_color.back_rank + pawn_direction:
     # can't move through pieces
-    if not Globals.board[piece.rank + (1 * direction)][piece.file]:
-      rank_candidates.append(piece.rank + (2 * direction))
+    if not Globals.board[piece.rank + (1 * pawn_direction)][piece.file]:
+      rank_candidates.append(piece.rank + (2 * pawn_direction))
   for new_rank in rank_candidates:
-    if MoveType.get_type(piece.player_color, new_rank, piece.file) is MoveType.OPEN_SQUARE:
-      include_promotion_moves(piece, new_rank, piece.file, moves)
+    move = Move(piece, new_rank, piece.file)
+    if move.move_type is MoveType.OPEN_SQUARE:
+      moves.update(include_promotion_moves(move))
   # capture moves
-  for rank_offset, file_offset in [(direction, 1), (direction, -1)]:
-    new_rank, new_file = piece.rank + rank_offset, piece.file + file_offset
-    if MoveType.get_type(piece.player_color, new_rank, new_file) is MoveType.CAPTURE:
-      include_promotion_moves(piece, new_rank, new_file, moves)
+  for rank_offset, file_offset in [(pawn_direction, 1), (pawn_direction, -1)]:
+    move = Move(piece, piece.rank + rank_offset, piece.file + file_offset)
+    if move.move_type is MoveType.CAPTURE:
+      moves.update(include_promotion_moves(move))
   # todo: en passant
   return moves
 
@@ -393,13 +432,13 @@ def generate_slide_moves(piece, directions):
     collision = False
     distance = 1
     while not collision:
-      new_rank, new_file = distance * rank_direction + piece.rank, distance * file_direction + piece.file
-      move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
-      if move_type in (MoveType.SELF_OCCUPIED, MoveType.OUT_OF_BOUNDS):
+      move = Move(piece, distance * rank_direction + piece.rank, distance * file_direction + piece.file)
+      # move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
+      if move.move_type in (MoveType.SELF_OCCUPIED, MoveType.OUT_OF_BOUNDS):
         collision = True
       else:
-        moves.add(Move(piece, new_rank, new_file))
-        if move_type is MoveType.CAPTURE:
+        moves.add(move)
+        if move.move_type is MoveType.CAPTURE:
           collision = True
       distance += 1
   return moves
@@ -410,22 +449,24 @@ def generate_knight_moves(piece):
   for far_rank in [True, False]:
     for rank_direction in [1, -1]:
       for file_direction in [1, -1]:
-        new_rank = (2 if far_rank else 1) * rank_direction + piece.rank
-        new_file = (1 if far_rank else 2) * file_direction + piece.file
-        move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
-        if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
-          moves.add(Move(piece, new_rank, new_file))
+        move = Move(
+          piece,
+          (2 if far_rank else 1) * rank_direction + piece.rank,
+          (1 if far_rank else 2) * file_direction + piece.file
+        )
+        # move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
+        if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
+          moves.add(move)
   return moves
 
 
 def generate_king_moves(piece: Piece, filter_checks=True):
   moves = set()
   for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
-    new_rank = rank_direction + piece.rank
-    new_file = file_direction + piece.file
-    move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
-    if move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
-      moves.add(Move(piece, new_rank, new_file))
+    move = Move(piece, rank_direction + piece.rank, file_direction + piece.file)
+    # move_type = MoveType.get_type(piece.player_color, new_rank, new_file)
+    if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
+      moves.add(move)
   # can we castle?
   if piece.n_times_moved == 0:
     player = Globals.players[piece.player_color]
@@ -484,13 +525,16 @@ def generate_legal_moves(piece, filter_checks=True):
     return moves
 
 
-def generate_all_legal_moves(player, filter_checks=True):
+def generate_and_mark_all_legal_moves(player, filter_checks=True):
+  player.reset_attack_boards()
   # keep move list in sorted order by score guess
   all_legal_moves = SortedList(key=lambda t: t[0])
   # all_legal_moves = []
   for pieces in player.pieces.values():
     for piece in pieces:
       for move in generate_legal_moves(piece, filter_checks):
+        if piece.type is not PieceType.PAWN or move.move_type is MoveType.CAPTURE:
+          player.attack_board[move.rank][move.file] = True
         all_legal_moves.add((move.score_guess, move))
         # all_legal_moves.append(move)
   return [move for score_guess, move in all_legal_moves]
@@ -502,14 +546,14 @@ def undo_last_move():
     move = Globals.move_history.pop()
     move.unapply()
     Globals.active_player_color = Globals.active_player_color.opponent
-    Globals.active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
+    Globals.active_player_legal_moves = generate_and_mark_all_legal_moves(Globals.active_player())
 
 
 def make_move(move):
   move.apply()
   Globals.move_history.append(move)
   Globals.active_player_color = Globals.active_player_color.opponent
-  Globals.active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
+  Globals.active_player_legal_moves = generate_and_mark_all_legal_moves(Globals.active_player())
 
 
 def evaluate_board(active_player_color):
@@ -526,7 +570,7 @@ def search_moves(active_player_color, depth, alpha, beta):
   if depth == 0:
     # todo: quiescence search
     return None, evaluate_board(active_player_color)
-  moves = generate_all_legal_moves(Globals.players[active_player_color])
+  moves = generate_and_mark_all_legal_moves(Globals.players[active_player_color])
   if not moves:
     if Globals.active_player().in_check():
       return None, -math.inf
@@ -645,7 +689,7 @@ def handle_event(event, vs_human):
     if Globals.selected:
       Globals.selected.update_screen_pos(event.pos)
   elif event.type == pg.KEYDOWN:
-    if event.key == pg.K_u:
+    if event.unicode.lower() == "u":
       if vs_human:
         undo_last_move()
       else:
@@ -654,8 +698,24 @@ def handle_event(event, vs_human):
           # undo last black + white moves, so white is still active
           undo_last_move()
           undo_last_move()
-    if event.key == pg.K_f:
+    elif event.unicode.lower() == "f":
       print(f"\nCURRENT BOARD FEN: {generate_fen()}")
+    elif event.unicode.lower() == "w":
+      Globals.display_pawn_attacks = None
+      Globals.display_player_attacking = PlayerColor.WHITE
+      print(f"\nDISPLAYING {Globals.display_player_attacking} ATTACK MAP.")
+    elif event.unicode.lower() == "b":
+      Globals.display_pawn_attacks = None
+      Globals.display_player_attacking = PlayerColor.BLACK
+      print(f"\nDISPLAYING {Globals.display_player_attacking} ATTACK MAP.")
+    elif event.unicode == "P":
+      Globals.display_player_attacking = None
+      Globals.display_pawn_attacks = PlayerColor.WHITE
+      print(f"\nDISPLAYING {Globals.display_pawn_attacks} PAWN ATTACK MAP.")
+    elif event.unicode == "p":
+      Globals.display_player_attacking = None
+      Globals.display_pawn_attacks = PlayerColor.BLACK
+      print(f"\nDISPLAYING {Globals.display_pawn_attacks} PAWN ATTACK MAP.")
   return True
 
 
@@ -664,7 +724,7 @@ def main(fen, vs_human):
   Globals.displayed_screen = set_mode((DISPLAY_WIDTH, DISPLAY_WIDTH), pg.RESIZABLE)
   Globals.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
   init_state(fen)
-  Globals.active_player_legal_moves = generate_all_legal_moves(Globals.active_player())
+  Globals.active_player_legal_moves = generate_and_mark_all_legal_moves(Globals.active_player())
   running = True
   while running:
     if not Globals.active_player_legal_moves:
