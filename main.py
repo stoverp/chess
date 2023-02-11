@@ -238,10 +238,6 @@ class Move:
         self.piece.file - 1 if is_king_side else self.piece.file + 1
       )
       self.castling_rook_move.apply()
-    # we have to clear the current player's attack map after the move
-    # todo: any way to optimize this?
-    # player.reset_attack_boards()
-    # generate_and_mark_all_legal_moves(player, filter_checks=False)
 
   def unapply(self):
     if self.captured_piece:
@@ -263,6 +259,8 @@ class Move:
       self.score_guess = 10 * self.captured_piece.type.score - self.piece.type.score
     if self.promote_type:
       self.score_guess += self.promote_type.score
+    if Globals.players[self.piece.player_color.opponent].pawn_attack_board[self.rank][self.file]:
+      self.score_guess -= self.piece.type.score
 
 
 def display_to_screen(display_pos):
@@ -478,21 +476,6 @@ def generate_king_moves(king: Piece, filter_checks=True):
     move = Move(king, rank_direction + king.rank, file_direction + king.file)
     if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
       moves.add(move)
-  # # can we castle?
-  # player = Globals.players[king.player_color]
-  # if not player.in_check() and king.n_times_moved == 0:
-  #   for rook in player.pieces[PieceType.ROOK]:
-  #     if rook.n_times_moved == 0:
-  #       new_file = king.file + 2 if rook.file - king.file > 0 else king.file - 2
-  #       small_file, big_file = sorted([king.file, rook.file])
-  #       can_castle = True
-  #       for file_between in range(small_file + 1, big_file):
-  #         if Globals.board[king.rank][file_between] or player.opponent().attack_board[king.rank][file_between]:
-  #           can_castle = False
-  #           break
-  #       if can_castle:
-  #         moves.add(Move(king, king.rank, new_file))
-  # return moves
   # can we castle?
   if king.n_times_moved == 0:
     player = Globals.players[king.player_color]
@@ -689,6 +672,24 @@ def get_user_promote_type():
   return PieceType.QUEEN
 
 
+def toggle_attack_display(player_color):
+  if Globals.display_player_attacking:
+    Globals.display_player_attacking = None
+  else:
+    Globals.display_pawn_attacks = None
+    Globals.display_player_attacking = PlayerColor.WHITE
+    print(f"\nDISPLAYING {player_color.name.upper()} ATTACK MAP.")
+
+
+def toggle_pawn_attack_display(player_color):
+  if Globals.display_pawn_attacks:
+    Globals.display_pawn_attacks = None
+  else:
+    Globals.display_player_attacking = None
+    Globals.display_pawn_attacks = player_color
+    print(f"\nDISPLAYING {player_color.name.upper()} PAWN ATTACK MAP.")
+
+
 def handle_event(event, vs_human):
   if event.type == pg.QUIT:
     return False
@@ -727,17 +728,11 @@ def handle_event(event, vs_human):
     elif event.unicode.lower() == "f":
       print(f"\nCURRENT BOARD FEN: {generate_fen()}")
     elif event.unicode.lower() == "w":
-      Globals.display_pawn_attacks = None
-      Globals.display_player_attacking = PlayerColor.WHITE
-      print(f"\nDISPLAYING WHITE ATTACK MAP.")
+      toggle_attack_display(PlayerColor.WHITE)
     elif event.unicode.lower() == "b":
-      Globals.display_pawn_attacks = None
-      Globals.display_player_attacking = PlayerColor.BLACK
-      print(f"\nDISPLAYING BLACK ATTACK MAP.")
+      toggle_attack_display(PlayerColor.BLACK)
     elif event.unicode == "P":
-      Globals.display_player_attacking = None
-      Globals.display_pawn_attacks = PlayerColor.WHITE
-      print(f"\nDISPLAYING WHITE PAWN ATTACK MAP.")
+      toggle_pawn_attack_display(PlayerColor.WHITE)
     elif event.unicode == "p":
       Globals.display_player_attacking = None
       Globals.display_pawn_attacks = PlayerColor.BLACK
