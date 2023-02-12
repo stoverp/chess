@@ -21,7 +21,6 @@ BACKGROUND_COLORS = [(242, 210, 133), (115, 99, 61)]
 SELECTED_SQUARE_COLOR = (252, 186, 3)
 LEGAL_MOVE_COLORS = [(235, 127, 132), (115, 61, 63)]
 LAST_MOVE_COLORS = [(127, 235, 226), (61, 113, 115)]
-# LAST_MOVE_DEST_COLORS = [(127, 235, 165), (61, 115, 78)]
 ATTACKING_COLORS = [(235, 127, 201), (115, 61, 98)]
 
 # todo: limit window resizing to preserve aspect ratio
@@ -470,13 +469,8 @@ def generate_knight_moves(piece):
   return moves
 
 
-def generate_king_moves(king: Piece, filter_checks=True):
+def castling_moves(king, filter_checks):
   moves = set()
-  for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
-    move = Move(king, rank_direction + king.rank, file_direction + king.file)
-    if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
-      moves.add(move)
-  # can we castle?
   if king.n_times_moved == 0:
     player = Globals.players[king.player_color]
     for rook in player.pieces[PieceType.ROOK]:
@@ -502,6 +496,16 @@ def generate_king_moves(king: Piece, filter_checks=True):
               fake_move.unapply()
           if can_castle:
             moves.add(Move(king, king.rank, new_file))
+  return moves
+
+
+def generate_king_moves(king: Piece, filter_checks=True):
+  moves = set()
+  for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
+    move = Move(king, rank_direction + king.rank, file_direction + king.file)
+    if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
+      moves.add(move)
+  # moves.update(castling_moves(king, filter_checks))
   return moves
 
 
@@ -673,16 +677,16 @@ def get_user_promote_type():
 
 
 def toggle_attack_display(player_color):
-  if Globals.display_player_attacking:
+  if Globals.display_player_attacking is player_color:
     Globals.display_player_attacking = None
   else:
     Globals.display_pawn_attacks = None
-    Globals.display_player_attacking = PlayerColor.WHITE
+    Globals.display_player_attacking = player_color
     print(f"\nDISPLAYING {player_color.name.upper()} ATTACK MAP.")
 
 
 def toggle_pawn_attack_display(player_color):
-  if Globals.display_pawn_attacks:
+  if Globals.display_pawn_attacks is player_color:
     Globals.display_pawn_attacks = None
   else:
     Globals.display_player_attacking = None
@@ -734,9 +738,7 @@ def handle_event(event, vs_human):
     elif event.unicode == "P":
       toggle_pawn_attack_display(PlayerColor.WHITE)
     elif event.unicode == "p":
-      Globals.display_player_attacking = None
-      Globals.display_pawn_attacks = PlayerColor.BLACK
-      print(f"\nDISPLAYING BLACK PAWN ATTACK MAP.")
+      toggle_pawn_attack_display(PlayerColor.BLACK)
   return True
 
 
