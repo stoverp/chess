@@ -67,19 +67,23 @@ class PlayerState:
   def __init__(self, player_color):
     self.player_color = player_color
     self.pieces = defaultdict(set)
-    # self.attacks_calculated = False
-    self.reset_attack_boards()
+    self.legal_moves = []
+    self.reset_attack_maps()
+
+  def reset_attack_maps(self):
+    self.attack_board = clear_board(False)
+    self.calculate_pawn_attack_board()
 
   def in_check(self):
-    opponent = Globals.players[self.player_color.opponent]
-    for move in generate_and_mark_all_legal_moves(opponent, filter_checks=False):
-      if move.captured_piece and move.captured_piece.type is PieceType.KING:
-        return True
-    return False
+    # opponent = Globals.players[self.player_color.opponent]
+    # for move in generate_and_mark_all_legal_moves(opponent, filter_checks=False):
+    #   if move.captured_piece and move.captured_piece.type is PieceType.KING:
+    #     return True
+    # return False
     # if not opponent.attacks_calculated:
-    #   generate_and_mark_all_legal_moves(opponent, filter_checks=False)
-    # king = self.find(PieceType.KING)
-    # return Globals.players[self.player_color.opponent].attack_board[king.rank][king.file]
+    #  generate_and_mark_all_legal_moves(opponent, filter_checks=False)
+    king = self.find(PieceType.KING)
+    return Globals.players[self.player_color.opponent].attack_board[king.rank][king.file]
 
   def find_rook(self, king_side: bool):
     # warning: this currently returns None if a rook has been moved out of its home
@@ -99,11 +103,6 @@ class PlayerState:
       return None
     return next(iter(piece_set))
 
-  def reset_attack_boards(self):
-    # self.attacks_calculated = False
-    self.attack_board = clear_board(False)
-    self.calculate_pawn_attack_board()
-
   def calculate_pawn_attack_board(self):
     # show squares pawns *could* capture if an opposing piece were there
     self.pawn_attack_board = clear_board(False)
@@ -118,6 +117,9 @@ class PlayerState:
 
   def opponent(self):
     return Globals.players[self.player_color.opponent]
+
+  def refresh_legal_moves(self, filter_checks=True):
+    self.legal_moves = generate_and_mark_all_legal_moves(self, filter_checks)
 
 
 class MoveType(Enum):
@@ -237,6 +239,9 @@ class Move:
         self.piece.file - 1 if is_king_side else self.piece.file + 1
       )
       self.castling_rook_move.apply()
+    # calculate opponent's attack map by refresing their legal moves
+    # todo: this is an expensive call, consider directly updating attack map
+    player.opponent().refresh_legal_moves(filter_checks=False)
 
   def unapply(self):
     if self.captured_piece:
@@ -341,7 +346,6 @@ class Globals:
   board = [[None for _ in range(8)] for _ in range(8)]
   selected = None
   active_player_color = PlayerColor.WHITE
-  active_player_legal_moves = []
   move_history = []
   n_moves_searched = 0
   display_player_attacking = None
@@ -505,7 +509,7 @@ def generate_king_moves(king: Piece, filter_checks=True):
     move = Move(king, rank_direction + king.rank, file_direction + king.file)
     if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
       moves.add(move)
-  # moves.update(castling_moves(king, filter_checks))
+  moves.update(castling_moves(king, filter_checks))
   return moves
 
 
@@ -539,7 +543,10 @@ def generate_legal_moves(piece, filter_checks=True):
 
 
 def generate_and_mark_all_legal_moves(player, filter_checks=True):
-  player.reset_attack_boards()
+  player.reset_attack_maps()
+  # if filter_checks:
+  #   # update opponent's attack map
+  #   generate_and_mark_all_legal_moves(player.opponent(), filter_checks=False)
   # keep move list in sorted order by score guess
   all_legal_moves = SortedList(key=lambda t: t[0])
   # all_legal_moves = []
@@ -550,23 +557,27 @@ def generate_and_mark_all_legal_moves(player, filter_checks=True):
           player.attack_board[move.rank][move.file] = True
         all_legal_moves.add((move.score_guess, move))
         # all_legal_moves.append(move)
-  return [move for score_guess, move in all_legal_moves]
+  return [move for score_guess, move in reversed(all_legal_moves)]
   # return all_legal_moves
+
+
+def make_move(move):
+  move.apply()
+  Globals.move_history.append(move)
+  # todo: this call is just to update the last player's attack map, so it's correct for the opponent
+  Globals.active_player().refresh_legal_moves()
+  Globals.active_player_color = Globals.active_player_color.opponent
+  Globals.active_player().refresh_legal_moves()
 
 
 def undo_last_move():
   if Globals.move_history:
     move = Globals.move_history.pop()
     move.unapply()
+    # todo: next line might be unnecessary
+    Globals.active_player().refresh_legal_moves()
     Globals.active_player_color = Globals.active_player_color.opponent
-    Globals.active_player_legal_moves = generate_and_mark_all_legal_moves(Globals.active_player())
-
-
-def make_move(move):
-  move.apply()
-  Globals.move_history.append(move)
-  Globals.active_player_color = Globals.active_player_color.opponent
-  Globals.active_player_legal_moves = generate_and_mark_all_legal_moves(Globals.active_player())
+    Globals.active_player().refresh_legal_moves()
 
 
 def evaluate_board(active_player_color):
@@ -583,7 +594,7 @@ def search_moves(active_player_color, depth, alpha, beta):
   if depth == 0:
     # todo: quiescence search
     return None, evaluate_board(active_player_color)
-  moves = generate_and_mark_all_legal_moves(Globals.players[active_player_color])
+  moves = generate_and_mark_all_legal_moves(Globals.players[active_player_color], filter_checks=True)
   if not moves:
     if Globals.active_player().in_check():
       return None, -math.inf
@@ -619,7 +630,7 @@ def best_move(active_player_color):
   if move:
     return move
   else:
-    move = Globals.active_player_legal_moves[0]
+    move = Globals.active_player().legal_moves[0]
     print(f"{active_player_color} has no moves that avoid checkmate! just make first legal move: {move}")
     return move
 
@@ -747,10 +758,10 @@ def main(fen, vs_human):
   Globals.displayed_screen = set_mode((DISPLAY_WIDTH, DISPLAY_WIDTH), pg.RESIZABLE)
   Globals.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
   init_state(fen)
-  Globals.active_player_legal_moves = generate_and_mark_all_legal_moves(Globals.active_player())
+  Globals.active_player().refresh_legal_moves()
   running = True
   while running:
-    if not Globals.active_player_legal_moves:
+    if not Globals.active_player().legal_moves:
       endgame()
       running = False
     if Globals.active_player_color is PlayerColor.BLACK and not vs_human:
