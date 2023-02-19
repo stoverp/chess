@@ -13,7 +13,7 @@ from pygame.sprite import Sprite
 from sortedcontainers import SortedList
 
 
-SEARCH_DEPTH = 3
+SEARCH_DEPTH = 4
 
 LIGHT_SQUARES = 0
 DARK_SQUARES = 1
@@ -68,11 +68,10 @@ class PlayerState:
     self.player_color = player_color
     self.pieces = defaultdict(set)
     self.legal_moves = []
-    self.reset_attack_maps()
-
-  def reset_attack_maps(self):
+    # self.reset_attack_maps()
+  # def reset_attack_maps(self):
     self.attack_board = clear_board(False)
-    self.calculate_pawn_attack_board()
+    self.pawn_attack_board = clear_board(False)
 
   def in_check(self):
     # opponent = Globals.players[self.player_color.opponent]
@@ -103,23 +102,20 @@ class PlayerState:
       return None
     return next(iter(piece_set))
 
-  def calculate_pawn_attack_board(self):
-    # show squares pawns *could* capture if an opposing piece were there
-    self.pawn_attack_board = clear_board(False)
-    pawn_direction = self.player_color.pawn_direction
-    for pawn in self.pieces[PieceType.PAWN]:
-      new_rank = pawn.rank + pawn_direction
-      for new_file in [pawn.file + 1, pawn.file - 1]:
-        if in_bounds(new_rank, new_file):
-          piece_on_square = Globals.board[new_rank][new_file]
-          if not piece_on_square or piece_on_square.player_color is self.player_color.opponent:
-            self.pawn_attack_board[new_rank][new_file] = True
-
   def opponent(self):
     return Globals.players[self.player_color.opponent]
 
   def refresh_legal_moves(self, filter_checks=True):
     self.legal_moves = generate_and_mark_all_legal_moves(self, filter_checks)
+
+  def calculate_attack_boards(self):
+    self.attack_board = clear_board(False)
+    self.pawn_attack_board = clear_board(False)
+    for piece in self.all_pieces():
+      calculate_attacks(piece, self.attack_board, self.pawn_attack_board)
+
+  def all_pieces(self):
+    return [piece for piece_type in PieceType for piece in self.pieces[piece_type]]
 
 
 class MoveType(Enum):
@@ -239,9 +235,7 @@ class Move:
         self.piece.file - 1 if is_king_side else self.piece.file + 1
       )
       self.castling_rook_move.apply()
-    # calculate opponent's attack map by refresing their legal moves
-    # todo: this is an expensive call, consider directly updating attack map
-    player.opponent().refresh_legal_moves(filter_checks=False)
+    player.opponent().calculate_attack_boards()
 
   def unapply(self):
     if self.captured_piece:
@@ -317,6 +311,72 @@ def clear_board(default_value=None):
   return [[default_value for _ in range(8)] for _ in range(8)]
 
 
+def calculate_knight_attacks(knight, attack_board):
+  for far_rank in [True, False]:
+    for rank_direction in [1, -1]:
+      for file_direction in [1, -1]:
+        rank = (2 if far_rank else 1) * rank_direction + knight.rank
+        file = (1 if far_rank else 2) * file_direction + knight.file
+        if empty_or_opponent_square(knight.player_color, rank, file):
+          attack_board[rank][file] = True
+
+
+def empty_or_opponent_square(player_color, rank, file):
+  if in_bounds(rank, file):
+    piece_on_square = Globals.board[rank][file]
+    return not piece_on_square or piece_on_square.player_color is player_color.opponent
+  return False
+
+
+def calculate_king_attacks(king, attack_board):
+  for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
+    rank = rank_direction + king.rank
+    file = file_direction + king.file
+    if empty_or_opponent_square(king.player_color, rank, file):
+      attack_board[rank][file] = True
+
+
+def calculate_attacks(piece, attack_board, pawn_attack_board):
+  if piece.type is PieceType.PAWN:
+    calculate_pawn_attacks(piece, attack_board, pawn_attack_board)
+  elif piece.type is PieceType.KNIGHT:
+    calculate_knight_attacks(piece, attack_board)
+  elif piece.type is PieceType.BISHOP:
+    calculate_slide_attacks(piece, BISHOP_DIRECTIONS, attack_board)
+  elif piece.type is PieceType.ROOK:
+    calculate_slide_attacks(piece, ROOK_DIRECTIONS, attack_board)
+  elif piece.type is PieceType.QUEEN:
+    calculate_slide_attacks(piece, ROOK_DIRECTIONS + BISHOP_DIRECTIONS, attack_board)
+  else:  # piece.type is PieceType.KING:
+    calculate_king_attacks(piece, attack_board)
+
+
+def calculate_slide_attacks(piece, directions, attack_board):
+  for rank_direction, file_direction in directions:
+    collision = False
+    distance = 1
+    while not collision:
+      rank = distance * rank_direction + piece.rank
+      file = distance * file_direction + piece.file
+      if not in_bounds(rank, file):
+        collision = True
+      else:
+        if empty_or_opponent_square(piece.player_color, rank, file):
+          attack_board[rank][file] = True
+        if Globals.board[rank][file]:
+          collision = True
+      distance += 1
+
+
+def calculate_pawn_attacks(pawn, attack_board, pawn_attack_board):
+  pawn_direction = pawn.player_color.pawn_direction
+  rank = pawn.rank + pawn_direction
+  for file in [pawn.file + 1, pawn.file - 1]:
+    if empty_or_opponent_square(pawn.player_color, rank, file):
+      attack_board[rank][file] = True
+      pawn_attack_board[rank][file] = True
+
+
 def init_state(fen):
   Globals.board = clear_board()
   piece_placement, side_to_move, castling_ability, en_passant_target_square, halfmove_clock, fullmove_counter = fen.split(" ")
@@ -334,6 +394,8 @@ def init_state(fen):
         file += 1
   Globals.active_player_color = PlayerColor.WHITE if side_to_move == "w" else PlayerColor.BLACK
   init_castling_ability(castling_ability)
+  for player in Globals.players.values():
+    player.calculate_attack_boards()
 
 
 class Globals:
@@ -543,22 +605,17 @@ def generate_legal_moves(piece, filter_checks=True):
 
 
 def generate_and_mark_all_legal_moves(player, filter_checks=True):
-  player.reset_attack_maps()
-  # if filter_checks:
-  #   # update opponent's attack map
-  #   generate_and_mark_all_legal_moves(player.opponent(), filter_checks=False)
+  # player.reset_attack_maps()
   # keep move list in sorted order by score guess
   all_legal_moves = SortedList(key=lambda t: t[0])
-  # all_legal_moves = []
   for pieces in player.pieces.values():
     for piece in pieces:
       for move in generate_legal_moves(piece, filter_checks):
-        if piece.type is not PieceType.PAWN or move.move_type is MoveType.CAPTURE:
-          player.attack_board[move.rank][move.file] = True
+        # if piece.type is not PieceType.PAWN or move.move_type is MoveType.CAPTURE:
+        #   player.attack_board[move.rank][move.file] = True
         all_legal_moves.add((move.score_guess, move))
-        # all_legal_moves.append(move)
+  # return high scores first
   return [move for score_guess, move in reversed(all_legal_moves)]
-  # return all_legal_moves
 
 
 def make_move(move):
