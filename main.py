@@ -68,8 +68,6 @@ class PlayerState:
     self.player_color = player_color
     self.pieces = defaultdict(set)
     self.legal_moves = []
-    # self.reset_attack_maps()
-  # def reset_attack_maps(self):
     self.attack_board = clear_board(False)
     self.pawn_attack_board = clear_board(False)
 
@@ -679,7 +677,7 @@ def search_moves(active_player_color, depth, alpha, beta):
 
 
 def best_move(active_player_color):
-  Globals.n_moves_search = 0
+  Globals.n_moves_searched = 0
   print(f"\ncalculating {active_player_color} move ...")
   start_time = time.time()
   move, score = search_moves(active_player_color, SEARCH_DEPTH, -math.inf, math.inf)
