@@ -72,13 +72,6 @@ class PlayerState:
     self.pawn_attack_board = clear_board(False)
 
   def in_check(self):
-    # opponent = Globals.players[self.player_color.opponent]
-    # for move in generate_and_mark_all_legal_moves(opponent, filter_checks=False):
-    #   if move.captured_piece and move.captured_piece.type is PieceType.KING:
-    #     return True
-    # return False
-    # if not opponent.attacks_calculated:
-    #  generate_and_mark_all_legal_moves(opponent, filter_checks=False)
     king = self.find(PieceType.KING)
     return Globals.players[self.player_color.opponent].attack_board[king.rank][king.file]
 
@@ -245,7 +238,6 @@ class Move:
     Globals.board[self.rank][self.file] = self.captured_piece
     Globals.board[self.old_rank][self.old_file] = self.piece
     self.piece.n_times_moved -= 1
-    # handle castling special case
     if self.castling_rook_move:
       self.castling_rook_move.unapply()
 
@@ -478,9 +470,16 @@ def include_promotion_moves(move):
   return moves
 
 
-def generate_pawn_moves(piece):
+def generate_pawn_moves(piece, captures_only=False):
   moves = set()
   pawn_direction = piece.player_color.pawn_direction
+  # capture moves
+  for rank_offset, file_offset in [(pawn_direction, 1), (pawn_direction, -1)]:
+    move = Move(piece, piece.rank + rank_offset, piece.file + file_offset)
+    if move.move_type is MoveType.CAPTURE:
+      moves.update(include_promotion_moves(move))
+  if captures_only:
+    return moves
   # one-square standard move
   rank_candidates = [piece.rank + (1 * pawn_direction)]
   # two-square opening move
@@ -492,16 +491,11 @@ def generate_pawn_moves(piece):
     move = Move(piece, new_rank, piece.file)
     if move.move_type is MoveType.OPEN_SQUARE:
       moves.update(include_promotion_moves(move))
-  # capture moves
-  for rank_offset, file_offset in [(pawn_direction, 1), (pawn_direction, -1)]:
-    move = Move(piece, piece.rank + rank_offset, piece.file + file_offset)
-    if move.move_type is MoveType.CAPTURE:
-      moves.update(include_promotion_moves(move))
   # todo: en passant
   return moves
 
 
-def generate_slide_moves(piece, directions):
+def generate_slide_moves(piece, directions, captures_only=False):
   moves = set()
   for rank_direction, file_direction in directions:
     collision = False
@@ -511,14 +505,21 @@ def generate_slide_moves(piece, directions):
       if move.move_type in (MoveType.SELF_OCCUPIED, MoveType.OUT_OF_BOUNDS):
         collision = True
       else:
-        moves.add(move)
+        add_move_if_valid(move, moves, captures_only)
         if move.move_type is MoveType.CAPTURE:
           collision = True
       distance += 1
   return moves
 
 
-def generate_knight_moves(piece):
+def add_move_if_valid(move, moves, captures_only):
+  if move.move_type is MoveType.CAPTURE:
+    moves.add(move)
+  elif not captures_only and move.move_type is MoveType.OPEN_SQUARE:
+    moves.add(move)
+
+
+def generate_knight_moves(piece, captures_only=False):
   moves = set()
   for far_rank in [True, False]:
     for rank_direction in [1, -1]:
@@ -528,8 +529,7 @@ def generate_knight_moves(piece):
           (2 if far_rank else 1) * rank_direction + piece.rank,
           (1 if far_rank else 2) * file_direction + piece.file
         )
-        if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
-          moves.add(move)
+        add_move_if_valid(move, moves, captures_only)
   return moves
 
 
@@ -563,29 +563,28 @@ def castling_moves(king, filter_checks):
   return moves
 
 
-def generate_king_moves(king: Piece, filter_checks=True):
+def generate_king_moves(king: Piece, filter_checks=True, captures_only=False):
   moves = set()
   for rank_direction, file_direction in ROOK_DIRECTIONS + BISHOP_DIRECTIONS:
     move = Move(king, rank_direction + king.rank, file_direction + king.file)
-    if move.move_type in (MoveType.OPEN_SQUARE, MoveType.CAPTURE):
-      moves.add(move)
+    add_move_if_valid(move, moves, captures_only)
   moves.update(castling_moves(king, filter_checks))
   return moves
 
 
-def generate_legal_moves(piece, filter_checks=True):
+def generate_legal_moves(piece, filter_checks=True, captures_only=False):
   if piece.type is PieceType.PAWN:
-    moves = generate_pawn_moves(piece)
+    moves = generate_pawn_moves(piece, captures_only)
   elif piece.type is PieceType.KNIGHT:
-    moves = generate_knight_moves(piece)
+    moves = generate_knight_moves(piece, captures_only)
   elif piece.type is PieceType.BISHOP:
-    moves = generate_slide_moves(piece, BISHOP_DIRECTIONS)
+    moves = generate_slide_moves(piece, BISHOP_DIRECTIONS, captures_only)
   elif piece.type is PieceType.ROOK:
-    moves = generate_slide_moves(piece, ROOK_DIRECTIONS)
+    moves = generate_slide_moves(piece, ROOK_DIRECTIONS, captures_only)
   elif piece.type is PieceType.QUEEN:
-    moves = generate_slide_moves(piece, ROOK_DIRECTIONS + BISHOP_DIRECTIONS)
+    moves = generate_slide_moves(piece, ROOK_DIRECTIONS + BISHOP_DIRECTIONS, captures_only)
   else:  # piece.type is PieceType.KING:
-    moves = generate_king_moves(piece, filter_checks)
+    moves = generate_king_moves(piece, filter_checks, captures_only)
   if filter_checks:
     player = Globals.players[piece.player_color]
     legal_moves = []
@@ -602,13 +601,13 @@ def generate_legal_moves(piece, filter_checks=True):
     return moves
 
 
-def generate_and_mark_all_legal_moves(player, filter_checks=True):
+def generate_and_mark_all_legal_moves(player, filter_checks=True, captures_only=False):
   # player.reset_attack_maps()
   # keep move list in sorted order by score guess
   all_legal_moves = SortedList(key=lambda t: t[0])
   for pieces in player.pieces.values():
     for piece in pieces:
-      for move in generate_legal_moves(piece, filter_checks):
+      for move in generate_legal_moves(piece, filter_checks, captures_only):
         # if piece.type is not PieceType.PAWN or move.move_type is MoveType.CAPTURE:
         #   player.attack_board[move.rank][move.file] = True
         all_legal_moves.add((move.score_guess, move))
@@ -620,7 +619,8 @@ def make_move(move):
   move.apply()
   Globals.move_history.append(move)
   # todo: this call is just to update the last player's attack map, so it's correct for the opponent
-  Globals.active_player().refresh_legal_moves()
+  # Globals.active_player().refresh_legal_moves()
+  Globals.active_player().calculate_attack_boards()
   Globals.active_player_color = Globals.active_player_color.opponent
   Globals.active_player().refresh_legal_moves()
 
@@ -630,7 +630,8 @@ def undo_last_move():
     move = Globals.move_history.pop()
     move.unapply()
     # todo: next line might be unnecessary
-    Globals.active_player().refresh_legal_moves()
+    # Globals.active_player().refresh_legal_moves()
+    Globals.active_player().calculate_attack_boards()
     Globals.active_player_color = Globals.active_player_color.opponent
     Globals.active_player().refresh_legal_moves()
 
@@ -645,10 +646,34 @@ def evaluate_board(active_player_color):
   return score
 
 
+def quiesce(active_player_color, alpha, beta):
+  score = evaluate_board(active_player_color)
+  if score >= beta:
+    return None, beta
+  alpha = max(alpha, score)
+  moves = generate_and_mark_all_legal_moves(Globals.players[active_player_color],
+    filter_checks=True, captures_only=True)
+  top_move = None
+  for move in moves:
+    Globals.n_moves_searched += 1
+    move.apply()
+    _, score = quiesce(active_player_color.opponent, -beta, -alpha)
+    # negate score to reflect opponent's perspective
+    score = -score
+    move.unapply()
+    if score >= beta:
+      # beta limit tells us opponent can prevent this scenario
+      return None, beta
+    if score > alpha:
+      top_move = move
+      alpha = score
+  return top_move, alpha
+
+
 def search_moves(active_player_color, depth, alpha, beta):
   if depth == 0:
-    # todo: quiescence search
-    return None, evaluate_board(active_player_color)
+    return quiesce(active_player_color, alpha, beta)
+    # return None, evaluate_board(active_player_color)
   moves = generate_and_mark_all_legal_moves(Globals.players[active_player_color], filter_checks=True)
   if not moves:
     if Globals.active_player().in_check():
