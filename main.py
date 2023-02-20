@@ -1,5 +1,6 @@
 import math
 import os
+import random
 import time
 from argparse import ArgumentParser
 from collections import defaultdict
@@ -13,7 +14,7 @@ from pygame.sprite import Sprite
 from sortedcontainers import SortedList
 
 
-SEARCH_DEPTH = 4
+SEARCH_DEPTH = 3
 
 LIGHT_SQUARES = 0
 DARK_SQUARES = 1
@@ -227,6 +228,7 @@ class Move:
       )
       self.castling_rook_move.apply()
     player.opponent().calculate_attack_boards()
+    Globals.zobrist_key = Zobrist.update_key(Globals.zobrist_key, self)
 
   def unapply(self):
     if self.captured_piece:
@@ -240,6 +242,9 @@ class Move:
     self.piece.n_times_moved -= 1
     if self.castling_rook_move:
       self.castling_rook_move.unapply()
+    # apply same update to key to revert move
+    # todo: verify this works
+    Globals.zobrist_key = Zobrist.update_key(Globals.zobrist_key, self)
 
   def guess_score(self):
     self.score_guess = 0
@@ -249,13 +254,6 @@ class Move:
       self.score_guess += self.promote_type.score
     if Globals.players[self.piece.player_color.opponent].pawn_attack_board[self.rank][self.file]:
       self.score_guess -= self.piece.type.score
-
-
-def display_to_screen(display_pos):
-  window_width, window_height = pg.display.get_window_size()
-  width_scale = window_width / BOARD_PIXEL_WIDTH
-  height_scale = window_height / BOARD_PIXEL_WIDTH
-  return display_pos[0] / width_scale, display_pos[1] / height_scale
 
 
 class Selected:
@@ -272,6 +270,61 @@ class Selected:
 
   def update_screen_pos(self, display_pos):
     self.screen_pos = display_to_screen(display_pos)
+
+
+def random_64bits():
+  return random.getrandbits(64)
+
+
+class Zobrist:
+  random.seed(2361912)
+  pieces = defaultdict(dict)
+  for color in PlayerColor:
+    for piece_type in PieceType:
+      pieces[color][piece_type] = [[random_64bits() for _ in range(8)] for _ in range(8)]
+  black_to_move = random_64bits()
+  castling_rights = [random_64bits() for _ in range(12)]
+  en_passant_file = [random_64bits() for _ in range(9)]
+
+  @classmethod
+  def init_key(cls):
+    key = 0
+    for color in PlayerColor:
+      for piece_type in PieceType:
+        for rank in range(8):
+          for file in range(8):
+            key ^= cls.pieces[color][piece_type][rank][file]
+    for v in cls.castling_rights:
+      key ^= v
+    for v in cls.en_passant_file:
+      key ^= v
+    print(f"zobrist key: {key}")
+    return key
+
+  @classmethod
+  def get_piece_hash(cls, piece, rank, file):
+    return cls.pieces[piece.player_color][piece.type][rank][file]
+
+  @classmethod
+  def update_key(cls, original_key, move):
+    key = original_key
+    # remove old piece position
+    key ^= Zobrist.get_piece_hash(move.piece, move.old_rank, move.old_file)
+    if move.captured_piece:
+      # remove captured piece
+      key ^= Zobrist.get_piece_hash(move.captured_piece, move.captured_piece.rank, move.captured_piece.file)
+    # add new piece position
+    key ^= Zobrist.get_piece_hash(move.piece, move.rank, move.file)
+    key ^= Zobrist.black_to_move
+    # todo: handle castling rights and en passant
+    return key
+
+
+def display_to_screen(display_pos):
+  window_width, window_height = pg.display.get_window_size()
+  width_scale = window_width / BOARD_PIXEL_WIDTH
+  height_scale = window_height / BOARD_PIXEL_WIDTH
+  return display_pos[0] / width_scale, display_pos[1] / height_scale
 
 
 def in_bounds(rank, file):
@@ -384,6 +437,8 @@ def init_state(fen):
         file += 1
   Globals.active_player_color = PlayerColor.WHITE if side_to_move == "w" else PlayerColor.BLACK
   init_castling_ability(castling_ability)
+  # todo: handle zobrist key for custom board state
+  Globals.zobrist_key = Zobrist.init_key()
   for player in Globals.players.values():
     player.calculate_attack_boards()
 
@@ -396,6 +451,7 @@ class Globals:
   displayed_screen = None
   screen = None
   board = [[None for _ in range(8)] for _ in range(8)]
+  zobrist_key = None
   selected = None
   active_player_color = PlayerColor.WHITE
   move_history = []
@@ -623,6 +679,7 @@ def make_move(move):
   Globals.active_player().calculate_attack_boards()
   Globals.active_player_color = Globals.active_player_color.opponent
   Globals.active_player().refresh_legal_moves()
+  print(f"zobrist key after move: {Globals.zobrist_key}")
 
 
 def undo_last_move():
@@ -634,6 +691,7 @@ def undo_last_move():
     Globals.active_player().calculate_attack_boards()
     Globals.active_player_color = Globals.active_player_color.opponent
     Globals.active_player().refresh_legal_moves()
+    print(f"zobrist key after undo move: {Globals.zobrist_key}")
 
 
 def evaluate_board(active_player_color):
