@@ -14,11 +14,11 @@ from pygame.sprite import Sprite
 from sortedcontainers import SortedList
 
 
-SEARCH_DEPTH = 3
+SEARCH_DEPTH = 5
 
 LIGHT_SQUARES = 0
 DARK_SQUARES = 1
-BACKGROUND_COLORS = [(242, 210, 133), (115, 99, 61)]
+BACKGROUND_COLORS = [(235, 236, 208), (119, 149, 86)]
 SELECTED_SQUARE_COLOR = (252, 186, 3)
 LEGAL_MOVE_COLORS = [(235, 127, 132), (115, 61, 63)]
 LAST_MOVE_COLORS = [(127, 235, 226), (61, 113, 115)]
@@ -248,6 +248,9 @@ class Move:
 
   def guess_score(self):
     self.score_guess = 0
+    if entry := Globals.transposition_table.from_key(Globals.zobrist_key):
+      if self == entry.move:
+        self.score_guess += 10000
     if self.captured_piece:
       self.score_guess = 10 * self.captured_piece.type.score - self.piece.type.score
     if self.promote_type:
@@ -270,6 +273,50 @@ class Selected:
 
   def update_screen_pos(self, display_pos):
     self.screen_pos = display_to_screen(display_pos)
+
+
+class EvalType(Enum):
+  EXACT = 1
+  LOWER_BOUND = 2
+  UPPER_BOUND = 3
+
+
+class TranspositionEntry:
+  def __init__(self, zobrist_key, depth, score, eval_type, move):
+    self.zobrist_key = zobrist_key
+    self.depth = depth
+    self.score = score
+    self.eval_type = eval_type
+    self.move = move
+
+
+class TranspositionTable:
+  def __init__(self):
+    self.entries = dict()
+
+  def store(self, zobrist_key, depth, score, eval_type, move):
+    self.entries[zobrist_key] = TranspositionEntry(zobrist_key, depth, score, eval_type, move)
+
+  def lookup(self, zobrist_key, depth, alpha, beta):
+    if zobrist_key not in self.entries:
+      return None
+    entry = self.entries[zobrist_key]
+    if entry.depth < depth:
+      return None
+    if entry.eval_type is EvalType.EXACT:
+      print(f"found exact score in tranposition table: {entry.score}")
+      return entry
+    elif entry.eval_type is EvalType.UPPER_BOUND and entry.score <= alpha:
+      print(f"found upper bound score in tranposition table: {entry.score}")
+      return entry
+    elif entry.eval_type is EvalType.LOWER_BOUND and entry.score >= beta:
+      print(f"found lower bound score in tranposition table: {entry.score}")
+      return entry
+    else:
+      return None
+
+  def from_key(self, zobrist_key):
+    return self.entries.get(zobrist_key, None)
 
 
 def random_64bits():
@@ -452,6 +499,7 @@ class Globals:
   screen = None
   board = [[None for _ in range(8)] for _ in range(8)]
   zobrist_key = None
+  transposition_table = TranspositionTable()
   selected = None
   active_player_color = PlayerColor.WHITE
   move_history = []
@@ -679,7 +727,8 @@ def make_move(move):
   Globals.active_player().calculate_attack_boards()
   Globals.active_player_color = Globals.active_player_color.opponent
   Globals.active_player().refresh_legal_moves()
-  print(f"zobrist key after move: {Globals.zobrist_key}")
+  print(f"\nzobrist key after move: {Globals.zobrist_key}")
+  print(f"board fen: {generate_fen()}")
 
 
 def undo_last_move():
@@ -729,6 +778,8 @@ def quiesce(active_player_color, alpha, beta):
 
 
 def search_moves(active_player_color, depth, alpha, beta):
+  if entry := Globals.transposition_table.lookup(Globals.zobrist_key, depth, alpha, beta):
+    return entry.move, entry.score
   if depth == 0:
     return quiesce(active_player_color, alpha, beta)
     # return None, evaluate_board(active_player_color)
@@ -739,6 +790,7 @@ def search_moves(active_player_color, depth, alpha, beta):
     else:
       return None, 0
   top_move = None
+  eval_type = EvalType.UPPER_BOUND
   for move in moves:
     # if move.rank == 5 and move.file == 0 and move.captured_piece:
     #   print(f"evaluating {move} ...")
@@ -751,11 +803,14 @@ def search_moves(active_player_color, depth, alpha, beta):
     #   print(f"evaluated score {score} for {move}")
     move.unapply()
     if score >= beta:
+      Globals.transposition_table.store(Globals.zobrist_key, depth, beta, EvalType.LOWER_BOUND, move)
       # beta limit tells us opponent can prevent this scenario
       return None, beta
     if score > alpha:
+      eval_type = EvalType.EXACT
       top_move = move
       alpha = score
+  Globals.transposition_table.store(Globals.zobrist_key, depth, alpha, eval_type, top_move)
   return top_move, alpha
 
 
@@ -861,7 +916,6 @@ def handle_event(event, vs_human):
         move = Move(Globals.selected.piece, rank, file)
       if move in Globals.selected.legal_moves:
         make_move(move)
-        print(f"\nCURRENT BOARD FEN: {generate_fen()}")
       else:
         print(f"attempted move to ({rank}, {file}) is illegal for {Globals.selected}!")
       Globals.selected = None
