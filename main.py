@@ -14,7 +14,7 @@ from pygame.sprite import Sprite
 from sortedcontainers import SortedList
 
 
-SEARCH_DEPTH = 5
+SEARCH_DEPTH = 4
 
 LIGHT_SQUARES = 0
 DARK_SQUARES = 1
@@ -37,6 +37,11 @@ BISHOP_DIRECTIONS = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = "300, 100"
+
+
+class PlayerType(Enum):
+  HUMAN = 'human'
+  ROBOT = 'robot'
 
 
 class PlayerColor(Enum):
@@ -65,8 +70,9 @@ class PlayerColor(Enum):
 
 
 class PlayerState:
-  def __init__(self, player_color):
+  def __init__(self, player_color, player_type):
     self.player_color = player_color
+    self.player_type = player_type
     self.pieces = defaultdict(set)
     self.legal_moves = []
     self.attack_board = clear_board(False)
@@ -304,13 +310,16 @@ class TranspositionTable:
     if entry.depth < depth:
       return None
     if entry.eval_type is EvalType.EXACT:
-      print(f"found exact score in tranposition table: {entry.score}")
+      Globals.n_transpositions_evaluated += 1
+      # print(f"found exact score in tranposition table: {entry.score}")
       return entry
     elif entry.eval_type is EvalType.UPPER_BOUND and entry.score <= alpha:
-      print(f"found upper bound score in tranposition table: {entry.score}")
+      Globals.n_transpositions_evaluated += 1
+      # print(f"found upper bound score in tranposition table: {entry.score}")
       return entry
     elif entry.eval_type is EvalType.LOWER_BOUND and entry.score >= beta:
-      print(f"found lower bound score in tranposition table: {entry.score}")
+      Globals.n_transpositions_evaluated += 1
+      # print(f"found lower bound score in tranposition table: {entry.score}")
       return entry
     else:
       return None
@@ -467,7 +476,11 @@ def calculate_pawn_attacks(pawn, attack_board, pawn_attack_board):
       pawn_attack_board[rank][file] = True
 
 
-def init_state(fen):
+def init_state(fen, white_player_type, black_player_type):
+  Globals.players = {
+    PlayerColor.WHITE: PlayerState(PlayerColor.WHITE, white_player_type),
+    PlayerColor.BLACK: PlayerState(PlayerColor.BLACK, black_player_type)
+  }
   Globals.board = clear_board()
   piece_placement, side_to_move, castling_ability, en_passant_target_square, halfmove_clock, fullmove_counter = fen.split(" ")
   for inverse_rank, rank_line in enumerate(piece_placement.split("/")):
@@ -491,10 +504,7 @@ def init_state(fen):
 
 
 class Globals:
-  players = {
-    PlayerColor.WHITE: PlayerState(PlayerColor.WHITE),
-    PlayerColor.BLACK: PlayerState(PlayerColor.BLACK)
-  }
+  players = None
   displayed_screen = None
   screen = None
   board = [[None for _ in range(8)] for _ in range(8)]
@@ -504,6 +514,7 @@ class Globals:
   active_player_color = PlayerColor.WHITE
   move_history = []
   n_moves_searched = 0
+  n_transpositions_evaluated = 0
   display_player_attacking = None
   display_pawn_attacks = None
 
@@ -706,6 +717,7 @@ def generate_legal_moves(piece, filter_checks=True, captures_only=False):
 
 
 def generate_and_mark_all_legal_moves(player, filter_checks=True, captures_only=False):
+  # todo: try going back to this approach; it's cleaner and attack maps currently aren't handling stuff like pins
   # player.reset_attack_maps()
   # keep move list in sorted order by score guess
   all_legal_moves = SortedList(key=lambda t: t[0])
@@ -719,6 +731,14 @@ def generate_and_mark_all_legal_moves(player, filter_checks=True, captures_only=
   return [move for score_guess, move in reversed(all_legal_moves)]
 
 
+def print_stats():
+  print("\nCURRENT STATE")
+  # print("-------------")
+  print(f"\tzobrist key: {Globals.zobrist_key}")
+  print(f"\tfen string: {generate_fen()}")
+  print(f"\ttranspositions evaluated: {Globals.n_transpositions_evaluated}")
+
+
 def make_move(move):
   move.apply()
   Globals.move_history.append(move)
@@ -727,8 +747,7 @@ def make_move(move):
   Globals.active_player().calculate_attack_boards()
   Globals.active_player_color = Globals.active_player_color.opponent
   Globals.active_player().refresh_legal_moves()
-  print(f"\nzobrist key after move: {Globals.zobrist_key}")
-  print(f"board fen: {generate_fen()}")
+  print_stats()
 
 
 def undo_last_move():
@@ -792,15 +811,11 @@ def search_moves(active_player_color, depth, alpha, beta):
   top_move = None
   eval_type = EvalType.UPPER_BOUND
   for move in moves:
-    # if move.rank == 5 and move.file == 0 and move.captured_piece:
-    #   print(f"evaluating {move} ...")
     Globals.n_moves_searched += 1
     move.apply()
     _, score = search_moves(active_player_color.opponent, depth - 1, -beta, -alpha)
     # negate score to reflect opponent's perspective
     score = -score
-    # if move.rank == 5 and move.file == 0 and move.captured_piece:
-    #   print(f"evaluated score {score} for {move}")
     move.unapply()
     if score >= beta:
       Globals.transposition_table.store(Globals.zobrist_key, depth, beta, EvalType.LOWER_BOUND, move)
@@ -842,6 +857,7 @@ def endgame():
         waiting = False
       if event.type == pg.QUIT:
         waiting = False
+      refresh_display()
 
 
 def generate_castling_ability_fen():
@@ -898,7 +914,7 @@ def toggle_pawn_attack_display(player_color):
     print(f"\nDISPLAYING {player_color.name.upper()} PAWN ATTACK MAP.")
 
 
-def handle_event(event, vs_human):
+def handle_event(event):
   if event.type == pg.QUIT:
     return False
   elif event.type == pg.MOUSEBUTTONDOWN:
@@ -924,13 +940,13 @@ def handle_event(event, vs_human):
       Globals.selected.update_screen_pos(event.pos)
   elif event.type == pg.KEYDOWN:
     if event.unicode.lower() == "u":
-      if vs_human:
-        undo_last_move()
-      else:
-        # disable undo while computer is thinking
-        if Globals.active_player_color is PlayerColor.WHITE:
-          # undo last black + white moves, so white is still active
+      # disable undo while computer is thinking
+      if Globals.active_player().player_type is PlayerType.HUMAN:
+        if Globals.active_player().opponent().player_type is PlayerType.ROBOT:
+          # undo last robot + human moves, so human is still active
           undo_last_move()
+          undo_last_move()
+        else:
           undo_last_move()
     elif event.unicode.lower() == "f":
       print(f"\nCURRENT BOARD FEN: {generate_fen()}")
@@ -945,34 +961,40 @@ def handle_event(event, vs_human):
   return True
 
 
-def main(fen, vs_human):
+def refresh_display():
+  draw_squares()
+  draw_pieces()
+  Globals.displayed_screen.blit(pg.transform.scale(Globals.screen, pg.display.get_window_size()), (0, 0))
+  pg.display.flip()
+
+
+def main(fen, white_player_type, black_player_type):
   pg.init()
   Globals.displayed_screen = set_mode((DISPLAY_WIDTH, DISPLAY_WIDTH), pg.RESIZABLE)
   Globals.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
-  init_state(fen)
+  init_state(fen, white_player_type, black_player_type)
   Globals.active_player().refresh_legal_moves()
   running = True
   while running:
     if not Globals.active_player().legal_moves:
       endgame()
       running = False
-    if Globals.active_player_color is PlayerColor.BLACK and not vs_human:
+    if Globals.active_player().player_type is PlayerType.ROBOT:
       move = best_move(Globals.active_player_color)
       make_move(move)
     else:
       for event in pg.event.get():
-        if not handle_event(event, vs_human):
+        if not handle_event(event):
           running = False
-    draw_squares()
-    draw_pieces()
-    Globals.displayed_screen.blit(pg.transform.scale(Globals.screen, pg.display.get_window_size()), (0, 0))
-    pg.display.flip()
+    refresh_display()
   pg.quit()
 
 
 if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("--fen", default=START_FEN)
-  parser.add_argument("--vs-human", action="store_true", default=False)
+  parser.add_argument("--white-player", type=PlayerType, default=PlayerType.HUMAN)
+  parser.add_argument("--black-player", type=PlayerType, default=PlayerType.ROBOT)
+  # parser.add_argument("--vs-human", action="store_true", default=False)
   args = parser.parse_args()
-  main(args.fen, args.vs_human)
+  main(args.fen, args.white_player, args.black_player)
