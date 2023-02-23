@@ -1,6 +1,7 @@
 import math
 import os
 import random
+import re
 import time
 from argparse import ArgumentParser
 from collections import defaultdict
@@ -128,11 +129,11 @@ class MoveType(Enum):
 
 
 class PieceType(Enum):
-  PAWN = 'p', 1
-  KNIGHT = 'n', 3
-  BISHOP = 'b', 3
-  ROOK = 'r', 5
-  QUEEN = 'q', 9
+  PAWN = 'p', 100
+  KNIGHT = 'n', 300
+  BISHOP = 'b', 320
+  ROOK = 'r', 500
+  QUEEN = 'q', 900
   KING = 'k', 0
 
   def __new__(cls, value, score):
@@ -476,7 +477,7 @@ def calculate_pawn_attacks(pawn, attack_board, pawn_attack_board):
       pawn_attack_board[rank][file] = True
 
 
-def init_state(fen, white_player_type, black_player_type):
+def init_game_state(fen, white_player_type, black_player_type):
   Globals.players = {
     PlayerColor.WHITE: PlayerState(PlayerColor.WHITE, white_player_type),
     PlayerColor.BLACK: PlayerState(PlayerColor.BLACK, black_player_type)
@@ -517,6 +518,7 @@ class Globals:
   n_transpositions_evaluated = 0
   display_player_attacking = None
   display_pawn_attacks = None
+  bonuses = dict()
 
   @classmethod
   def active_player(cls):
@@ -769,6 +771,8 @@ def evaluate_board(active_player_color):
     for pieces in player.pieces.values():
       for piece in pieces:
         score += perspective * piece.type.score
+        square_bonus = Globals.bonuses[piece.type][player.player_color][piece.rank][piece.file]
+        score += perspective * square_bonus
   return score
 
 
@@ -834,7 +838,7 @@ def best_move(active_player_color):
   print(f"\ncalculating {active_player_color} move ...")
   start_time = time.time()
   move, score = search_moves(active_player_color, SEARCH_DEPTH, -math.inf, math.inf)
-  print(f"evaluated score {score} by searching {Globals.n_moves_searched} moves in {time.time() - start_time} seconds for {move}")
+  print(f"evaluated score {score} by searching {Globals.n_moves_searched} moves in {time.time() - start_time} seconds:\n\t{move}")
   if move:
     return move
   else:
@@ -968,11 +972,39 @@ def refresh_display():
   pg.display.flip()
 
 
-def main(fen, white_player_type, black_player_type):
+def flip_board(board):
+  flipped_board = []
+  for rank in reversed(board):
+    flipped_board.append(rank)
+  return flipped_board
+
+
+def read_square_bonuses(square_bonuses_file):
+  current_piece = None
+  bonuses = dict()
+  with open(square_bonuses_file, "r") as f:
+    for line in f.readlines():
+      text = line.strip()
+      if not text:
+        continue
+      if text.isalpha():
+        current_piece = PieceType(text)
+        bonuses[current_piece] = []
+      else:
+        rank = [int(v) for v in re.split(r",\s*", text)]
+        bonuses[current_piece].append(rank)
+  for piece, bonus_board in bonuses.items():
+    Globals.bonuses[piece] = dict()
+    Globals.bonuses[piece][PlayerColor.BLACK] = bonuses[piece]
+    Globals.bonuses[piece][PlayerColor.WHITE] = flip_board(bonuses[piece])
+
+
+def main(square_bonuses_file, fen, white_player_type, black_player_type):
   pg.init()
   Globals.displayed_screen = set_mode((DISPLAY_WIDTH, DISPLAY_WIDTH), pg.RESIZABLE)
   Globals.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
-  init_state(fen, white_player_type, black_player_type)
+  read_square_bonuses(square_bonuses_file)
+  init_game_state(fen, white_player_type, black_player_type)
   Globals.active_player().refresh_legal_moves()
   running = True
   while running:
@@ -992,9 +1024,9 @@ def main(fen, white_player_type, black_player_type):
 
 if __name__ == "__main__":
   parser = ArgumentParser()
+  parser.add_argument("--square-bonuses-file", default="resources/piece_square_bonuses.txt")
   parser.add_argument("--fen", default=START_FEN)
   parser.add_argument("--white-player", type=PlayerType, default=PlayerType.HUMAN)
   parser.add_argument("--black-player", type=PlayerType, default=PlayerType.ROBOT)
-  # parser.add_argument("--vs-human", action="store_true", default=False)
   args = parser.parse_args()
-  main(args.fen, args.white_player, args.black_player)
+  main(args.square_bonuses_file, args.fen, args.white_player, args.black_player)
