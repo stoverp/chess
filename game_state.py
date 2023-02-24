@@ -5,8 +5,10 @@ from move_generator import MoveGenerator
 from player_state import PlayerState
 
 
+START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+
 class GameState:
-  def __init__(self, search_depth, fen, white_player_type, black_player_type, bonuses):
+  def __init__(self, white_player_type, black_player_type, search_depth=1, bonuses=None, fen=START_FEN):
     self.players = {
       PlayerColor.WHITE: PlayerState(PlayerColor.WHITE, white_player_type, self),
       PlayerColor.BLACK: PlayerState(PlayerColor.BLACK, black_player_type, self)
@@ -14,6 +16,8 @@ class GameState:
     self.board = Board()
     self.bonuses = bonuses
     self.active_player_color = PlayerColor.WHITE
+    if not fen:
+      fen = START_FEN
     self.init_from_fen(fen)
     # todo: handle zobrist key for custom board state
     for player in self.players.values():
@@ -61,8 +65,16 @@ class GameState:
   def active_player(self):
     return self.players[self.active_player_color]
 
+  def generate_legal_moves(self, piece, filter_checks=True, captures_only=False):
+    return self.move_generator.generate_legal_moves(piece, filter_checks, captures_only)
+
   def generate_all_legal_moves(self, filter_checks=True, captures_only=False):
     return self.move_generator.generate_and_mark_all_legal_moves(filter_checks, captures_only)
 
   def best_move(self):
     return self.ai.best_move()
+
+  def lookup_bonus(self, piece_type, player_color, rank, file):
+    if not self.bonuses:
+      return 0
+    return self.bonuses[piece_type][player_color][rank][file]

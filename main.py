@@ -1,5 +1,4 @@
 import os
-import os
 import re
 from argparse import ArgumentParser
 from collections import defaultdict
@@ -9,7 +8,6 @@ from pygame.display import set_mode
 from pygame.image import load
 from pygame.rect import Rect
 
-from ai import AI
 from core import Board
 from enums import PlayerType, PlayerColor, PieceType
 from game_state import GameState
@@ -29,8 +27,6 @@ BOARD_PIXEL_WIDTH = 560
 SQUARE_WIDTH = BOARD_PIXEL_WIDTH // 8
 IMAGE_WIDTH = 60
 IMAGE_CORNER_OFFSET = (SQUARE_WIDTH - IMAGE_WIDTH) // 2
-
-START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = "300, 100"
 
@@ -312,12 +308,12 @@ def read_square_bonuses(square_bonuses_file):
   return piece_bonuses_for_color
 
 
-def main(square_bonuses_file, search_depth, fen, white_player_type, black_player_type):
+def main(square_bonuses_file, search_depth, white_player_type, black_player_type, fen):
   pg.init()
   Globals.displayed_screen = set_mode((DISPLAY_WIDTH, DISPLAY_WIDTH), pg.RESIZABLE)
   Globals.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
   bonuses = read_square_bonuses(square_bonuses_file)
-  Globals.game_state = GameState(search_depth, fen, white_player_type, black_player_type, bonuses)
+  Globals.game_state = GameState(white_player_type, black_player_type, search_depth, bonuses, fen)
   running = True
   while running:
     if not Globals.game_state.active_player().legal_moves:
@@ -337,9 +333,9 @@ def main(square_bonuses_file, search_depth, fen, white_player_type, black_player
 if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("--square-bonuses-file", default="resources/piece_square_bonuses.txt")
-  parser.add_argument("--fen", default=START_FEN)
+  parser.add_argument("--fen")
   parser.add_argument("--search-depth", type=int, default=3)
   parser.add_argument("--white-player", type=PlayerType, default=PlayerType.HUMAN)
   parser.add_argument("--black-player", type=PlayerType, default=PlayerType.ROBOT)
   args = parser.parse_args()
-  main(args.square_bonuses_file, args.search_depth, args.fen, args.white_player, args.black_player)
+  main(args.square_bonuses_file, args.search_depth, args.white_player, args.black_player, args.fen)

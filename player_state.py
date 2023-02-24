@@ -30,10 +30,13 @@ class PlayerState:
     return None
 
   def find(self, piece_type):
-    piece_set = self.pieces[piece_type]
+    piece_set = self.find_all(piece_type)
     if not piece_set:
       return None
     return next(iter(piece_set))
+
+  def find_all(self, piece_type):
+    return self.pieces[piece_type]
 
   def opponent(self):
     return self.game_state.players[self.player_color.opponent]

@@ -44,3 +44,10 @@ class PieceType(Enum):
     obj._value_ = value
     obj.score = score
     return obj
+
+  @property
+  def san_format(self):
+    return self.value.upper()
+
+
+piece_types_by_san_format = dict((pt.san_format, pt) for pt in PieceType)

@@ -18,7 +18,7 @@ class AI:
       for pieces in player.pieces.values():
         for piece in pieces:
           score += perspective * piece.type.score
-          square_bonus = self.game_state.bonuses[piece.type][player.player_color][piece.rank][piece.file]
+          square_bonus = self.game_state.lookup_bonus(piece.type, player.player_color, piece.rank, piece.file)
           score += perspective * square_bonus
     return score
 
