@@ -98,7 +98,7 @@ class Move:
 
   def guess_score(self):
     self.score_guess = 0
-    if entry := self.game_state.transposition_table.from_key(self.game_state.board.zobrist_key):
+    if entry := self.game_state.ai.transposition_table.from_key(self.game_state.board.zobrist_key):
       if self == entry.move:
         self.score_guess += 10000
     if self.captured_piece:

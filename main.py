@@ -1,7 +1,6 @@
-import math
+import os
 import os
 import re
-import time
 from argparse import ArgumentParser
 from collections import defaultdict
 
@@ -10,13 +9,11 @@ from pygame.display import set_mode
 from pygame.image import load
 from pygame.rect import Rect
 
+from ai import AI
 from core import Board
 from enums import PlayerType, PlayerColor, PieceType
 from game_state import GameState
 from move import Move
-from transpositions import EvalType
-
-SEARCH_DEPTH = 3
 
 LIGHT_SQUARES = 0
 DARK_SQUARES = 1
@@ -75,7 +72,6 @@ def display_to_screen(display_pos):
 # todo: consider replacing by passing around local state, after modularization
 class Globals:
   game_state = None
-
   # todo: break out display stuff into components
   displayed_screen = None
   screen = None
@@ -136,7 +132,7 @@ def print_stats():
   print("\nCURRENT STATE")
   print(f"\tzobrist key: {Globals.game_state.board.zobrist_key}")
   print(f"\tfen string: {generate_fen()}")
-  print(f"\ttranspositions evaluated: {Globals.game_state.transposition_table.n_transpositions_evaluated}")
+  print(f"\ttranspositions evaluated: {Globals.game_state.ai.transposition_table.n_transpositions_evaluated}")
 
 
 def make_move(move):
@@ -160,87 +156,6 @@ def undo_last_move():
     Globals.game_state.active_player_color = Globals.game_state.active_player_color.opponent
     Globals.game_state.active_player().refresh_legal_moves()
     print(f"zobrist key after undo move: {Globals.game_state.zobrist_key}")
-
-
-def evaluate_board(active_player_color):
-  score = 0
-  for player in Globals.game_state.players.values():
-    perspective = 1 if player.player_color == active_player_color else -1
-    for pieces in player.pieces.values():
-      for piece in pieces:
-        score += perspective * piece.type.score
-        square_bonus = Globals.game_state.bonuses[piece.type][player.player_color][piece.rank][piece.file]
-        score += perspective * square_bonus
-  return score
-
-
-def quiesce(active_player_color, alpha, beta):
-  score = evaluate_board(active_player_color)
-  if score >= beta:
-    return None, beta
-  alpha = max(alpha, score)
-  moves = Globals.game_state.generate_all_legal_moves(filter_checks=True, captures_only=True)
-  top_move = None
-  for move in moves:
-    Globals.game_state.n_moves_searched += 1
-    move.apply()
-    _, score = quiesce(active_player_color.opponent, -beta, -alpha)
-    # negate score to reflect opponent's perspective
-    score = -score
-    move.unapply()
-    if score >= beta:
-      # beta limit tells us opponent can prevent this scenario
-      return None, beta
-    if score > alpha:
-      top_move = move
-      alpha = score
-  return top_move, alpha
-
-
-def search_moves(active_player_color, depth, alpha, beta):
-  if entry := Globals.game_state.transposition_table.lookup(Globals.game_state.board.zobrist_key, depth, alpha, beta):
-    return entry.move, entry.score
-  if depth == 0:
-    return quiesce(active_player_color, alpha, beta)
-  moves = Globals.game_state.generate_all_legal_moves(filter_checks=True)
-  if not moves:
-    if Globals.game_state.active_player().in_check():
-      return None, -math.inf
-    else:
-      return None, 0
-  top_move = None
-  eval_type = EvalType.UPPER_BOUND
-  for move in moves:
-    Globals.game_state.n_moves_searched += 1
-    move.apply()
-    _, score = search_moves(active_player_color.opponent, depth - 1, -beta, -alpha)
-    # negate score to reflect opponent's perspective
-    score = -score
-    move.unapply()
-    if score >= beta:
-      Globals.game_state.transposition_table.store(Globals.game_state.board.zobrist_key, depth, beta, EvalType.LOWER_BOUND, move)
-      # beta limit tells us opponent can prevent this scenario
-      return None, beta
-    if score > alpha:
-      eval_type = EvalType.EXACT
-      top_move = move
-      alpha = score
-  Globals.game_state.transposition_table.store(Globals.game_state.board.zobrist_key, depth, alpha, eval_type, top_move)
-  return top_move, alpha
-
-
-def best_move(active_player_color):
-  Globals.n_moves_searched = 0
-  print(f"\ncalculating {active_player_color} move ...")
-  start_time = time.time()
-  move, score = search_moves(active_player_color, SEARCH_DEPTH, -math.inf, math.inf)
-  print(f"evaluated score {score} by searching {Globals.n_moves_searched} moves in {time.time() - start_time} seconds:\n\t{move}")
-  if move:
-    return move
-  else:
-    move = Globals.game_state.active_player().legal_moves[0]
-    print(f"{active_player_color} has no moves that avoid checkmate! just make first legal move: {move}")
-    return move
 
 
 def endgame():
@@ -397,20 +312,19 @@ def read_square_bonuses(square_bonuses_file):
   return piece_bonuses_for_color
 
 
-def main(square_bonuses_file, fen, white_player_type, black_player_type):
+def main(square_bonuses_file, search_depth, fen, white_player_type, black_player_type):
   pg.init()
   Globals.displayed_screen = set_mode((DISPLAY_WIDTH, DISPLAY_WIDTH), pg.RESIZABLE)
   Globals.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
   bonuses = read_square_bonuses(square_bonuses_file)
-  Globals.game_state = GameState(fen, white_player_type, black_player_type, bonuses)
-  Globals.game_state.active_player().refresh_legal_moves()
+  Globals.game_state = GameState(search_depth, fen, white_player_type, black_player_type, bonuses)
   running = True
   while running:
     if not Globals.game_state.active_player().legal_moves:
       endgame()
       running = False
     if Globals.game_state.active_player().player_type is PlayerType.ROBOT:
-      move = best_move(Globals.game_state.active_player_color)
+      move = Globals.game_state.best_move()
       make_move(move)
     else:
       for event in pg.event.get():
@@ -424,7 +338,8 @@ if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("--square-bonuses-file", default="resources/piece_square_bonuses.txt")
   parser.add_argument("--fen", default=START_FEN)
+  parser.add_argument("--search-depth", type=int, default=3)
   parser.add_argument("--white-player", type=PlayerType, default=PlayerType.HUMAN)
   parser.add_argument("--black-player", type=PlayerType, default=PlayerType.ROBOT)
   args = parser.parse_args()
-  main(args.square_bonuses_file, args.fen, args.white_player, args.black_player)
+  main(args.square_bonuses_file, args.search_depth, args.fen, args.white_player, args.black_player)

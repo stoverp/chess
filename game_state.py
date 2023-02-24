@@ -1,12 +1,12 @@
+from ai import AI
 from core import Board, Piece
 from enums import PlayerColor, PieceType
 from move_generator import MoveGenerator
 from player_state import PlayerState
-from transpositions import TranspositionTable
 
 
 class GameState:
-  def __init__(self, fen, white_player_type, black_player_type, bonuses):
+  def __init__(self, search_depth, fen, white_player_type, black_player_type, bonuses):
     self.players = {
       PlayerColor.WHITE: PlayerState(PlayerColor.WHITE, white_player_type, self),
       PlayerColor.BLACK: PlayerState(PlayerColor.BLACK, black_player_type, self)
@@ -18,12 +18,10 @@ class GameState:
     # todo: handle zobrist key for custom board state
     for player in self.players.values():
       player.refresh_attack_board()
-    self.move_generator = MoveGenerator(self)
     self.move_history = []
-
-    # todo: break out AI stuff into components
-    self.transposition_table = TranspositionTable()
-    self.n_moves_searched = 0
+    self.move_generator = MoveGenerator(self)
+    self.ai = AI(search_depth, self)
+    self.active_player().refresh_legal_moves()
 
   def init_from_fen(self, fen):
     piece_placement, side_to_move, castling_ability, en_passant_target_square, halfmove_clock, fullmove_counter = \
@@ -65,3 +63,6 @@ class GameState:
 
   def generate_all_legal_moves(self, filter_checks=True, captures_only=False):
     return self.move_generator.generate_and_mark_all_legal_moves(filter_checks, captures_only)
+
+  def best_move(self):
+    return self.ai.best_move()
