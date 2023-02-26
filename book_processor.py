@@ -1,11 +1,14 @@
+import json
+import os
 import re
 from argparse import ArgumentParser
+from collections import defaultdict
 
 import pygame as pg
 
 from display import BoardDisplay
 from engine import Engine
-from enums import PlayerType, piece_types_by_san_format, PieceType
+from enums import PlayerType, piece_types_by_san_format, PieceType, PlayerColor
 from game_state import GameState
 
 
@@ -60,14 +63,30 @@ def wait_for_key(board_display):
       if event.type == pg.KEYDOWN:
         waiting = False
       if event.type == pg.QUIT:
-        waiting = False
+        return False
       board_display.refresh()
+  return True
 
 
-def main(file):
+def make_move(player_color, move_string, game_state, engine, board_display, openings):
+  move = parse_move(move_string, game_state)
+  print(f"found {player_color} move for string {move_string}:\n\t{move}")
+  openings[game_state.board.zobrist_key].append(move)
+  engine.make_move(move)
+  # return wait_for_key(board_display)
+  return True
+
+
+def start_game():
   game_state = GameState(PlayerType.HUMAN, PlayerType.HUMAN)
   board_display = BoardDisplay(game_state)
   engine = Engine(game_state, board_display)
+  return game_state, board_display, engine
+
+
+def process_games(file):
+
+  openings = defaultdict(list)
   n_games = 0
   with open(file, "r") as f:
     for line in f.readlines():
@@ -76,23 +95,34 @@ def main(file):
         continue
       elif text.startswith("1."):
         n_games += 1
-        if n_games > 1:
-          break
+        game_state, board_display, engine = start_game()
+        if n_games > 3:
+          return openings
       move_tuples = re.findall(r"(\d+)\.([\w\-+]+) ([\w\-+]+)", text)
       for move_number, white_move_string, black_move_string in move_tuples:
-        print(f"MOVE #{move_number}")
-        white_move = parse_move(white_move_string, game_state)
-        print(f"found white move for string {white_move_string}: {white_move}")
-        engine.make_move(white_move)
-        wait_for_key(board_display)
-        black_move = parse_move(black_move_string, game_state)
-        print(f"found black move for string {black_move_string}: {black_move}")
-        engine.make_move(black_move)
-        wait_for_key(board_display)
+        print(f"\nMOVE #{move_number}")
+        if not make_move(PlayerColor.WHITE, white_move_string, game_state, engine, board_display, openings):
+          pg.quit()
+          return openings
+        if not make_move(PlayerColor.BLACK, black_move_string, game_state, engine, board_display, openings):
+          pg.quit()
+          return openings
+  return openings
+
+
+def to_json(openings):
+  result = dict()
+  for key, moves in openings.items():
+    result[key] = [move.to_json() for move in moves]
+  return result
 
 
 if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("file")
   args = parser.parse_args()
-  main(args.file)
+  openings = process_games(args.file)
+  json_openings = to_json(openings)
+  output_file = os.path.splitext(args.file)[0] + ".json"
+  with open(output_file, "w") as f:
+    json.dump(json_openings, f, default=lambda x: x.value, indent=2)

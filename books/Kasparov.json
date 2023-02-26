@@ -1,0 +1,4609 @@
+{
+  "16286323168420447134": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": 0
+    },
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": 0
+    },
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "6438727095750274108": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 0
+    },
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    },
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "12496809940542418718": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": 0
+    },
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 2,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "2116151597463850487": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 5,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "9609926721026148910": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 4,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "2169440359459504918": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "6488126955507746352": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": -100
+    }
+  ],
+  "4333298197758546569": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "5746770054489086531": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "8501997616878482717": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 900
+    }
+  ],
+  "3735172341712072792": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": 900
+    }
+  ],
+  "5800299583858579912": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 5,
+        "file": 4
+      },
+      "rank": 5,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 5,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "2059889976780190488": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 0
+      },
+      "rank": 2,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "17829307171862812079": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 5,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": -100
+    }
+  ],
+  "1115822196459154101": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "9346259006756955563": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 4,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "5764902067959422036": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 1,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "18208176997708031294": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 5,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "10076318964191972369": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "1818225537292013579": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 2700
+    }
+  ],
+  "440859365340059510": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 2680
+    }
+  ],
+  "16319892723601958008": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 4,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": 900
+    }
+  ],
+  "4861728628064527905": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 4,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": 900
+    }
+  ],
+  "7683144809336863870": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 6,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "12524411673480895543": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 0,
+        "file": 7
+      },
+      "rank": 0,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": {
+        "piece": {
+          "player_color": "white",
+          "type": "r",
+          "rank": 2,
+          "file": 2
+        },
+        "rank": 0,
+        "file": 5,
+        "promote_type": null,
+        "old_rank": 0,
+        "old_file": 7,
+        "move_type": 4,
+        "castling_rook_move": null,
+        "captured_piece": {
+          "player_color": "white",
+          "type": "r",
+          "rank": 2,
+          "file": 2
+        },
+        "score_guess": 0
+      },
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 0,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "16850053924590479140": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 5
+      },
+      "rank": 6,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "13957550193626376588": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 1,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "8072460904686084851": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 6,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "7930220340392944458": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "10991495416846422044": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "rank": 7,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": {
+        "piece": {
+          "player_color": "black",
+          "type": "r",
+          "rank": 2,
+          "file": 2
+        },
+        "rank": 7,
+        "file": 3,
+        "promote_type": null,
+        "old_rank": 7,
+        "old_file": 0,
+        "move_type": 4,
+        "castling_rook_move": null,
+        "captured_piece": {
+          "player_color": "black",
+          "type": "r",
+          "rank": 2,
+          "file": 2
+        },
+        "score_guess": 0
+      },
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "14684836422758058350": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 0,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "11950725479591913839": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "rank": 7,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "4576590498151402793": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "16163507281606016007": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 7,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "14603906874295502805": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 2
+      },
+      "rank": 3,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "7840887829207146715": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 5
+      },
+      "rank": 5,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 5
+      },
+      "score_guess": -100
+    }
+  ],
+  "3626499127012565879": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "9504811978797557768": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 5,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "11379761920998582705": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "7345722731830027006": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 5
+      },
+      "rank": 4,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "16195476128973652615": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 0,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "9372438927877370857": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 5,
+        "file": 0
+      },
+      "rank": 5,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 5,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "1449413442363553480": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 6
+      },
+      "rank": 0,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 6
+      },
+      "score_guess": 0
+    }
+  ],
+  "14104941653537631967": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "rank": 4,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "17803676283564604484": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 1,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "5091131223324505915": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "12161689413260847813": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 2,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "6936350431892148046": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 2700
+    }
+  ],
+  "8996609893503327577": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 4500
+    }
+  ],
+  "356663323079313968": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 5
+      },
+      "rank": 3,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "14320584285748706984": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 0,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "1024905818510859043": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "rank": 3,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "12498405408038463680": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "7830269197885289040": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 5
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "14679579774302180910": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "15000858643955393139": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "rank": 6,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "15213013957646772838": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 0
+      },
+      "rank": 3,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "7907964980680688271": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 5
+      },
+      "rank": 2,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 5
+      },
+      "score_guess": -320
+    }
+  ],
+  "6846010592649006717": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 0
+      },
+      "rank": 4,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "17192528848565756495": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 7,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "720658355790391057": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 2
+      },
+      "rank": 3,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "3332757904347729844": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 4,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 2680
+    }
+  ],
+  "3621430899442410312": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 1,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 2
+      },
+      "score_guess": 3100
+    }
+  ],
+  "4347700524589232161": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 3,
+      "file": 7,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "3510096704732580287": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "rank": 2,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 6,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "score_guess": 3100
+    }
+  ],
+  "2455324604100735523": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "rank": 2,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 6,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "score_guess": 900
+    }
+  ],
+  "8126360472024324289": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 0,
+        "file": 7
+      },
+      "rank": 0,
+      "file": 7,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 0,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "8296001542604581334": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 2
+      },
+      "rank": 7,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 7,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "15124587396241988261": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "12913262885202684875": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 2
+      },
+      "rank": 6,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "8631479895034282565": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 4,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 2100
+    }
+  ],
+  "12098542498011397239": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 4,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 7,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "12243091759038995936": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 2
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 2
+      },
+      "score_guess": -100
+    }
+  ],
+  "9125376825566185050": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "rank": 7,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "9048122240597691983": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 2
+      },
+      "rank": 6,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "4958363577908403256": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 2
+      },
+      "rank": 6,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 6,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 2
+      },
+      "score_guess": 500
+    }
+  ],
+  "17121291311879637983": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 6
+      },
+      "rank": 0,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 6
+      },
+      "score_guess": 0
+    }
+  ],
+  "862086322832879659": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 4,
+      "file": 7,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "12131984530445412927": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 6
+      },
+      "rank": 7,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 6
+      },
+      "score_guess": 0
+    }
+  ],
+  "11480171020397348873": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 2
+      },
+      "rank": 7,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "1592377820373781432": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 5,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "4862134561525452104": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "rank": 6,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 6,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "1563323661539264236": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "8330120277632668245": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": -100
+    }
+  ],
+  "10047883786961405931": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 1,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "7082166280256836200": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 5,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "18035699829602801073": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "rank": 4,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "6993415794364963977": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "16305291242689205206": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 2700
+    }
+  ],
+  "8537501579826137911": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 2900
+    }
+  ],
+  "16180479479251301060": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "7792027804881892858": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 5,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "3163885950923145770": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 1,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "4207794982891112629": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 5,
+        "file": 2
+      },
+      "rank": 6,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 5,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "10260219926649388911": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 2,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "8444667557245228113": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": -100
+    }
+  ],
+  "9297151632995735411": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 900
+    }
+  ],
+  "3940687409239629653": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 0,
+        "file": 3
+      },
+      "rank": 0,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 0,
+        "file": 3
+      },
+      "score_guess": 8100
+    }
+  ],
+  "10189592644536445235": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 3
+      },
+      "rank": 0,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 0,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 3
+      },
+      "score_guess": 8500
+    }
+  ],
+  "15649855749362998897": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 5,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 680
+    }
+  ],
+  "15800375315881881782": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 4,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 2880
+    }
+  ],
+  "2809253254411974866": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 1,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 3100
+    }
+  ],
+  "5127773765018424445": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "6907005851872825858": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 6,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "11665276145743701670": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "rank": 0,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": {
+        "piece": {
+          "player_color": "white",
+          "type": "r",
+          "rank": 4,
+          "file": 3
+        },
+        "rank": 0,
+        "file": 5,
+        "promote_type": null,
+        "old_rank": 0,
+        "old_file": 7,
+        "move_type": 4,
+        "castling_rook_move": null,
+        "captured_piece": {
+          "player_color": "white",
+          "type": "r",
+          "rank": 4,
+          "file": 3
+        },
+        "score_guess": 0
+      },
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "16572030650032709045": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 5,
+        "file": 2
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 5,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "16036066946657468601": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 2
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 1,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 2
+      },
+      "score_guess": 2880
+    }
+  ],
+  "12472130919448696769": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 1,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 2900
+    }
+  ],
+  "13216908395942004294": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 6,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 700
+    }
+  ],
+  "11103350474456222677": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 700
+    }
+  ],
+  "14458719830238589885": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 4,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 4,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 700
+    }
+  ],
+  "3832692606060544059": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 7,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "10503080144268359155": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 1
+      },
+      "rank": 3,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "4015378682452726525": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 3
+      },
+      "rank": 7,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 7,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "10201844562757872807": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "rank": 2,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 2,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "10886036151126473254": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 1
+      },
+      "rank": 4,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 1
+      },
+      "score_guess": -100
+    }
+  ],
+  "3928029798573196732": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "9705442528466462549": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 1
+      },
+      "rank": 3,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 0,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 1
+      },
+      "score_guess": 900
+    }
+  ],
+  "15685452747275145968": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "rank": 3,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "score_guess": 900
+    }
+  ],
+  "11468816179746677685": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "1108969348976968980": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 3
+      },
+      "rank": 7,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 7,
+        "file": 3
+      },
+      "score_guess": 4500
+    }
+  ],
+  "1427035366571182041": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 7,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 4500
+    }
+  ],
+  "13026644354995576692": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "rank": 4,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "16269422083019202007": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "14727050162909814205": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 0,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "17171278957632206586": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "2654570283549505401": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "rank": 5,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "15784412984838739449": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 7,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "2229037299867849826": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "rank": 6,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "9337247237308027251": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 6,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "7722033271633155636": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "11958854996590039050": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 7,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "14807943986650470653": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "rank": 1,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "17766030389391077016": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "2032005508583139807": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "9659307177536010218": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 6,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "2045607395144275892": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "r",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 2500
+    }
+  ],
+  "16436313448248674102": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 4,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 4900
+    }
+  ],
+  "2657838514812373150": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 5,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 0
+    }
+  ],
+  "1693672844866715246": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 6,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 1000
+    }
+  ],
+  "13055110065464868287": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 7,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 0,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "score_guess": 4700
+    }
+  ],
+  "12183442941200873869": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 7,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 1,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 3000
+    }
+  ],
+  "11629042086258025213": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "rank": 2,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "268124381026909935": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 6,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "775282591362204738": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "1677182653570283172": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "9315853924675863306": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 3,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "10834205746105145562": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 5,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "5033791559889132443": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "score_guess": 1000
+    }
+  ],
+  "17926143998509890520": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 4,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "15358240889164304776": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "rank": 5,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "12734375899444148159": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "rank": 3,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 0,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 3,
+        "file": 0
+      },
+      "score_guess": 1000
+    }
+  ],
+  "16600377362703844068": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "rank": 6,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 6,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "8223574624037208979": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 5
+      },
+      "rank": 4,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "10903249117186031680": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 5,
+        "file": 2
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 5,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "16479313597745760394": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": -100
+    }
+  ],
+  "9411057229688642611": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 900
+    }
+  ],
+  "14173421820550076790": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 5,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 700
+    }
+  ],
+  "5895367930395206248": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 5,
+        "file": 5
+      },
+      "rank": 5,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 5,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "14543187664201754033": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "6574741883593095595": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "1717791552242226043": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 4,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "9910283209279161515": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 3,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 0
+    }
+  ],
+  "2184348563856163066": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 2,
+        "file": 0
+      },
+      "rank": 2,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 2,
+        "file": 0
+      },
+      "score_guess": 0
+    }
+  ],
+  "17701400669864584781": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 1,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 2
+      },
+      "score_guess": 2680
+    }
+  ],
+  "683997645912663315": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 2,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 1,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 2900
+    }
+  ],
+  "10786293245931737673": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": -100
+    }
+  ],
+  "7879986391837034487": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 4,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 900
+    }
+  ],
+  "17025219515419357779": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 4,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 900
+    }
+  ],
+  "11459832138328645438": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 2,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "1279347683417755680": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 7,
+        "file": 6
+      },
+      "rank": 7,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": {
+        "piece": {
+          "player_color": "black",
+          "type": "r",
+          "rank": 7,
+          "file": 4
+        },
+        "rank": 7,
+        "file": 5,
+        "promote_type": null,
+        "old_rank": 7,
+        "old_file": 7,
+        "move_type": 4,
+        "castling_rook_move": null,
+        "captured_piece": {
+          "player_color": "black",
+          "type": "r",
+          "rank": 7,
+          "file": 4
+        },
+        "score_guess": 0
+      },
+      "captured_piece": {
+        "player_color": "black",
+        "type": "k",
+        "rank": 7,
+        "file": 6
+      },
+      "score_guess": 0
+    }
+  ],
+  "5849442321417293949": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 0,
+        "file": 6
+      },
+      "rank": 0,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": {
+        "piece": {
+          "player_color": "white",
+          "type": "r",
+          "rank": 0,
+          "file": 5
+        },
+        "rank": 0,
+        "file": 5,
+        "promote_type": null,
+        "old_rank": 0,
+        "old_file": 7,
+        "move_type": 4,
+        "castling_rook_move": null,
+        "captured_piece": {
+          "player_color": "white",
+          "type": "r",
+          "rank": 0,
+          "file": 5
+        },
+        "score_guess": 0
+      },
+      "captured_piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 0,
+        "file": 6
+      },
+      "score_guess": 0
+    }
+  ],
+  "1528312397549742958": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 3
+      },
+      "score_guess": 0
+    }
+  ],
+  "4412771798561332050": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "9741542010768476251": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 4,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ],
+  "2920967278284716512": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 5
+      },
+      "rank": 4,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 5
+      },
+      "score_guess": 0
+    }
+  ],
+  "5064930522250698886": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 5,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 2680
+    }
+  ],
+  "13799862262195139345": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 4
+      },
+      "score_guess": 2880
+    }
+  ],
+  "1564447404739236837": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 5,
+        "file": 7
+      },
+      "rank": 5,
+      "file": 7,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 7,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 5,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "13754180703818110295": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 5
+      },
+      "rank": 5,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 6,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 5
+      },
+      "score_guess": 2680
+    }
+  ],
+  "8699485215419637065": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 5,
+        "file": 5
+      },
+      "rank": 5,
+      "file": 5,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "q",
+        "rank": 5,
+        "file": 5
+      },
+      "score_guess": 2300
+    }
+  ],
+  "10836454304530184651": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 4,
+      "file": 7,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 4,
+        "file": 7
+      },
+      "score_guess": 0
+    }
+  ],
+  "1876871296968992845": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 4
+      },
+      "rank": 7,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 5,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 4
+      },
+      "score_guess": 0
+    }
+  ]
+}

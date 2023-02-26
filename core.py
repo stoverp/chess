@@ -16,6 +16,14 @@ class Piece:
   def __repr__(self):
     return str(self)
 
+  def to_json(self):
+    return {
+      'player_color': self.player_color,
+      'type': self.type,
+      'rank': self.rank,
+      'file': self.file,
+    }
+
   def fen(self):
     abbr = self.type.value
     return abbr.upper() if self.player_color is PlayerColor.WHITE else abbr

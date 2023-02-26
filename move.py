@@ -26,6 +26,7 @@ class Move:
     self.old_file = piece.file
     self.move_type = self.get_type()
     self.castling_rook_move = None
+    self.score_guess = 0
     if self.move_type in MoveType.legal_types():
       self.captured_piece = game_state.board[rank][file]
       self.guess_score()
@@ -43,6 +44,20 @@ class Move:
 
   def __hash__(self):
     return hash(repr(self))
+
+  def to_json(self):
+    return {
+      'piece': self.piece.to_json(),
+      'rank': self.rank,
+      'file': self.file,
+      'promote_type': self.promote_type,
+      'old_rank': self.old_rank,
+      'old_file': self.old_file,
+      'move_type': self.move_type,
+      'castling_rook_move': self.castling_rook_move.to_json() if self.castling_rook_move else None,
+      'captured_piece': self.piece.to_json() if self.piece else None,
+      'score_guess': self.score_guess
+    }
 
   def get_type(self):
     if not Board.in_bounds(self.rank, self.file):

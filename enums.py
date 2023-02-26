@@ -1,14 +1,14 @@
 from enum import Enum
 
 
-class PlayerType(Enum):
+class PlayerType(str, Enum):
   HUMAN = 'human'
   ROBOT = 'robot'
 
 
-class PlayerColor(Enum):
-  WHITE = 1
-  BLACK = 2
+class PlayerColor(str, Enum):
+  WHITE = 'white'
+  BLACK = 'black'
 
   @property
   def abbr(self):

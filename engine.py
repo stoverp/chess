@@ -35,7 +35,7 @@ class Engine:
     self.game_state.active_player().refresh_attack_board()
     self.game_state.active_player_color = self.game_state.active_player_color.opponent
     self.game_state.active_player().refresh_legal_moves()
-    self.print_stats()
+    # self.print_stats()
 
   def undo_last_move(self):
     if self.game_state.move_history:
