@@ -54,6 +54,7 @@ def endgame(game_state, board_display):
         waiting = False
       board_display.refresh()
 
+
 def main(square_bonuses_file, search_depth, white_player_type, black_player_type, fen):
   bonuses = read_square_bonuses(square_bonuses_file)
   game_state = GameState(white_player_type, black_player_type, search_depth, bonuses, fen)
@@ -75,6 +76,7 @@ def main(square_bonuses_file, search_depth, white_player_type, black_player_type
   pg.quit()
 
 
+# todo: fix queen sac on main line
 if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("--square-bonuses-file", default="resources/piece_square_bonuses.txt")
