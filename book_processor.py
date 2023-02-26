@@ -16,7 +16,16 @@ def san_to_index(rank_string, file_string):
 
 
 def parse_move(move_string, game_state):
-  if match := re.match(rf"([{''.join(piece_types_by_san_format.keys())}]?)(\w?)(\d?)x?(\w)(\d)\+?", move_string):
+  # todo: handle en passant and promotion
+  if move_string.startswith('O-O'):
+    # castling! king-side is 'O-O', queen-side is 'O-O-O'
+    king = game_state.active_player().find(PieceType.KING)
+    rook = game_state.active_player().find_rook(king_side=move_string == 'O-O')
+    for move in game_state.generate_legal_moves(king):
+      if move.castling_rook_move and move.castling_rook_move.piece == rook:
+        return move
+    raise Exception(f"can't find valid move for move string: {move_string}")
+  elif match := re.match(rf"([{''.join(piece_types_by_san_format.keys())}]?)([a-h]?)(\d?)x?([a-h])(\d)\+?", move_string):
     piece_type = piece_types_by_san_format.get(match.group(1)) if match.group(1) else None
     from_rank, from_file = san_to_index(match.group(3), match.group(2))
     to_rank, to_file = san_to_index(match.group(5), match.group(4))
@@ -66,13 +75,10 @@ def main(file):
       if not text or text.startswith("["):
         continue
       elif text.startswith("1."):
-        # print()
         n_games += 1
         if n_games > 1:
           break
       move_tuples = re.findall(r"(\d+)\.([\w\-+]+) ([\w\-+]+)", text)
-      # print(text)
-      # print(move_tuples)
       for move_number, white_move_string, black_move_string in move_tuples:
         print(f"MOVE #{move_number}")
         white_move = parse_move(white_move_string, game_state)
