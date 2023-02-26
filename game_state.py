@@ -16,6 +16,7 @@ class GameState:
     self.board = Board()
     self.bonuses = bonuses
     self.active_player_color = PlayerColor.WHITE
+    self.selected_piece = None
     if not fen:
       fen = START_FEN
     self.init_from_fen(fen)
@@ -58,6 +59,35 @@ class GameState:
         self.players[piece_color].find(PieceType.KING).n_times_moved = 0
         # find and mark appropriate rook ("k"-side or "q"-side)
         self.players[piece_color].find_rook(king_side=piece_type is PieceType.KING).n_times_moved = 0
+
+  def generate_castling_ability_fen(self):
+    castling_ability = ""
+    for color in PlayerColor:
+      if self.players[color].find(PieceType.KING).n_times_moved == 0:
+        for char, king_side in [("k", True), ("q", False)]:
+          rook = self.players[color].find_rook(king_side)
+          if rook and rook.n_times_moved == 0:
+            castling_ability += char.upper() if color is PlayerColor.WHITE else char
+    return castling_ability or "-"
+
+  def generate_fen(self):
+    piece_placement_ranks = []
+    for rank in range(7, -1, -1):
+      n_empty_squares = 0
+      fen_line = []
+      for file in range(8):
+        piece = self.board[rank][file]
+        if piece:
+          if n_empty_squares > 0:
+            fen_line.append(str(n_empty_squares))
+            n_empty_squares = 0
+          fen_line.append(piece.fen())
+        else:
+          n_empty_squares += 1
+      if n_empty_squares > 0:
+        fen_line.append(str(n_empty_squares))
+      piece_placement_ranks.append("".join(fen_line))
+    return f"{'/'.join(piece_placement_ranks)} {self.active_player_color.abbr} {self.generate_castling_ability_fen()} - - -"
 
   def parse_piece_char(self, piece_char):
     return PieceType(piece_char.lower()), PlayerColor.WHITE if piece_char.isupper() else PlayerColor.BLACK
