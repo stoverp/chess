@@ -27,7 +27,7 @@ class AI:
     if score >= beta:
       return None, beta
     alpha = max(alpha, score)
-    moves = self.game_state.generate_all_legal_moves(filter_checks=True, captures_only=True)
+    moves = self.game_state.generate_all_legal_moves(active_player_color, filter_checks=True, captures_only=True)
     top_move = None
     for move in moves:
       self.n_moves_searched += 1
@@ -49,7 +49,7 @@ class AI:
       return entry.move, entry.score
     if depth == 0:
       return self.quiesce(active_player_color, alpha, beta)
-    moves = self.game_state.generate_all_legal_moves(filter_checks=True)
+    moves = self.game_state.generate_all_legal_moves(active_player_color, filter_checks=True)
     if not moves:
       if self.game_state.active_player().in_check():
         return None, -math.inf
@@ -73,8 +73,7 @@ class AI:
         eval_type = EvalType.EXACT
         top_move = move
         alpha = score
-    self.transposition_table.store(self.game_state.board.zobrist_key, depth, alpha, eval_type,
-      top_move)
+    self.transposition_table.store(self.game_state.board.zobrist_key, depth, alpha, eval_type, top_move)
     return top_move, alpha
 
   def best_move(self):

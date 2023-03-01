@@ -151,10 +151,10 @@ class MoveGenerator:
     else:
       return moves
 
-  def generate_and_mark_all_legal_moves(self, filter_checks=True, captures_only=False):
+  def generate_and_mark_all_legal_moves(self, active_player_color, filter_checks=True, captures_only=False):
     # todo: try going back to this approach; it's cleaner and attack maps currently aren't handling stuff like pins
     # player.reset_attack_maps()
-    player = self.game_state.active_player()
+    player = self.game_state.players[active_player_color]
     # keep move list in sorted order by score guess
     all_legal_moves = SortedList(key=lambda t: t[0])
     for pieces in player.pieces.values():

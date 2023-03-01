@@ -98,8 +98,8 @@ class GameState:
   def generate_legal_moves(self, piece, filter_checks=True, captures_only=False):
     return self.move_generator.generate_legal_moves(piece, filter_checks, captures_only)
 
-  def generate_all_legal_moves(self, filter_checks=True, captures_only=False):
-    return self.move_generator.generate_and_mark_all_legal_moves(filter_checks, captures_only)
+  def generate_all_legal_moves(self, active_player_color, filter_checks=True, captures_only=False):
+    return self.move_generator.generate_and_mark_all_legal_moves(active_player_color, filter_checks, captures_only)
 
   def best_move(self):
     return self.ai.best_move()

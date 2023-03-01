@@ -46,7 +46,7 @@ class Engine:
       self.game_state.active_player().refresh_attack_board()
       self.game_state.active_player_color = self.game_state.active_player_color.opponent
       self.game_state.active_player().refresh_legal_moves()
-      print(f"zobrist key after undo move: {self.game_state.zobrist_key}")
+      print(f"zobrist key after undo move: {self.game_state.board.zobrist_key}")
 
   def print_stats(self):
     print("\nCURRENT STATE")

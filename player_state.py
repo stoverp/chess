@@ -42,7 +42,7 @@ class PlayerState:
     return self.game_state.players[self.player_color.opponent]
 
   def refresh_legal_moves(self, filter_checks=True):
-    self.legal_moves = self.game_state.generate_all_legal_moves(filter_checks)
+    self.legal_moves = self.game_state.generate_all_legal_moves(self.player_color, filter_checks)
 
   def refresh_attack_board(self):
     self.attack_board.refresh()
