@@ -4,7 +4,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
+        "rank": 1,
         "file": 4
       },
       "rank": 3,
@@ -14,19 +14,15 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "e4"
     },
     {
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
+        "rank": 1,
         "file": 4
       },
       "rank": 3,
@@ -36,20 +32,16 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "e4"
     },
     {
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
-        "file": 3
+        "rank": 1,
+        "file": 4
       },
       "rank": 3,
       "file": 4,
@@ -58,13 +50,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "e4"
     }
   ],
   "6438727095750274108": [
@@ -72,8 +60,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 3
+        "rank": 6,
+        "file": 2
       },
       "rank": 4,
       "file": 2,
@@ -82,20 +70,16 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "c5"
     },
     {
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
-        "file": 3
+        "rank": 6,
+        "file": 4
       },
       "rank": 5,
       "file": 4,
@@ -104,20 +88,16 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "e6"
     },
     {
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 3
+        "rank": 6,
+        "file": 2
       },
       "rank": 4,
       "file": 2,
@@ -126,13 +106,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "c5"
     }
   ],
   "12496809940542418718": [
@@ -140,8 +116,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
-        "file": 4
+        "rank": 1,
+        "file": 2
       },
       "rank": 2,
       "file": 2,
@@ -150,20 +126,16 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "c3"
     },
     {
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 3,
-        "file": 4
+        "rank": 0,
+        "file": 6
       },
       "rank": 2,
       "file": 5,
@@ -172,13 +144,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nf3"
     }
   ],
   "2116151597463850487": [
@@ -186,8 +154,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 2,
-        "file": 2
+        "rank": 7,
+        "file": 6
       },
       "rank": 5,
       "file": 5,
@@ -196,13 +164,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 2,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nf6"
     }
   ],
   "9609926721026148910": [
@@ -210,7 +174,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
+        "rank": 3,
         "file": 4
       },
       "rank": 4,
@@ -220,13 +184,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "e5"
     }
   ],
   "2169440359459504918": [
@@ -234,8 +194,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 2,
-        "file": 2
+        "rank": 5,
+        "file": 5
       },
       "rank": 4,
       "file": 3,
@@ -244,13 +204,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 2,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd5"
     }
   ],
   "6488126955507746352": [
@@ -258,7 +214,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 3,
+        "rank": 1,
         "file": 3
       },
       "rank": 3,
@@ -268,13 +224,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 3,
-        "file": 3
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "d4"
     }
   ],
   "4333298197758546569": [
@@ -282,8 +234,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 3,
-        "file": 3
+        "rank": 7,
+        "file": 1
       },
       "rank": 5,
       "file": 2,
@@ -292,13 +244,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 3,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nc6"
     }
   ],
   "5746770054489086531": [
@@ -306,8 +254,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 4,
-        "file": 2
+        "rank": 0,
+        "file": 6
       },
       "rank": 2,
       "file": 5,
@@ -316,13 +264,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nf3"
     }
   ],
   "8501997616878482717": [
@@ -330,8 +274,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 3
+        "rank": 4,
+        "file": 2
       },
       "rank": 3,
       "file": 3,
@@ -341,12 +285,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "p",
         "rank": 3,
         "file": 3
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "cxd4"
     }
   ],
   "3735172341712072792": [
@@ -354,8 +299,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
-        "file": 4
+        "rank": 2,
+        "file": 2
       },
       "rank": 3,
       "file": 3,
@@ -365,12 +310,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "p",
-        "rank": 4,
-        "file": 4
+        "rank": 3,
+        "file": 3
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "cxd4"
     }
   ],
   "5800299583858579912": [
@@ -378,7 +324,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 5,
+        "rank": 6,
         "file": 4
       },
       "rank": 5,
@@ -388,13 +334,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 5,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "e6"
     }
   ],
   "2059889976780190488": [
@@ -402,7 +344,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
+        "rank": 1,
         "file": 0
       },
       "rank": 2,
@@ -412,13 +354,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "a3"
     }
   ],
   "17829307171862812079": [
@@ -426,8 +364,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
-        "file": 4
+        "rank": 6,
+        "file": 3
       },
       "rank": 5,
       "file": 3,
@@ -436,13 +374,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 4,
-        "file": 4
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "d6"
     }
   ],
   "1115822196459154101": [
@@ -450,8 +384,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 3,
-        "file": 2
+        "rank": 0,
+        "file": 5
       },
       "rank": 2,
       "file": 3,
@@ -460,13 +394,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "b",
-        "rank": 3,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bd3"
     }
   ],
   "9346259006756955563": [
@@ -474,8 +404,8 @@
       "piece": {
         "player_color": "black",
         "type": "q",
-        "rank": 4,
-        "file": 7
+        "rank": 7,
+        "file": 3
       },
       "rank": 4,
       "file": 0,
@@ -484,13 +414,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qa5+"
     }
   ],
   "5764902067959422036": [
@@ -498,7 +424,7 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 2,
+        "rank": 0,
         "file": 2
       },
       "rank": 1,
@@ -508,13 +434,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "b",
-        "rank": 2,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bd2"
     }
   ],
   "18208176997708031294": [
@@ -523,7 +445,7 @@
         "player_color": "black",
         "type": "q",
         "rank": 4,
-        "file": 7
+        "file": 0
       },
       "rank": 5,
       "file": 1,
@@ -532,13 +454,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qb6"
     }
   ],
   "10076318964191972369": [
@@ -546,8 +464,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 2,
-        "file": 2
+        "rank": 0,
+        "file": 1
       },
       "rank": 2,
       "file": 2,
@@ -556,13 +474,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 2,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nc3"
     }
   ],
   "1818225537292013579": [
@@ -570,8 +484,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 2,
-        "file": 2
+        "rank": 4,
+        "file": 3
       },
       "rank": 2,
       "file": 2,
@@ -581,12 +495,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "n",
         "rank": 2,
         "file": 2
       },
-      "score_guess": 2700
+      "score_guess": 2700,
+      "move_string": "Nxc3"
     }
   ],
   "440859365340059510": [
@@ -594,8 +509,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 2,
-        "file": 2
+        "rank": 1,
+        "file": 3
       },
       "rank": 2,
       "file": 2,
@@ -605,12 +520,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "b",
+        "player_color": "black",
+        "type": "n",
         "rank": 2,
         "file": 2
       },
-      "score_guess": 2680
+      "score_guess": 2680,
+      "move_string": "Bxc3"
     }
   ],
   "16319892723601958008": [
@@ -618,8 +534,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
-        "file": 4
+        "rank": 5,
+        "file": 3
       },
       "rank": 4,
       "file": 4,
@@ -629,12 +545,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "p",
         "rank": 4,
         "file": 4
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "dxe5"
     }
   ],
   "4861728628064527905": [
@@ -642,8 +559,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
-        "file": 4
+        "rank": 3,
+        "file": 3
       },
       "rank": 4,
       "file": 4,
@@ -653,12 +570,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "p",
         "rank": 4,
         "file": 4
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "dxe5"
     }
   ],
   "7683144809336863870": [
@@ -666,8 +584,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 4,
-        "file": 2
+        "rank": 7,
+        "file": 5
       },
       "rank": 6,
       "file": 4,
@@ -676,13 +594,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "b",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Be7"
     }
   ],
   "12524411673480895543": [
@@ -691,7 +605,7 @@
         "player_color": "white",
         "type": "k",
         "rank": 0,
-        "file": 7
+        "file": 4
       },
       "rank": 0,
       "file": 6,
@@ -703,8 +617,8 @@
         "piece": {
           "player_color": "white",
           "type": "r",
-          "rank": 2,
-          "file": 2
+          "rank": 0,
+          "file": 7
         },
         "rank": 0,
         "file": 5,
@@ -713,21 +627,12 @@
         "old_file": 7,
         "move_type": 4,
         "castling_rook_move": null,
-        "captured_piece": {
-          "player_color": "white",
-          "type": "r",
-          "rank": 2,
-          "file": 2
-        },
+        "captured_piece": null,
         "score_guess": 0
       },
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 0,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "O-O"
     }
   ],
   "16850053924590479140": [
@@ -735,8 +640,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 2,
-        "file": 5
+        "rank": 7,
+        "file": 2
       },
       "rank": 6,
       "file": 3,
@@ -745,13 +650,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "b",
-        "rank": 2,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bd7"
     }
   ],
   "13957550193626376588": [
@@ -759,8 +660,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 4,
-        "file": 2
+        "rank": 2,
+        "file": 5
       },
       "rank": 1,
       "file": 3,
@@ -769,13 +670,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd2"
     }
   ],
   "8072460904686084851": [
@@ -783,8 +680,8 @@
       "piece": {
         "player_color": "black",
         "type": "q",
-        "rank": 4,
-        "file": 7
+        "rank": 5,
+        "file": 1
       },
       "rank": 6,
       "file": 2,
@@ -793,13 +690,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qc7"
     }
   ],
   "7930220340392944458": [
@@ -807,7 +700,7 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
+        "rank": 0,
         "file": 3
       },
       "rank": 3,
@@ -817,13 +710,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qg4"
     }
   ],
   "10991495416846422044": [
@@ -831,8 +720,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 6,
-        "file": 0
+        "rank": 7,
+        "file": 4
       },
       "rank": 7,
       "file": 2,
@@ -844,8 +733,8 @@
         "piece": {
           "player_color": "black",
           "type": "r",
-          "rank": 2,
-          "file": 2
+          "rank": 7,
+          "file": 0
         },
         "rank": 7,
         "file": 3,
@@ -854,21 +743,12 @@
         "old_file": 0,
         "move_type": 4,
         "castling_rook_move": null,
-        "captured_piece": {
-          "player_color": "black",
-          "type": "r",
-          "rank": 2,
-          "file": 2
-        },
+        "captured_piece": null,
         "score_guess": 0
       },
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 6,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "O-O-O"
     }
   ],
   "14684836422758058350": [
@@ -876,8 +756,8 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 2,
-        "file": 2
+        "rank": 0,
+        "file": 5
       },
       "rank": 0,
       "file": 2,
@@ -886,13 +766,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "r",
-        "rank": 2,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rfc1"
     }
   ],
   "11950725479591913839": [
@@ -900,8 +776,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 6,
-        "file": 0
+        "rank": 7,
+        "file": 2
       },
       "rank": 7,
       "file": 1,
@@ -910,13 +786,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 6,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kb8"
     }
   ],
   "4576590498151402793": [
@@ -924,8 +796,8 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
-        "file": 3
+        "rank": 3,
+        "file": 6
       },
       "rank": 3,
       "file": 2,
@@ -934,13 +806,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qc4"
     }
   ],
   "16163507281606016007": [
@@ -948,8 +816,8 @@
       "piece": {
         "player_color": "black",
         "type": "r",
-        "rank": 2,
-        "file": 2
+        "rank": 7,
+        "file": 3
       },
       "rank": 7,
       "file": 2,
@@ -958,13 +826,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 2,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rc8"
     }
   ],
   "14603906874295502805": [
@@ -972,8 +836,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
-        "file": 2
+        "rank": 1,
+        "file": 1
       },
       "rank": 3,
       "file": 1,
@@ -982,13 +846,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 6,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "b4"
     }
   ],
   "7840887829207146715": [
@@ -996,7 +856,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
+        "rank": 6,
         "file": 5
       },
       "rank": 5,
@@ -1006,13 +866,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 5
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "f6"
     }
   ],
   "3626499127012565879": [
@@ -1020,8 +876,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 4,
-        "file": 2
+        "rank": 1,
+        "file": 3
       },
       "rank": 2,
       "file": 5,
@@ -1030,13 +886,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nf3"
     }
   ],
   "9504811978797557768": [
@@ -1044,8 +896,8 @@
       "piece": {
         "player_color": "black",
         "type": "q",
-        "rank": 4,
-        "file": 7
+        "rank": 6,
+        "file": 2
       },
       "rank": 5,
       "file": 1,
@@ -1054,13 +906,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qb6"
     }
   ],
   "11379761920998582705": [
@@ -1068,8 +916,8 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
-        "file": 3
+        "rank": 3,
+        "file": 2
       },
       "rank": 3,
       "file": 4,
@@ -1078,13 +926,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qe4"
     }
   ],
   "7345722731830027006": [
@@ -1092,7 +936,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
+        "rank": 5,
         "file": 5
       },
       "rank": 4,
@@ -1102,13 +946,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "f5"
     }
   ],
   "16195476128973652615": [
@@ -1116,8 +956,8 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
-        "file": 3
+        "rank": 3,
+        "file": 4
       },
       "rank": 0,
       "file": 4,
@@ -1126,13 +966,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qe1"
     }
   ],
   "9372438927877370857": [
@@ -1140,7 +976,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 5,
+        "rank": 6,
         "file": 0
       },
       "rank": 5,
@@ -1150,13 +986,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 5,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "a6"
     }
   ],
   "1449413442363553480": [
@@ -1164,8 +996,8 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 7,
-        "file": 6
+        "rank": 0,
+        "file": 0
       },
       "rank": 0,
       "file": 1,
@@ -1174,13 +1006,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "r",
-        "rank": 7,
-        "file": 6
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rab1"
     }
   ],
   "14104941653537631967": [
@@ -1188,8 +1016,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 2,
-        "file": 5
+        "rank": 6,
+        "file": 6
       },
       "rank": 4,
       "file": 6,
@@ -1198,13 +1026,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 2,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "g5"
     }
   ],
   "17803676283564604484": [
@@ -1212,8 +1036,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 4,
-        "file": 2
+        "rank": 2,
+        "file": 5
       },
       "rank": 1,
       "file": 3,
@@ -1222,13 +1046,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd2"
     }
   ],
   "5091131223324505915": [
@@ -1236,8 +1056,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 3,
-        "file": 3
+        "rank": 5,
+        "file": 2
       },
       "rank": 3,
       "file": 3,
@@ -1246,13 +1066,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 3,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd4"
     }
   ],
   "12161689413260847813": [
@@ -1260,8 +1076,8 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
-        "file": 3
+        "rank": 0,
+        "file": 4
       },
       "rank": 2,
       "file": 4,
@@ -1270,13 +1086,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qe3"
     }
   ],
   "6936350431892148046": [
@@ -1284,7 +1096,7 @@
       "piece": {
         "player_color": "black",
         "type": "r",
-        "rank": 2,
+        "rank": 7,
         "file": 2
       },
       "rank": 2,
@@ -1295,12 +1107,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "r",
+        "player_color": "white",
+        "type": "b",
         "rank": 2,
         "file": 2
       },
-      "score_guess": 2700
+      "score_guess": 2700,
+      "move_string": "Rxc3"
     }
   ],
   "8996609893503327577": [
@@ -1308,7 +1121,7 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 2,
+        "rank": 0,
         "file": 2
       },
       "rank": 2,
@@ -1319,12 +1132,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "r",
         "rank": 2,
         "file": 2
       },
-      "score_guess": 4500
+      "score_guess": 4500,
+      "move_string": "Rxc3"
     }
   ],
   "356663323079313968": [
@@ -1332,7 +1146,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
+        "rank": 4,
         "file": 5
       },
       "rank": 3,
@@ -1342,13 +1156,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "f4"
     }
   ],
   "14320584285748706984": [
@@ -1356,8 +1166,8 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
-        "file": 3
+        "rank": 2,
+        "file": 4
       },
       "rank": 0,
       "file": 4,
@@ -1366,13 +1176,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qe1"
     }
   ],
   "1024905818510859043": [
@@ -1380,8 +1186,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 2,
-        "file": 5
+        "rank": 4,
+        "file": 6
       },
       "rank": 3,
       "file": 6,
@@ -1390,13 +1196,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 2,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "g4"
     }
   ],
   "12498405408038463680": [
@@ -1404,8 +1206,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 4,
-        "file": 2
+        "rank": 1,
+        "file": 3
       },
       "rank": 3,
       "file": 4,
@@ -1414,13 +1216,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ne4"
     }
   ],
   "7830269197885289040": [
@@ -1428,8 +1226,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 2,
-        "file": 5
+        "rank": 6,
+        "file": 3
       },
       "rank": 5,
       "file": 2,
@@ -1438,13 +1236,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "b",
-        "rank": 2,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bc6"
     }
   ],
   "14679579774302180910": [
@@ -1452,8 +1246,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 4,
-        "file": 2
+        "rank": 3,
+        "file": 4
       },
       "rank": 4,
       "file": 2,
@@ -1462,13 +1256,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nc5"
     }
   ],
   "15000858643955393139": [
@@ -1476,8 +1266,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 6,
-        "file": 0
+        "rank": 7,
+        "file": 1
       },
       "rank": 6,
       "file": 0,
@@ -1486,13 +1276,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 6,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ka7"
     }
   ],
   "15213013957646772838": [
@@ -1500,7 +1286,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
+        "rank": 2,
         "file": 0
       },
       "rank": 3,
@@ -1510,13 +1296,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "a4"
     }
   ],
   "7907964980680688271": [
@@ -1524,8 +1306,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 2,
-        "file": 5
+        "rank": 5,
+        "file": 2
       },
       "rank": 2,
       "file": 5,
@@ -1534,13 +1316,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "b",
-        "rank": 2,
-        "file": 5
-      },
-      "score_guess": -320
+      "captured_piece": null,
+      "score_guess": -320,
+      "move_string": "Bf3"
     }
   ],
   "6846010592649006717": [
@@ -1548,7 +1326,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
+        "rank": 3,
         "file": 0
       },
       "rank": 4,
@@ -1558,13 +1336,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "a5"
     }
   ],
   "17192528848565756495": [
@@ -1572,8 +1346,8 @@
       "piece": {
         "player_color": "black",
         "type": "q",
-        "rank": 4,
-        "file": 7
+        "rank": 5,
+        "file": 1
       },
       "rank": 7,
       "file": 3,
@@ -1582,13 +1356,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qd8"
     }
   ],
   "720658355790391057": [
@@ -1596,8 +1366,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 3,
-        "file": 2
+        "rank": 2,
+        "file": 3
       },
       "rank": 3,
       "file": 2,
@@ -1606,13 +1376,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "b",
-        "rank": 3,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bc4"
     }
   ],
   "3332757904347729844": [
@@ -1620,8 +1386,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 4,
-        "file": 2
+        "rank": 6,
+        "file": 4
       },
       "rank": 4,
       "file": 2,
@@ -1631,12 +1397,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "b",
+        "player_color": "white",
+        "type": "n",
         "rank": 4,
         "file": 2
       },
-      "score_guess": 2680
+      "score_guess": 2680,
+      "move_string": "Bxc5"
     }
   ],
   "3621430899442410312": [
@@ -1644,8 +1411,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
-        "file": 2
+        "rank": 3,
+        "file": 1
       },
       "rank": 4,
       "file": 2,
@@ -1655,12 +1422,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 6,
+        "player_color": "black",
+        "type": "b",
+        "rank": 4,
         "file": 2
       },
-      "score_guess": 3100
+      "score_guess": 3100,
+      "move_string": "bxc5"
     }
   ],
   "4347700524589232161": [
@@ -1668,8 +1436,8 @@
       "piece": {
         "player_color": "black",
         "type": "q",
-        "rank": 4,
-        "file": 7
+        "rank": 7,
+        "file": 3
       },
       "rank": 3,
       "file": 7,
@@ -1678,13 +1446,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qh4"
     }
   ],
   "3510096704732580287": [
@@ -1692,8 +1456,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 2,
-        "file": 5
+        "rank": 1,
+        "file": 6
       },
       "rank": 2,
       "file": 5,
@@ -1703,12 +1467,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "p",
+        "player_color": "black",
+        "type": "b",
         "rank": 2,
         "file": 5
       },
-      "score_guess": 3100
+      "score_guess": 3100,
+      "move_string": "gxf3"
     }
   ],
   "2455324604100735523": [
@@ -1716,8 +1481,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 2,
-        "file": 5
+        "rank": 3,
+        "file": 6
       },
       "rank": 2,
       "file": 5,
@@ -1727,12 +1492,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "p",
         "rank": 2,
         "file": 5
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "gxf3"
     }
   ],
   "8126360472024324289": [
@@ -1741,7 +1507,7 @@
         "player_color": "white",
         "type": "k",
         "rank": 0,
-        "file": 7
+        "file": 6
       },
       "rank": 0,
       "file": 7,
@@ -1750,13 +1516,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 0,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kh1"
     }
   ],
   "8296001542604581334": [
@@ -1765,7 +1527,7 @@
         "player_color": "black",
         "type": "r",
         "rank": 7,
-        "file": 2
+        "file": 7
       },
       "rank": 7,
       "file": 6,
@@ -1774,13 +1536,9 @@
       "old_file": 7,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 7,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rg8"
     }
   ],
   "15124587396241988261": [
@@ -1788,8 +1546,8 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
-        "file": 3
+        "rank": 0,
+        "file": 4
       },
       "rank": 3,
       "file": 4,
@@ -1798,13 +1556,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qe4"
     }
   ],
   "12913262885202684875": [
@@ -1813,7 +1567,7 @@
         "player_color": "black",
         "type": "r",
         "rank": 7,
-        "file": 2
+        "file": 6
       },
       "rank": 6,
       "file": 6,
@@ -1822,13 +1576,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 7,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rg7"
     }
   ],
   "8631479895034282565": [
@@ -1836,8 +1586,8 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
-        "file": 3
+        "rank": 3,
+        "file": 4
       },
       "rank": 3,
       "file": 3,
@@ -1847,12 +1597,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
         "file": 3
       },
-      "score_guess": 2100
+      "score_guess": 2100,
+      "move_string": "Qxd4"
     }
   ],
   "12098542498011397239": [
@@ -1860,7 +1611,7 @@
       "piece": {
         "player_color": "black",
         "type": "q",
-        "rank": 4,
+        "rank": 3,
         "file": 7
       },
       "rank": 4,
@@ -1870,13 +1621,9 @@
       "old_file": 7,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qg5"
     }
   ],
   "12243091759038995936": [
@@ -1884,7 +1631,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
+        "rank": 4,
         "file": 2
       },
       "rank": 5,
@@ -1894,13 +1641,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 6,
-        "file": 2
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "c6+"
     }
   ],
   "9125376825566185050": [
@@ -1918,13 +1661,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 6,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kb8"
     }
   ],
   "9048122240597691983": [
@@ -1932,7 +1671,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
+        "rank": 5,
         "file": 2
       },
       "rank": 6,
@@ -1942,13 +1681,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 6,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "c7+"
     }
   ],
   "4958363577908403256": [
@@ -1956,8 +1691,8 @@
       "piece": {
         "player_color": "black",
         "type": "r",
-        "rank": 7,
-        "file": 2
+        "rank": 6,
+        "file": 6
       },
       "rank": 6,
       "file": 2,
@@ -1967,12 +1702,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 7,
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
         "file": 2
       },
-      "score_guess": 500
+      "score_guess": 500,
+      "move_string": "Rxc7"
     }
   ],
   "17121291311879637983": [
@@ -1980,8 +1716,8 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 7,
-        "file": 6
+        "rank": 0,
+        "file": 1
       },
       "rank": 0,
       "file": 6,
@@ -1990,13 +1726,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "r",
-        "rank": 7,
-        "file": 6
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rg1"
     }
   ],
   "862086322832879659": [
@@ -2005,7 +1737,7 @@
         "player_color": "black",
         "type": "q",
         "rank": 4,
-        "file": 7
+        "file": 6
       },
       "rank": 4,
       "file": 7,
@@ -2014,13 +1746,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qh5"
     }
   ],
   "12131984530445412927": [
@@ -2028,7 +1756,7 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 7,
+        "rank": 0,
         "file": 6
       },
       "rank": 7,
@@ -2038,13 +1766,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "r",
-        "rank": 7,
-        "file": 6
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rg8+"
     }
   ],
   "11480171020397348873": [
@@ -2052,7 +1776,7 @@
       "piece": {
         "player_color": "black",
         "type": "r",
-        "rank": 7,
+        "rank": 6,
         "file": 2
       },
       "rank": 7,
@@ -2062,13 +1786,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 7,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rc8"
     }
   ],
   "1592377820373781432": [
@@ -2076,7 +1796,7 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 5,
+        "rank": 3,
         "file": 3
       },
       "rank": 5,
@@ -2086,13 +1806,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 5,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qd6+"
     }
   ],
   "4862134561525452104": [
@@ -2100,8 +1816,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 6,
-        "file": 0
+        "rank": 7,
+        "file": 1
       },
       "rank": 6,
       "file": 0,
@@ -2110,13 +1826,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 6,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ka7"
     }
   ],
   "1563323661539264236": [
@@ -2124,8 +1836,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
-        "file": 2
+        "rank": 1,
+        "file": 3
       },
       "rank": 3,
       "file": 3,
@@ -2134,13 +1846,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "d4"
     }
   ],
   "8330120277632668245": [
@@ -2148,8 +1856,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 4
+        "rank": 6,
+        "file": 3
       },
       "rank": 4,
       "file": 3,
@@ -2158,13 +1866,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "d5"
     }
   ],
   "10047883786961405931": [
@@ -2172,8 +1876,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 3,
-        "file": 4
+        "rank": 0,
+        "file": 1
       },
       "rank": 1,
       "file": 3,
@@ -2182,13 +1886,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd2"
     }
   ],
   "7082166280256836200": [
@@ -2196,8 +1896,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 3,
-        "file": 4
+        "rank": 7,
+        "file": 6
       },
       "rank": 5,
       "file": 5,
@@ -2206,13 +1906,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nf6"
     }
   ],
   "18035699829602801073": [
@@ -2220,7 +1916,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
+        "rank": 3,
         "file": 4
       },
       "rank": 4,
@@ -2230,13 +1926,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 4,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "e5"
     }
   ],
   "6993415794364963977": [
@@ -2244,8 +1936,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 3,
-        "file": 4
+        "rank": 5,
+        "file": 5
       },
       "rank": 3,
       "file": 4,
@@ -2254,13 +1946,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ne4"
     }
   ],
   "16305291242689205206": [
@@ -2268,8 +1956,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 3,
-        "file": 4
+        "rank": 1,
+        "file": 3
       },
       "rank": 3,
       "file": 4,
@@ -2279,12 +1967,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "n",
         "rank": 3,
         "file": 4
       },
-      "score_guess": 2700
+      "score_guess": 2700,
+      "move_string": "Nxe4"
     }
   ],
   "8537501579826137911": [
@@ -2292,8 +1981,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 4
+        "rank": 4,
+        "file": 3
       },
       "rank": 3,
       "file": 4,
@@ -2303,12 +1992,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "p",
+        "player_color": "white",
+        "type": "n",
         "rank": 3,
         "file": 4
       },
-      "score_guess": 2900
+      "score_guess": 2900,
+      "move_string": "dxe4"
     }
   ],
   "16180479479251301060": [
@@ -2316,7 +2006,7 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 4,
+        "rank": 0,
         "file": 2
       },
       "rank": 2,
@@ -2326,13 +2016,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "b",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Be3"
     }
   ],
   "7792027804881892858": [
@@ -2340,8 +2026,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
-        "file": 2
+        "rank": 6,
+        "file": 1
       },
       "rank": 5,
       "file": 1,
@@ -2350,13 +2036,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "b6"
     }
   ],
   "3163885950923145770": [
@@ -2364,8 +2046,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 7,
-        "file": 1
+        "rank": 0,
+        "file": 6
       },
       "rank": 1,
       "file": 4,
@@ -2374,13 +2056,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 7,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ne2"
     }
   ],
   "4207794982891112629": [
@@ -2388,7 +2066,7 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 5,
+        "rank": 7,
         "file": 2
       },
       "rank": 6,
@@ -2398,13 +2076,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "b",
-        "rank": 5,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bb7"
     }
   ],
   "10260219926649388911": [
@@ -2412,8 +2086,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 7,
-        "file": 1
+        "rank": 1,
+        "file": 4
       },
       "rank": 2,
       "file": 6,
@@ -2422,13 +2096,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 7,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ng3"
     }
   ],
   "8444667557245228113": [
@@ -2436,7 +2106,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
+        "rank": 6,
         "file": 2
       },
       "rank": 4,
@@ -2446,13 +2116,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 4,
-        "file": 2
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "c5"
     }
   ],
   "9297151632995735411": [
@@ -2460,8 +2126,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
-        "file": 2
+        "rank": 3,
+        "file": 3
       },
       "rank": 4,
       "file": 2,
@@ -2471,12 +2137,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "p",
         "rank": 4,
         "file": 2
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "dxc5"
     }
   ],
   "3940687409239629653": [
@@ -2484,7 +2151,7 @@
       "piece": {
         "player_color": "black",
         "type": "q",
-        "rank": 0,
+        "rank": 7,
         "file": 3
       },
       "rank": 0,
@@ -2495,12 +2162,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "q",
         "rank": 0,
         "file": 3
       },
-      "score_guess": 8100
+      "score_guess": 8100,
+      "move_string": "Qxd1+"
     }
   ],
   "10189592644536445235": [
@@ -2508,8 +2176,8 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 7,
-        "file": 3
+        "rank": 0,
+        "file": 0
       },
       "rank": 0,
       "file": 3,
@@ -2519,12 +2187,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "r",
-        "rank": 7,
+        "player_color": "black",
+        "type": "q",
+        "rank": 0,
         "file": 3
       },
-      "score_guess": 8500
+      "score_guess": 8500,
+      "move_string": "Rxd1"
     }
   ],
   "15649855749362998897": [
@@ -2532,8 +2201,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 4,
-        "file": 2
+        "rank": 7,
+        "file": 5
       },
       "rank": 4,
       "file": 2,
@@ -2543,12 +2212,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "b",
+        "player_color": "white",
+        "type": "p",
         "rank": 4,
         "file": 2
       },
-      "score_guess": 680
+      "score_guess": 680,
+      "move_string": "Bxc5"
     }
   ],
   "15800375315881881782": [
@@ -2556,8 +2226,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 4,
-        "file": 2
+        "rank": 2,
+        "file": 4
       },
       "rank": 4,
       "file": 2,
@@ -2567,12 +2237,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "b",
         "rank": 4,
         "file": 2
       },
-      "score_guess": 2880
+      "score_guess": 2880,
+      "move_string": "Bxc5"
     }
   ],
   "2809253254411974866": [
@@ -2580,8 +2251,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
-        "file": 2
+        "rank": 5,
+        "file": 1
       },
       "rank": 4,
       "file": 2,
@@ -2591,12 +2262,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "p",
+        "player_color": "white",
+        "type": "b",
         "rank": 4,
         "file": 2
       },
-      "score_guess": 3100
+      "score_guess": 3100,
+      "move_string": "bxc5"
     }
   ],
   "5127773765018424445": [
@@ -2604,8 +2276,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 5,
-        "file": 2
+        "rank": 0,
+        "file": 5
       },
       "rank": 4,
       "file": 1,
@@ -2614,13 +2286,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "b",
-        "rank": 5,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bb5+"
     }
   ],
   "6907005851872825858": [
@@ -2628,8 +2296,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 7,
+        "file": 4
       },
       "rank": 6,
       "file": 4,
@@ -2638,13 +2306,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ke7"
     }
   ],
   "11665276145743701670": [
@@ -2652,7 +2316,7 @@
       "piece": {
         "player_color": "white",
         "type": "k",
-        "rank": 6,
+        "rank": 0,
         "file": 4
       },
       "rank": 0,
@@ -2665,8 +2329,8 @@
         "piece": {
           "player_color": "white",
           "type": "r",
-          "rank": 4,
-          "file": 3
+          "rank": 0,
+          "file": 7
         },
         "rank": 0,
         "file": 5,
@@ -2675,21 +2339,12 @@
         "old_file": 7,
         "move_type": 4,
         "castling_rook_move": null,
-        "captured_piece": {
-          "player_color": "white",
-          "type": "r",
-          "rank": 4,
-          "file": 3
-        },
+        "captured_piece": null,
         "score_guess": 0
       },
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 6,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "O-O"
     }
   ],
   "16572030650032709045": [
@@ -2697,8 +2352,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 5,
-        "file": 2
+        "rank": 6,
+        "file": 1
       },
       "rank": 5,
       "file": 2,
@@ -2707,13 +2362,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "b",
-        "rank": 5,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bc6"
     }
   ],
   "16036066946657468601": [
@@ -2721,8 +2372,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 5,
-        "file": 2
+        "rank": 4,
+        "file": 1
       },
       "rank": 5,
       "file": 2,
@@ -2732,12 +2383,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "b",
         "rank": 5,
         "file": 2
       },
-      "score_guess": 2880
+      "score_guess": 2880,
+      "move_string": "Bxc6"
     }
   ],
   "12472130919448696769": [
@@ -2745,8 +2397,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 4,
-        "file": 3
+        "rank": 7,
+        "file": 1
       },
       "rank": 5,
       "file": 2,
@@ -2756,12 +2408,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 4,
-        "file": 3
+        "player_color": "white",
+        "type": "b",
+        "rank": 5,
+        "file": 2
       },
-      "score_guess": 2900
+      "score_guess": 2900,
+      "move_string": "Nxc6"
     }
   ],
   "13216908395942004294": [
@@ -2769,8 +2422,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 7,
-        "file": 1
+        "rank": 2,
+        "file": 6
       },
       "rank": 3,
       "file": 4,
@@ -2780,12 +2433,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 7,
-        "file": 1
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 4
       },
-      "score_guess": 700
+      "score_guess": 700,
+      "move_string": "Nxe4"
     }
   ],
   "11103350474456222677": [
@@ -2793,8 +2447,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 4,
-        "file": 3
+        "rank": 5,
+        "file": 2
       },
       "rank": 4,
       "file": 4,
@@ -2804,12 +2458,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "n",
+        "player_color": "white",
+        "type": "p",
         "rank": 4,
-        "file": 3
+        "file": 4
       },
-      "score_guess": 700
+      "score_guess": 700,
+      "move_string": "Nxe5"
     }
   ],
   "14458719830238589885": [
@@ -2817,8 +2472,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 7,
-        "file": 1
+        "rank": 3,
+        "file": 4
       },
       "rank": 4,
       "file": 2,
@@ -2828,12 +2483,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 7,
-        "file": 1
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 2
       },
-      "score_guess": 700
+      "score_guess": 700,
+      "move_string": "Nxc5"
     }
   ],
   "3832692606060544059": [
@@ -2842,7 +2498,7 @@
         "player_color": "black",
         "type": "r",
         "rank": 7,
-        "file": 1
+        "file": 0
       },
       "rank": 7,
       "file": 2,
@@ -2851,13 +2507,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 7,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rac8"
     }
   ],
   "10503080144268359155": [
@@ -2865,7 +2517,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 3,
+        "rank": 1,
         "file": 1
       },
       "rank": 3,
@@ -2875,13 +2527,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 3,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "b4"
     }
   ],
   "4015378682452726525": [
@@ -2890,7 +2538,7 @@
         "player_color": "black",
         "type": "r",
         "rank": 7,
-        "file": 3
+        "file": 7
       },
       "rank": 7,
       "file": 3,
@@ -2899,13 +2547,9 @@
       "old_file": 7,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 7,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rhd8"
     }
   ],
   "10201844562757872807": [
@@ -2913,7 +2557,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 2,
+        "rank": 1,
         "file": 5
       },
       "rank": 2,
@@ -2923,13 +2567,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 2,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "f3"
     }
   ],
   "10886036151126473254": [
@@ -2937,8 +2577,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 1
+        "rank": 6,
+        "file": 0
       },
       "rank": 4,
       "file": 0,
@@ -2947,13 +2587,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 1
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "a5"
     }
   ],
   "3928029798573196732": [
@@ -2961,8 +2597,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
-        "file": 1
+        "rank": 1,
+        "file": 2
       },
       "rank": 2,
       "file": 2,
@@ -2971,13 +2607,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 6,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "c3"
     }
   ],
   "9705442528466462549": [
@@ -2985,8 +2617,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 1
+        "rank": 4,
+        "file": 0
       },
       "rank": 3,
       "file": 1,
@@ -2996,12 +2628,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "p",
         "rank": 3,
         "file": 1
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "axb4"
     }
   ],
   "15685452747275145968": [
@@ -3009,8 +2642,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
-        "file": 1
+        "rank": 2,
+        "file": 2
       },
       "rank": 3,
       "file": 1,
@@ -3020,12 +2653,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "p",
-        "rank": 6,
+        "rank": 3,
         "file": 1
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "cxb4"
     }
   ],
   "11468816179746677685": [
@@ -3034,7 +2668,7 @@
         "player_color": "black",
         "type": "n",
         "rank": 4,
-        "file": 3
+        "file": 4
       },
       "rank": 5,
       "file": 2,
@@ -3043,13 +2677,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nc6"
     }
   ],
   "1108969348976968980": [
@@ -3057,7 +2687,7 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 7,
+        "rank": 0,
         "file": 3
       },
       "rank": 7,
@@ -3068,12 +2698,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "r",
         "rank": 7,
         "file": 3
       },
-      "score_guess": 4500
+      "score_guess": 4500,
+      "move_string": "Rxd8"
     }
   ],
   "1427035366571182041": [
@@ -3082,7 +2713,7 @@
         "player_color": "black",
         "type": "r",
         "rank": 7,
-        "file": 1
+        "file": 2
       },
       "rank": 7,
       "file": 3,
@@ -3092,12 +2723,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "r",
         "rank": 7,
-        "file": 1
+        "file": 3
       },
-      "score_guess": 4500
+      "score_guess": 4500,
+      "move_string": "Rxd8"
     }
   ],
   "13026644354995576692": [
@@ -3105,7 +2737,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
+        "rank": 3,
         "file": 1
       },
       "rank": 4,
@@ -3115,13 +2747,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 6,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "b5"
     }
   ],
   "16269422083019202007": [
@@ -3129,8 +2757,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 4,
-        "file": 3
+        "rank": 5,
+        "file": 2
       },
       "rank": 3,
       "file": 1,
@@ -3139,13 +2767,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nb4"
     }
   ],
   "14727050162909814205": [
@@ -3153,8 +2777,8 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 4,
-        "file": 3
+        "rank": 0,
+        "file": 5
       },
       "rank": 0,
       "file": 1,
@@ -3163,13 +2787,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "r",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rb1"
     }
   ],
   "17171278957632206586": [
@@ -3177,8 +2797,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 4,
-        "file": 3
+        "rank": 3,
+        "file": 1
       },
       "rank": 4,
       "file": 3,
@@ -3187,13 +2807,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd5"
     }
   ],
   "2654570283549505401": [
@@ -3201,7 +2817,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
+        "rank": 4,
         "file": 1
       },
       "rank": 5,
@@ -3211,13 +2827,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 6,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "b6"
     }
   ],
   "15784412984838739449": [
@@ -3226,7 +2838,7 @@
         "player_color": "black",
         "type": "r",
         "rank": 7,
-        "file": 1
+        "file": 3
       },
       "rank": 7,
       "file": 1,
@@ -3235,13 +2847,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 7,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rb8"
     }
   ],
   "2229037299867849826": [
@@ -3249,7 +2857,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 6,
+        "rank": 5,
         "file": 1
       },
       "rank": 6,
@@ -3259,13 +2867,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 6,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "b7"
     }
   ],
   "9337247237308027251": [
@@ -3283,13 +2887,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nc7"
     }
   ],
   "7722033271633155636": [
@@ -3297,8 +2897,8 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 4,
-        "file": 3
+        "rank": 0,
+        "file": 1
       },
       "rank": 5,
       "file": 1,
@@ -3307,13 +2907,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "r",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rb6"
     }
   ],
   "11958854996590039050": [
@@ -3321,8 +2917,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 6,
+        "file": 4
       },
       "rank": 7,
       "file": 3,
@@ -3331,13 +2927,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kd8"
     }
   ],
   "14807943986650470653": [
@@ -3345,8 +2937,8 @@
       "piece": {
         "player_color": "white",
         "type": "k",
-        "rank": 6,
-        "file": 4
+        "rank": 0,
+        "file": 6
       },
       "rank": 1,
       "file": 5,
@@ -3355,13 +2947,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 6,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kf2"
     }
   ],
   "17766030389391077016": [
@@ -3369,8 +2957,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 4,
-        "file": 3
+        "rank": 6,
+        "file": 2
       },
       "rank": 4,
       "file": 3,
@@ -3379,13 +2967,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd5"
     }
   ],
   "2032005508583139807": [
@@ -3393,8 +2977,8 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 4,
-        "file": 3
+        "rank": 5,
+        "file": 1
       },
       "rank": 5,
       "file": 3,
@@ -3403,13 +2987,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "r",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rd6+"
     }
   ],
   "9659307177536010218": [
@@ -3417,8 +2997,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 7,
+        "file": 3
       },
       "rank": 6,
       "file": 2,
@@ -3427,13 +3007,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kc7"
     }
   ],
   "2045607395144275892": [
@@ -3441,7 +3017,7 @@
       "piece": {
         "player_color": "white",
         "type": "r",
-        "rank": 4,
+        "rank": 5,
         "file": 3
       },
       "rank": 4,
@@ -3452,12 +3028,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "r",
+        "player_color": "black",
+        "type": "n",
         "rank": 4,
         "file": 3
       },
-      "score_guess": 2500
+      "score_guess": 2500,
+      "move_string": "Rxd5"
     }
   ],
   "16436313448248674102": [
@@ -3465,8 +3042,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
-        "file": 3
+        "rank": 5,
+        "file": 4
       },
       "rank": 4,
       "file": 3,
@@ -3476,12 +3053,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "p",
+        "player_color": "white",
+        "type": "r",
         "rank": 4,
         "file": 3
       },
-      "score_guess": 4900
+      "score_guess": 4900,
+      "move_string": "exd5"
     }
   ],
   "2657838514812373150": [
@@ -3489,8 +3067,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 7,
-        "file": 1
+        "rank": 4,
+        "file": 2
       },
       "rank": 5,
       "file": 0,
@@ -3499,13 +3077,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 7,
-        "file": 1
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Na6+"
     }
   ],
   "1693672844866715246": [
@@ -3513,8 +3087,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 6,
+        "file": 2
       },
       "rank": 6,
       "file": 1,
@@ -3524,12 +3098,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
+        "player_color": "white",
+        "type": "p",
+        "rank": 6,
+        "file": 1
       },
-      "score_guess": 1000
+      "score_guess": 1000,
+      "move_string": "Kxb7"
     }
   ],
   "13055110065464868287": [
@@ -3537,8 +3112,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 7,
-        "file": 1
+        "rank": 5,
+        "file": 0
       },
       "rank": 7,
       "file": 1,
@@ -3548,12 +3123,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "n",
+        "player_color": "black",
+        "type": "r",
         "rank": 7,
         "file": 1
       },
-      "score_guess": 4700
+      "score_guess": 4700,
+      "move_string": "Nxb8"
     }
   ],
   "12183442941200873869": [
@@ -3561,8 +3137,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 6,
+        "file": 1
       },
       "rank": 7,
       "file": 1,
@@ -3572,12 +3148,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
+        "player_color": "white",
+        "type": "n",
+        "rank": 7,
+        "file": 1
       },
-      "score_guess": 3000
+      "score_guess": 3000,
+      "move_string": "Kxb8"
     }
   ],
   "11629042086258025213": [
@@ -3585,8 +3162,8 @@
       "piece": {
         "player_color": "white",
         "type": "k",
-        "rank": 6,
-        "file": 4
+        "rank": 1,
+        "file": 5
       },
       "rank": 2,
       "file": 4,
@@ -3595,13 +3172,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 6,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ke3"
     }
   ],
   "268124381026909935": [
@@ -3609,8 +3182,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 7,
+        "file": 1
       },
       "rank": 6,
       "file": 2,
@@ -3619,13 +3192,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kc7"
     }
   ],
   "775282591362204738": [
@@ -3633,7 +3202,7 @@
       "piece": {
         "player_color": "white",
         "type": "k",
-        "rank": 6,
+        "rank": 2,
         "file": 4
       },
       "rank": 3,
@@ -3643,13 +3212,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 6,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kd4"
     }
   ],
   "1677182653570283172": [
@@ -3657,8 +3222,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 6,
+        "file": 2
       },
       "rank": 5,
       "file": 2,
@@ -3667,13 +3232,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kc6"
     }
   ],
   "9315853924675863306": [
@@ -3681,7 +3242,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 3,
+        "rank": 1,
         "file": 0
       },
       "rank": 3,
@@ -3691,13 +3252,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 3,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "a4"
     }
   ],
   "10834205746105145562": [
@@ -3705,8 +3262,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 5,
+        "file": 2
       },
       "rank": 5,
       "file": 1,
@@ -3715,13 +3272,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kb6"
     }
   ],
   "5033791559889132443": [
@@ -3729,8 +3282,8 @@
       "piece": {
         "player_color": "white",
         "type": "k",
-        "rank": 6,
-        "file": 4
+        "rank": 3,
+        "file": 3
       },
       "rank": 4,
       "file": 3,
@@ -3740,12 +3293,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 6,
-        "file": 4
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 3
       },
-      "score_guess": 1000
+      "score_guess": 1000,
+      "move_string": "Kxd5"
     }
   ],
   "17926143998509890520": [
@@ -3753,8 +3307,8 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
-        "file": 0
+        "rank": 5,
+        "file": 1
       },
       "rank": 4,
       "file": 0,
@@ -3763,13 +3317,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 3,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ka5"
     }
   ],
   "15358240889164304776": [
@@ -3777,8 +3327,8 @@
       "piece": {
         "player_color": "white",
         "type": "k",
-        "rank": 6,
-        "file": 4
+        "rank": 4,
+        "file": 3
       },
       "rank": 5,
       "file": 3,
@@ -3787,13 +3337,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 6,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Kd6"
     }
   ],
   "12734375899444148159": [
@@ -3801,7 +3347,7 @@
       "piece": {
         "player_color": "black",
         "type": "k",
-        "rank": 3,
+        "rank": 4,
         "file": 0
       },
       "rank": 3,
@@ -3812,12 +3358,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "k",
+        "player_color": "white",
+        "type": "p",
         "rank": 3,
         "file": 0
       },
-      "score_guess": 1000
+      "score_guess": 1000,
+      "move_string": "Kxa4"
     }
   ],
   "16600377362703844068": [
@@ -3825,8 +3372,8 @@
       "piece": {
         "player_color": "white",
         "type": "k",
-        "rank": 6,
-        "file": 4
+        "rank": 5,
+        "file": 3
       },
       "rank": 6,
       "file": 4,
@@ -3835,13 +3382,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 6,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ke7"
     }
   ],
   "8223574624037208979": [
@@ -3849,7 +3392,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
+        "rank": 6,
         "file": 5
       },
       "rank": 4,
@@ -3859,13 +3402,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 4,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "f5"
     }
   ],
   "10903249117186031680": [
@@ -3873,8 +3412,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 5,
-        "file": 2
+        "rank": 7,
+        "file": 1
       },
       "rank": 5,
       "file": 2,
@@ -3883,13 +3422,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 5,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nc6"
     }
   ],
   "16479313597745760394": [
@@ -3897,7 +3432,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 3,
+        "rank": 1,
         "file": 3
       },
       "rank": 3,
@@ -3907,13 +3442,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 3,
-        "file": 3
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "d4"
     }
   ],
   "9411057229688642611": [
@@ -3921,8 +3452,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 3
+        "rank": 4,
+        "file": 2
       },
       "rank": 3,
       "file": 3,
@@ -3932,12 +3463,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "p",
         "rank": 3,
         "file": 3
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "cxd4"
     }
   ],
   "14173421820550076790": [
@@ -3945,8 +3477,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 3,
-        "file": 4
+        "rank": 2,
+        "file": 5
       },
       "rank": 3,
       "file": 3,
@@ -3956,12 +3488,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "n",
+        "player_color": "black",
+        "type": "p",
         "rank": 3,
-        "file": 4
+        "file": 3
       },
-      "score_guess": 700
+      "score_guess": 700,
+      "move_string": "Nxd4"
     }
   ],
   "5895367930395206248": [
@@ -3969,8 +3502,8 @@
       "piece": {
         "player_color": "black",
         "type": "n",
-        "rank": 5,
-        "file": 5
+        "rank": 7,
+        "file": 6
       },
       "rank": 5,
       "file": 5,
@@ -3979,13 +3512,9 @@
       "old_file": 6,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "n",
-        "rank": 5,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nf6"
     }
   ],
   "14543187664201754033": [
@@ -3993,8 +3522,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 2,
-        "file": 2
+        "rank": 0,
+        "file": 1
       },
       "rank": 2,
       "file": 2,
@@ -4003,13 +3532,9 @@
       "old_file": 1,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 2,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nc3"
     }
   ],
   "6574741883593095595": [
@@ -4017,8 +3542,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 3
+        "rank": 6,
+        "file": 4
       },
       "rank": 5,
       "file": 4,
@@ -4027,13 +3552,9 @@
       "old_file": 4,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "e6"
     }
   ],
   "1717791552242226043": [
@@ -4042,7 +3563,7 @@
         "player_color": "white",
         "type": "n",
         "rank": 3,
-        "file": 4
+        "file": 3
       },
       "rank": 4,
       "file": 1,
@@ -4051,13 +3572,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ndb5"
     }
   ],
   "9910283209279161515": [
@@ -4065,8 +3582,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 2,
-        "file": 2
+        "rank": 7,
+        "file": 5
       },
       "rank": 3,
       "file": 1,
@@ -4075,13 +3592,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "b",
-        "rank": 2,
-        "file": 2
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bb4"
     }
   ],
   "2184348563856163066": [
@@ -4089,7 +3602,7 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 2,
+        "rank": 1,
         "file": 0
       },
       "rank": 2,
@@ -4099,13 +3612,9 @@
       "old_file": 0,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "p",
-        "rank": 2,
-        "file": 0
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "a3"
     }
   ],
   "17701400669864584781": [
@@ -4113,8 +3622,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 2,
-        "file": 2
+        "rank": 3,
+        "file": 1
       },
       "rank": 2,
       "file": 2,
@@ -4124,12 +3633,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "b",
+        "player_color": "white",
+        "type": "n",
         "rank": 2,
         "file": 2
       },
-      "score_guess": 2680
+      "score_guess": 2680,
+      "move_string": "Bxc3+"
     }
   ],
   "683997645912663315": [
@@ -4137,8 +3647,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 3,
-        "file": 4
+        "rank": 4,
+        "file": 1
       },
       "rank": 2,
       "file": 2,
@@ -4148,12 +3658,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 3,
-        "file": 4
+        "player_color": "black",
+        "type": "b",
+        "rank": 2,
+        "file": 2
       },
-      "score_guess": 2900
+      "score_guess": 2900,
+      "move_string": "Nxc3"
     }
   ],
   "10786293245931737673": [
@@ -4161,7 +3672,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 4,
+        "rank": 6,
         "file": 3
       },
       "rank": 4,
@@ -4171,13 +3682,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 4,
-        "file": 3
-      },
-      "score_guess": -100
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "d5"
     }
   ],
   "7879986391837034487": [
@@ -4185,8 +3692,8 @@
       "piece": {
         "player_color": "white",
         "type": "p",
-        "rank": 4,
-        "file": 3
+        "rank": 3,
+        "file": 4
       },
       "rank": 4,
       "file": 3,
@@ -4196,12 +3703,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "p",
         "rank": 4,
         "file": 3
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "exd5"
     }
   ],
   "17025219515419357779": [
@@ -4209,8 +3717,8 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
-        "file": 3
+        "rank": 5,
+        "file": 4
       },
       "rank": 4,
       "file": 3,
@@ -4220,12 +3728,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
+        "player_color": "white",
         "type": "p",
-        "rank": 3,
+        "rank": 4,
         "file": 3
       },
-      "score_guess": 900
+      "score_guess": 900,
+      "move_string": "exd5"
     }
   ],
   "11459832138328645438": [
@@ -4233,8 +3742,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 3,
-        "file": 4
+        "rank": 0,
+        "file": 5
       },
       "rank": 2,
       "file": 3,
@@ -4243,13 +3752,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "b",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bd3"
     }
   ],
   "1279347683417755680": [
@@ -4258,7 +3763,7 @@
         "player_color": "black",
         "type": "k",
         "rank": 7,
-        "file": 6
+        "file": 4
       },
       "rank": 7,
       "file": 6,
@@ -4271,7 +3776,7 @@
           "player_color": "black",
           "type": "r",
           "rank": 7,
-          "file": 4
+          "file": 7
         },
         "rank": 7,
         "file": 5,
@@ -4280,21 +3785,12 @@
         "old_file": 7,
         "move_type": 4,
         "castling_rook_move": null,
-        "captured_piece": {
-          "player_color": "black",
-          "type": "r",
-          "rank": 7,
-          "file": 4
-        },
+        "captured_piece": null,
         "score_guess": 0
       },
-      "captured_piece": {
-        "player_color": "black",
-        "type": "k",
-        "rank": 7,
-        "file": 6
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "O-O"
     }
   ],
   "5849442321417293949": [
@@ -4303,7 +3799,7 @@
         "player_color": "white",
         "type": "k",
         "rank": 0,
-        "file": 6
+        "file": 4
       },
       "rank": 0,
       "file": 6,
@@ -4316,7 +3812,7 @@
           "player_color": "white",
           "type": "r",
           "rank": 0,
-          "file": 5
+          "file": 7
         },
         "rank": 0,
         "file": 5,
@@ -4325,21 +3821,12 @@
         "old_file": 7,
         "move_type": 4,
         "castling_rook_move": null,
-        "captured_piece": {
-          "player_color": "white",
-          "type": "r",
-          "rank": 0,
-          "file": 5
-        },
+        "captured_piece": null,
         "score_guess": 0
       },
-      "captured_piece": {
-        "player_color": "white",
-        "type": "k",
-        "rank": 0,
-        "file": 6
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "O-O"
     }
   ],
   "1528312397549742958": [
@@ -4347,7 +3834,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 3,
+        "rank": 4,
         "file": 3
       },
       "rank": 3,
@@ -4357,13 +3844,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 3,
-        "file": 3
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "d4"
     }
   ],
   "4412771798561332050": [
@@ -4371,8 +3854,8 @@
       "piece": {
         "player_color": "white",
         "type": "n",
-        "rank": 3,
-        "file": 4
+        "rank": 2,
+        "file": 2
       },
       "rank": 3,
       "file": 4,
@@ -4381,13 +3864,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "n",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ne4"
     }
   ],
   "9741542010768476251": [
@@ -4395,8 +3874,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 3,
-        "file": 4
+        "rank": 7,
+        "file": 2
       },
       "rank": 4,
       "file": 5,
@@ -4405,13 +3884,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "b",
-        "rank": 3,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bf5"
     }
   ],
   "2920967278284716512": [
@@ -4419,8 +3894,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 5,
-        "file": 5
+        "rank": 0,
+        "file": 2
       },
       "rank": 4,
       "file": 6,
@@ -4429,13 +3904,9 @@
       "old_file": 2,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "b",
-        "rank": 5,
-        "file": 5
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bg5"
     }
   ],
   "5064930522250698886": [
@@ -4443,8 +3914,8 @@
       "piece": {
         "player_color": "black",
         "type": "b",
-        "rank": 3,
-        "file": 4
+        "rank": 4,
+        "file": 5
       },
       "rank": 3,
       "file": 4,
@@ -4454,12 +3925,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "b",
+        "player_color": "white",
+        "type": "n",
         "rank": 3,
         "file": 4
       },
-      "score_guess": 2680
+      "score_guess": 2680,
+      "move_string": "Bxe4"
     }
   ],
   "13799862262195139345": [
@@ -4467,8 +3939,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 3,
-        "file": 4
+        "rank": 2,
+        "file": 3
       },
       "rank": 3,
       "file": 4,
@@ -4478,12 +3950,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
+        "player_color": "black",
         "type": "b",
         "rank": 3,
         "file": 4
       },
-      "score_guess": 2880
+      "score_guess": 2880,
+      "move_string": "Bxe4"
     }
   ],
   "1564447404739236837": [
@@ -4491,7 +3964,7 @@
       "piece": {
         "player_color": "black",
         "type": "p",
-        "rank": 5,
+        "rank": 6,
         "file": 7
       },
       "rank": 5,
@@ -4501,13 +3974,9 @@
       "old_file": 7,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "p",
-        "rank": 5,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "h6"
     }
   ],
   "13754180703818110295": [
@@ -4515,8 +3984,8 @@
       "piece": {
         "player_color": "white",
         "type": "b",
-        "rank": 5,
-        "file": 5
+        "rank": 4,
+        "file": 6
       },
       "rank": 5,
       "file": 5,
@@ -4526,12 +3995,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "white",
-        "type": "b",
+        "player_color": "black",
+        "type": "n",
         "rank": 5,
         "file": 5
       },
-      "score_guess": 2680
+      "score_guess": 2680,
+      "move_string": "Bxf6"
     }
   ],
   "8699485215419637065": [
@@ -4539,8 +4009,8 @@
       "piece": {
         "player_color": "black",
         "type": "q",
-        "rank": 5,
-        "file": 5
+        "rank": 7,
+        "file": 3
       },
       "rank": 5,
       "file": 5,
@@ -4550,12 +4020,13 @@
       "move_type": 3,
       "castling_rook_move": null,
       "captured_piece": {
-        "player_color": "black",
-        "type": "q",
+        "player_color": "white",
+        "type": "b",
         "rank": 5,
         "file": 5
       },
-      "score_guess": 2300
+      "score_guess": 2300,
+      "move_string": "Qxf6"
     }
   ],
   "10836454304530184651": [
@@ -4563,8 +4034,8 @@
       "piece": {
         "player_color": "white",
         "type": "q",
-        "rank": 4,
-        "file": 7
+        "rank": 0,
+        "file": 3
       },
       "rank": 4,
       "file": 7,
@@ -4573,13 +4044,9 @@
       "old_file": 3,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "white",
-        "type": "q",
-        "rank": 4,
-        "file": 7
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Qh5"
     }
   ],
   "1876871296968992845": [
@@ -4588,7 +4055,7 @@
         "player_color": "black",
         "type": "r",
         "rank": 7,
-        "file": 4
+        "file": 5
       },
       "rank": 7,
       "file": 4,
@@ -4597,13 +4064,9 @@
       "old_file": 5,
       "move_type": 4,
       "castling_rook_move": null,
-      "captured_piece": {
-        "player_color": "black",
-        "type": "r",
-        "rank": 7,
-        "file": 4
-      },
-      "score_guess": 0
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Rfe8"
     }
   ]
 }

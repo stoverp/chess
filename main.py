@@ -1,41 +1,11 @@
-import re
 from argparse import ArgumentParser
 
 import pygame as pg
 
-from engine import Engine
-from enums import PlayerType, PlayerColor, PieceType
-from game_state import GameState
 from display import BoardDisplay
-
-
-def flip_board(board):
-  flipped_board = []
-  for rank in reversed(board):
-    flipped_board.append(rank)
-  return flipped_board
-
-
-def read_square_bonuses(square_bonuses_file):
-  current_piece = None
-  piece_bonuses = dict()
-  with open(square_bonuses_file, "r") as f:
-    for line in f.readlines():
-      text = line.strip()
-      if not text:
-        continue
-      if text.isalpha():
-        current_piece = PieceType(text)
-        piece_bonuses[current_piece] = []
-      else:
-        rank = [int(v) for v in re.split(r",\s*", text)]
-        piece_bonuses[current_piece].append(rank)
-  piece_bonuses_for_color = dict()
-  for piece, bonus_board in piece_bonuses.items():
-    piece_bonuses_for_color[piece] = dict()
-    piece_bonuses_for_color[piece][PlayerColor.BLACK] = piece_bonuses[piece]
-    piece_bonuses_for_color[piece][PlayerColor.WHITE] = flip_board(piece_bonuses[piece])
-  return piece_bonuses_for_color
+from engine import Engine
+from enums import PlayerType
+from game_state import GameState
 
 
 def endgame(game_state, board_display):
@@ -55,9 +25,8 @@ def endgame(game_state, board_display):
       board_display.refresh()
 
 
-def main(square_bonuses_file, search_depth, white_player_type, black_player_type, fen):
-  bonuses = read_square_bonuses(square_bonuses_file)
-  game_state = GameState(white_player_type, black_player_type, search_depth, bonuses, fen)
+def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, book_file):
+  game_state = GameState(white_player_type, black_player_type, search_depth, bonuses_file, fen, book_file)
   board_display = BoardDisplay(game_state)
   engine = Engine(game_state, board_display)
   running = True
@@ -78,10 +47,11 @@ def main(square_bonuses_file, search_depth, white_player_type, black_player_type
 
 if __name__ == "__main__":
   parser = ArgumentParser()
-  parser.add_argument("--square-bonuses-file", default="resources/piece_square_bonuses.txt")
-  parser.add_argument("--fen")
   parser.add_argument("--search-depth", type=int, default=3)
   parser.add_argument("--white-player", type=PlayerType, default=PlayerType.HUMAN)
   parser.add_argument("--black-player", type=PlayerType, default=PlayerType.ROBOT)
+  parser.add_argument("--square-bonuses-file", default="resources/piece_square_bonuses.txt")
+  parser.add_argument("--fen")
+  parser.add_argument("--book-file")
   args = parser.parse_args()
-  main(args.square_bonuses_file, args.search_depth, args.white_player, args.black_player, args.fen)
+  main(args.search_depth, args.white_player, args.black_player, args.square_bonuses_file, args.fen, args.book_file)

@@ -1,6 +1,6 @@
 from enum import Enum, auto
 
-from core import Board
+from core import Board, Piece
 from enums import PieceType
 
 
@@ -16,7 +16,8 @@ class MoveType(Enum):
 
 
 class Move:
-  def __init__(self, piece, rank, file, game_state, promote_type=None):
+  def __init__(self, piece, rank, file, game_state, promote_type=None, move_type=None, captured_piece=None,
+      score_guess=None):
     self.piece = piece
     self.rank = rank
     self.file = file
@@ -24,12 +25,17 @@ class Move:
     self.promote_type = promote_type
     self.old_rank = piece.rank
     self.old_file = piece.file
-    self.move_type = self.get_type()
     self.castling_rook_move = None
-    self.score_guess = 0
-    if self.move_type in MoveType.legal_types():
-      self.captured_piece = game_state.board[rank][file]
-      self.guess_score()
+    # if we already know the move type, we're initializing the move from a known board state
+    if move_type:
+      self.move_type = move_type
+      self.captured_piece = captured_piece
+      self.score_guess = score_guess
+    else:
+      self.move_type = self.get_type()
+      if self.move_type in MoveType.legal_types():
+        self.captured_piece = game_state.board[rank][file]
+        self.score_guess = self.guess_score()
 
   def __str__(self):
     return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file})"
@@ -55,9 +61,24 @@ class Move:
       'old_file': self.old_file,
       'move_type': self.move_type,
       'castling_rook_move': self.castling_rook_move.to_json() if self.castling_rook_move else None,
-      'captured_piece': self.piece.to_json() if self.piece else None,
+      'captured_piece': self.captured_piece.to_json() if self.captured_piece else None,
       'score_guess': self.score_guess
     }
+
+  @staticmethod
+  def from_json(json, game_state):
+    return Move(
+      # Piece.from_json(json['piece']),
+      game_state.board[json['old_rank']][json['old_file']],
+      json['rank'],
+      json['file'],
+      game_state,
+      json['promote_type'],
+      json['move_type'],
+      game_state.board[json['captured_piece']['rank']][json['captured_piece']['file']]
+          if json['captured_piece'] else None,
+      # Piece.from_json(json['captured_piece']) if json['captured_piece'] else None,
+      json['score_guess'])
 
   def get_type(self):
     if not Board.in_bounds(self.rank, self.file):
@@ -112,13 +133,14 @@ class Move:
     self.game_state.board.update_zobrist_key(self)
 
   def guess_score(self):
-    self.score_guess = 0
+    score_guess = 0
     if entry := self.game_state.ai.transposition_table.from_key(self.game_state.board.zobrist_key):
       if self == entry.move:
-        self.score_guess += 10000
+        score_guess += 10000
     if self.captured_piece:
-      self.score_guess = 10 * self.captured_piece.type.score - self.piece.type.score
+      score_guess = 10 * self.captured_piece.type.score - self.piece.type.score
     if self.promote_type:
-      self.score_guess += self.promote_type.score
+      score_guess += self.promote_type.score
     if self.game_state.players[self.piece.player_color.opponent].attack_board.pawn_board[self.rank][self.file]:
-      self.score_guess -= self.piece.type.score
+      score_guess -= self.piece.type.score
+    return score_guess

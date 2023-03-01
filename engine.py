@@ -58,6 +58,9 @@ class Engine:
     # todo: prompt for piece type
     return PieceType.QUEEN
 
+  # todo: this probably shouldn't be exposed to clients
+  # figure out where to initialize the event listener, and keep this method with it
+  # right now, the event listener loop is in main.py
   def handle_event(self, event):
     if event.type == pg.QUIT:
       return False

@@ -80,9 +80,15 @@ class AI:
     self.n_moves_searched = 0
     print(f"\ncalculating {self.game_state.active_player_color} move ...")
     start_time = time.time()
-    move, score = self.search_moves(self.game_state.active_player_color, self.search_depth, -math.inf, math.inf)
-    print(
-      f"evaluated score {score} by searching {self.n_moves_searched} moves in {time.time() - start_time} seconds:\n\t{move}")
+    opening_moves = self.game_state.opening_moves()
+    if opening_moves:
+      # todo: pick move from list with random criteria
+      move = opening_moves[0]
+      print(f"found opening move in book:\n\t{move}")
+    else:
+      move, score = self.search_moves(self.game_state.active_player_color, self.search_depth, -math.inf, math.inf)
+      print(
+        f"evaluated score {score} by searching {self.n_moves_searched} moves in {time.time() - start_time} seconds:\n\t{move}")
     if move:
       return move
     else:

@@ -1,3 +1,4 @@
+import copy
 import json
 import os
 import re
@@ -10,6 +11,10 @@ from display import BoardDisplay
 from engine import Engine
 from enums import PlayerType, piece_types_by_san_format, PieceType, PlayerColor
 from game_state import GameState
+
+
+class Globals:
+  quiet = False
 
 
 def san_to_index(rank_string, file_string):
@@ -37,17 +42,17 @@ def parse_move(move_string, game_state):
       for piece in game_state.active_player().find_all(piece_type):
         legal_moves.extend(game_state.generate_legal_moves(piece))
     else:
-      legal_moves = game_state.generate_all_legal_moves()
+      legal_moves = game_state.generate_all_legal_moves(game_state.active_player_color)
     candidates = []
     for move in legal_moves:
       if (to_rank, to_file) == (move.rank, move.file):
-        if not from_rank or from_rank == move.old_rank:
-          if not from_file or from_file == move.old_file:
+        if (from_rank is None) or (from_rank == move.old_rank):
+          if (from_file is None) or (from_file == move.old_file):
             candidates.append(move)
     if len(candidates) == 0:
       raise Exception(f"can't find valid move for move string: {move_string}")
     elif len(candidates) > 1:
-      print(f"move string {move_string} has more than one candidate: {candidates}")
+      debug(f"move string {move_string} has more than one candidate: {candidates}")
       for candidate in candidates:
         if candidate.piece.type is PieceType.PAWN:
           return candidate
@@ -68,24 +73,30 @@ def wait_for_key(board_display):
   return True
 
 
-def make_move(player_color, move_string, game_state, engine, board_display, openings):
+def make_move(player_color, move_string, game_state, engine, openings, board_display=None):
   move = parse_move(move_string, game_state)
-  print(f"found {player_color} move for string {move_string}:\n\t{move}")
-  openings[game_state.board.zobrist_key].append(move)
+  debug(f"found {player_color} move for string {move_string}:\n\t{move}")
+  openings[game_state.board.zobrist_key].append((move_string, copy.deepcopy(move)))
   engine.make_move(move)
-  # return wait_for_key(board_display)
-  return True
+  if board_display:
+    return wait_for_key(board_display)
+  else:
+    return True
 
 
-def start_game():
+def start_game(interactive):
   game_state = GameState(PlayerType.HUMAN, PlayerType.HUMAN)
-  board_display = BoardDisplay(game_state)
+  board_display = BoardDisplay(game_state) if interactive else None
   engine = Engine(game_state, board_display)
   return game_state, board_display, engine
 
 
-def process_games(file):
+def debug(message):
+  if not Globals.quiet:
+    print(message)
 
+
+def process_games(file, interactive):
   openings = defaultdict(list)
   n_games = 0
   with open(file, "r") as f:
@@ -95,33 +106,43 @@ def process_games(file):
         continue
       elif text.startswith("1."):
         n_games += 1
-        game_state, board_display, engine = start_game()
-        if n_games > 3:
-          return openings
+        print("\n=======")
+        print(f"GAME #{n_games}")
+        print("=======\n")
+        game_state, board_display, engine = start_game(interactive)
+        # if n_games > 3:
+        #   return openings
       move_tuples = re.findall(r"(\d+)\.([\w\-+]+) ([\w\-+]+)", text)
       for move_number, white_move_string, black_move_string in move_tuples:
-        print(f"\nMOVE #{move_number}")
-        if not make_move(PlayerColor.WHITE, white_move_string, game_state, engine, board_display, openings):
+        debug(f"\nMOVE #{move_number}")
+        if not make_move(PlayerColor.WHITE, white_move_string, game_state, engine, openings, board_display):
           pg.quit()
           return openings
-        if not make_move(PlayerColor.BLACK, black_move_string, game_state, engine, board_display, openings):
+        if not make_move(PlayerColor.BLACK, black_move_string, game_state, engine, openings, board_display):
           pg.quit()
           return openings
   return openings
 
 
 def to_json(openings):
-  result = dict()
+  result = defaultdict(list)
   for key, moves in openings.items():
-    result[key] = [move.to_json() for move in moves]
+    for move_string, move in moves:
+      json_move = move.to_json()
+      json_move["move_string"] = move_string
+      result[key].append(json_move)
   return result
 
 
+# todo: fix additional cases in Kasparov book
 if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("file")
+  parser.add_argument("--interactive", action="store_true")
+  parser.add_argument("--quiet", action="store_true")
   args = parser.parse_args()
-  openings = process_games(args.file)
+  Globals.quiet = args.quiet
+  openings = process_games(args.file, args.interactive)
   json_openings = to_json(openings)
   output_file = os.path.splitext(args.file)[0] + ".json"
   with open(output_file, "w") as f:

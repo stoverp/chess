@@ -1,6 +1,10 @@
+import json
+import re
+
 from ai import AI
 from core import Board, Piece
 from enums import PlayerColor, PieceType
+from move import Move
 from move_generator import MoveGenerator
 from player_state import PlayerState
 
@@ -8,18 +12,19 @@ from player_state import PlayerState
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 class GameState:
-  def __init__(self, white_player_type, black_player_type, search_depth=1, bonuses=None, fen=START_FEN):
+  def __init__(self, white_player_type, black_player_type, search_depth=1, bonuses_file=None, fen=START_FEN, book_file=None):
     self.players = {
       PlayerColor.WHITE: PlayerState(PlayerColor.WHITE, white_player_type, self),
       PlayerColor.BLACK: PlayerState(PlayerColor.BLACK, black_player_type, self)
     }
     self.board = Board()
-    self.bonuses = bonuses
+    self.bonuses = self.read_square_bonuses(bonuses_file) if bonuses_file else None
     self.active_player_color = PlayerColor.WHITE
     self.selected_piece = None
     if not fen:
       fen = START_FEN
     self.init_from_fen(fen)
+    self.opening_book = self.read_opening_book(book_file) if book_file else None
     # todo: handle zobrist key for custom board state
     for player in self.players.values():
       player.refresh_attack_board()
@@ -92,6 +97,41 @@ class GameState:
   def parse_piece_char(self, piece_char):
     return PieceType(piece_char.lower()), PlayerColor.WHITE if piece_char.isupper() else PlayerColor.BLACK
 
+  def read_square_bonuses(self, square_bonuses_file):
+    current_piece = None
+    piece_bonuses = dict()
+    with open(square_bonuses_file, "r") as f:
+      for line in f.readlines():
+        text = line.strip()
+        if not text:
+          continue
+        if text.isalpha():
+          current_piece = PieceType(text)
+          piece_bonuses[current_piece] = []
+        else:
+          rank = [int(v) for v in re.split(r",\s*", text)]
+          piece_bonuses[current_piece].append(rank)
+    piece_bonuses_for_color = dict()
+    for piece, bonus_board in piece_bonuses.items():
+      piece_bonuses_for_color[piece] = dict()
+      piece_bonuses_for_color[piece][PlayerColor.BLACK] = piece_bonuses[piece]
+      piece_bonuses_for_color[piece][PlayerColor.WHITE] = self.flip_board(piece_bonuses[piece])
+    return piece_bonuses_for_color
+
+  def flip_board(self, board):
+    flipped_board = []
+    for rank in reversed(board):
+      flipped_board.append(rank)
+    return flipped_board
+
+  def read_opening_book(self, book_file):
+    print(f"loading opening book from '{book_file}' ...")
+    opening_book = dict()
+    with open(book_file, "r") as f:
+      for key_string, moves in json.load(f).items():
+        opening_book[int(key_string)] = [move_dict for move_dict in moves]
+    return opening_book
+
   def active_player(self):
     return self.players[self.active_player_color]
 
@@ -108,3 +148,9 @@ class GameState:
     if not self.bonuses:
       return 0
     return self.bonuses[piece_type][player_color][rank][file]
+
+  def opening_moves(self):
+    moves = []
+    for opening_move_json in self.opening_book.get(self.board.zobrist_key, []):
+      moves.append(Move.from_json(opening_move_json, self))
+    return moves

@@ -1,4 +1,4 @@
-from enums import PlayerColor
+from enums import PlayerColor, PieceType
 from zobrist import Zobrist
 
 
