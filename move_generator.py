@@ -32,13 +32,12 @@ class MoveGenerator:
       if capture_move.move_type is MoveType.CAPTURE:
         moves.update(self.include_promotion_moves(capture_move))
       elif capture_move.move_type is MoveType.OPEN_SQUARE:
-        if piece_on_square := self.game_state.board[pawn.rank][pawn.file + file_offset]:
-          if piece_on_square.type is PieceType.PAWN and \
-              piece_on_square.player_color is pawn.player_color.opponent:
-            # todo: and piece_on_square last moved two spaces
-            en_passant_move = Move(pawn, pawn.rank + rank_offset, pawn.file + file_offset, self.game_state,
-              move_type=MoveType.CAPTURE, captured_piece=piece_on_square)
-            moves.add(en_passant_move)
+        # look for en passant
+        capture_rank = pawn.rank + rank_offset
+        capture_file = pawn.file + file_offset
+        if (capture_rank, capture_file) == self.game_state.en_passant_target_square:
+          moves.add(Move(pawn, capture_rank, capture_file, self.game_state,
+            move_type=MoveType.CAPTURE, captured_piece=self.game_state.board[pawn.rank][pawn.file + file_offset]))
     if captures_only:
       return moves
     # one-square standard move

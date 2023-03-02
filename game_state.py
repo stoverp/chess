@@ -2,13 +2,11 @@ import json
 import re
 
 from ai import AI
-from core import Board, Piece
+from core import Board, Piece, san_to_index, index_to_san
 from enums import PlayerColor, PieceType
 from move import Move
 from move_generator import MoveGenerator
 from player_state import PlayerState
-from book_processor import san_to_index
-
 
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
@@ -78,6 +76,9 @@ class GameState:
             castling_ability += char.upper() if color is PlayerColor.WHITE else char
     return castling_ability or "-"
 
+  def generate_en_passant_fen(self):
+    return index_to_san(*self.en_passant_target_square) if self.en_passant_target_square else '-'
+
   def generate_fen(self):
     piece_placement_ranks = []
     for rank in range(7, -1, -1):
@@ -95,7 +96,7 @@ class GameState:
       if n_empty_squares > 0:
         fen_line.append(str(n_empty_squares))
       piece_placement_ranks.append("".join(fen_line))
-    return f"{'/'.join(piece_placement_ranks)} {self.active_player_color.abbr} {self.generate_castling_ability_fen()} - - -"
+    return f"{'/'.join(piece_placement_ranks)} {self.active_player_color.abbr} {self.generate_castling_ability_fen()} {self.generate_en_passant_fen()} - -"
 
   def parse_piece_char(self, piece_char):
     return PieceType(piece_char.lower()), PlayerColor.WHITE if piece_char.isupper() else PlayerColor.BLACK
@@ -159,4 +160,6 @@ class GameState:
     return moves
 
   def init_en_passant_target_square(self, square):
-    self.en_passant_target_square = san_to_index(square[0], square[1])
+    if square != "-":
+      self.en_passant_target_square = san_to_index(square[0], square[1])
+

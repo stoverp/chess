@@ -1,4 +1,5 @@
 from enum import Enum, auto
+from math import copysign
 
 from core import Board, Piece
 from enums import PieceType
@@ -106,7 +107,12 @@ class Move:
       self.game_state.players[self.captured_piece.player_color].pieces[self.captured_piece.type].remove(self.captured_piece)
       # do this explicitly to handle en passant captures (new piece doesn't cover captured square)
       self.game_state.board[self.captured_piece.rank][self.captured_piece.file] = None
-    # todo: set game_state.en_passant_target_square if necessary
+    # track en passant possibility
+    self.game_state.previous_move_en_passant_target_square = self.game_state.en_passant_target_square
+    if self.piece.type is PieceType.PAWN and abs(self.rank - self.old_rank) == 2:
+      self.game_state.en_passant_target_square = (self.rank - int(copysign(1, self.rank - self.old_rank)), self.file)
+    else:
+      self.game_state.en_passant_target_square = None
     self.piece.rank = self.rank
     self.piece.file = self.file
     if self.promote_type:
@@ -131,6 +137,8 @@ class Move:
   def unapply(self):
     if self.promote_type:
       self.piece.update_type(PieceType.PAWN, self.game_state.players[self.piece.player_color].pieces)
+    # revert en passant possibility
+    self.game_state.en_passant_target_square = self.game_state.previous_move_en_passant_target_square
     # return piece to starting square
     self.piece.rank = self.old_rank
     self.piece.file = self.old_file

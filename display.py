@@ -36,6 +36,7 @@ class PieceSprites:
     return cls.sprites[piece.type][piece.player_color]
 
 
+# todo: display board coordinates
 class BoardDisplay:
   def __init__(self, game_state):
     self.game_state = game_state
@@ -56,15 +57,15 @@ class BoardDisplay:
     for rank in range(8):
       for file in range(8):
         square_type = (rank + file) % 2
-        if last_move and (rank, file) in [(last_move.old_rank, last_move.old_file), (last_move.rank, last_move.file)]:
-          color = LAST_MOVE_COLORS[square_type]
-        elif self.game_state.selected_piece:
+        if self.game_state.selected_piece:
           if (rank, file) == (self.game_state.selected_piece.piece.rank, self.game_state.selected_piece.piece.file):
             color = SELECTED_SQUARE_COLOR
           elif Move(self.game_state.selected_piece.piece, rank, file, self.game_state) in self.game_state.selected_piece.legal_moves:
             color = LEGAL_MOVE_COLORS[square_type]
           else:
             color = BACKGROUND_COLORS[square_type]
+        elif last_move and (rank, file) in [(last_move.old_rank, last_move.old_file), (last_move.rank, last_move.file)]:
+          color = LAST_MOVE_COLORS[square_type]
         elif self.display_player_attacking and \
             self.game_state.players[self.display_player_attacking].attack_board[rank][file]:
           color = ATTACKING_COLORS[square_type]

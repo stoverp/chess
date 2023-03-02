@@ -7,6 +7,7 @@ from collections import defaultdict
 
 import pygame as pg
 
+from core import san_to_index
 from display import BoardDisplay
 from engine import Engine
 from enums import PlayerType, piece_types_by_san_format, PieceType, PlayerColor
@@ -15,12 +16,6 @@ from game_state import GameState
 
 class Globals:
   verbose = False
-
-
-def san_to_index(rank_string, file_string):
-  rank = int(rank_string) - 1 if rank_string else None
-  file = ord(file_string) - ord('a') if file_string else None
-  return rank, file
 
 
 def parse_move(move_string, game_state):

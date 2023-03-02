@@ -4,7 +4,7 @@ from core import Board
 from display import display_coords_to_screen, get_square
 from enums import PieceType, PlayerType, PlayerColor
 from move import Move
-from logging import debug
+from logging import debug, Logging
 
 
 class SelectedPiece:
@@ -42,7 +42,8 @@ class Engine:
     self.game_state.active_player().refresh_attack_board()
     self.game_state.active_player_color = self.game_state.active_player_color.opponent
     self.game_state.active_player().refresh_legal_moves()
-    # self.print_stats()
+    if Logging.verbose:
+      self.print_stats()
 
   def undo_last_move(self):
     if self.game_state.move_history:
