@@ -23,28 +23,35 @@ class MoveGenerator:
       moves.add(move)
     return moves
 
-  def generate_pawn_moves(self, piece, captures_only=False):
+  def generate_pawn_moves(self, pawn, captures_only=False):
     moves = set()
-    pawn_direction = piece.player_color.pawn_direction
+    pawn_direction = pawn.player_color.pawn_direction
     # capture moves
     for rank_offset, file_offset in [(pawn_direction, 1), (pawn_direction, -1)]:
-      move = Move(piece, piece.rank + rank_offset, piece.file + file_offset, self.game_state)
-      if move.move_type is MoveType.CAPTURE:
-        moves.update(self.include_promotion_moves(move))
+      capture_move = Move(pawn, pawn.rank + rank_offset, pawn.file + file_offset, self.game_state)
+      if capture_move.move_type is MoveType.CAPTURE:
+        moves.update(self.include_promotion_moves(capture_move))
+      elif capture_move.move_type is MoveType.OPEN_SQUARE:
+        if piece_on_square := self.game_state.board[pawn.rank][pawn.file + file_offset]:
+          if piece_on_square.type is PieceType.PAWN and \
+              piece_on_square.player_color is pawn.player_color.opponent:
+            # todo: and piece_on_square last moved two spaces
+            en_passant_move = Move(pawn, pawn.rank + rank_offset, pawn.file + file_offset, self.game_state,
+              move_type=MoveType.CAPTURE, captured_piece=piece_on_square)
+            moves.add(en_passant_move)
     if captures_only:
       return moves
     # one-square standard move
-    rank_candidates = [piece.rank + (1 * pawn_direction)]
+    rank_candidates = [pawn.rank + (1 * pawn_direction)]
     # two-square opening move
-    if piece.rank == piece.player_color.back_rank + pawn_direction:
+    if pawn.rank == pawn.player_color.back_rank + pawn_direction:
       # can't move through pieces
-      if not self.game_state.board[piece.rank + (1 * pawn_direction)][piece.file]:
-        rank_candidates.append(piece.rank + (2 * pawn_direction))
+      if not self.game_state.board[pawn.rank + (1 * pawn_direction)][pawn.file]:
+        rank_candidates.append(pawn.rank + (2 * pawn_direction))
     for new_rank in rank_candidates:
-      move = Move(piece, new_rank, piece.file, self.game_state)
-      if move.move_type is MoveType.OPEN_SQUARE:
-        moves.update(self.include_promotion_moves(move))
-    # todo: en passant
+      capture_move = Move(pawn, new_rank, pawn.file, self.game_state)
+      if capture_move.move_type is MoveType.OPEN_SQUARE:
+        moves.update(self.include_promotion_moves(capture_move))
     return moves
 
   def generate_slide_moves(self, piece, directions, captures_only=False):

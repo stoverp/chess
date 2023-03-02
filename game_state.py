@@ -7,6 +7,7 @@ from enums import PlayerColor, PieceType
 from move import Move
 from move_generator import MoveGenerator
 from player_state import PlayerState
+from book_processor import san_to_index
 
 
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
@@ -21,6 +22,7 @@ class GameState:
     self.bonuses = self.read_square_bonuses(bonuses_file) if bonuses_file else None
     self.active_player_color = PlayerColor.WHITE
     self.selected_piece = None
+    self.en_passant_target_square = None
     if not fen:
       fen = START_FEN
     self.init_from_fen(fen)
@@ -50,6 +52,7 @@ class GameState:
           file += 1
     self.active_player_color = PlayerColor.WHITE if side_to_move == "w" else PlayerColor.BLACK
     self.init_castling_ability(castling_ability)
+    self.init_en_passant_target_square(en_passant_target_square)
 
   def init_castling_ability(self, castling_ability):
     # first assume that nobody can castle by setting the king and rook move counts to something nonzero
@@ -154,3 +157,6 @@ class GameState:
     for opening_move_json in self.opening_book.get(self.board.zobrist_key, []):
       moves.append(Move.from_json(opening_move_json, self))
     return moves
+
+  def init_en_passant_target_square(self, square):
+    self.en_passant_target_square = san_to_index(square[0], square[1])

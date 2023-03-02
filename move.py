@@ -17,7 +17,7 @@ class MoveType(Enum):
 
 class Move:
   def __init__(self, piece, rank, file, game_state, promote_type=None, move_type=None, captured_piece=None,
-      score_guess=None):
+        score_guess=None):
     self.piece = piece
     self.rank = rank
     self.file = file
@@ -27,14 +27,23 @@ class Move:
     self.old_file = piece.file
     self.castling_rook_move = None
     # if we already know the move type, we're initializing the move from a known board state
-    if move_type:
-      self.move_type = move_type
-      self.captured_piece = captured_piece
-      self.score_guess = score_guess
-    else:
-      self.move_type = self.get_type()
-      if self.move_type in MoveType.legal_types():
+    # if move_type:
+    #   self.move_type = move_type
+    #   self.captured_piece = captured_piece
+    #   self.score_guess = score_guess
+    # else:
+    #   self.move_type = self.get_type()
+    #   if self.move_type in MoveType.legal_types():
+    #     self.captured_piece = game_state.board[rank][file]
+    #     self.score_guess = self.guess_score()
+    self.move_type = move_type or self.get_type()
+    self.captured_piece = captured_piece
+    self.score_guess = score_guess
+    if self.move_type in MoveType.legal_types():
+      # we can find the captured piece and score guess if the move is legal
+      if not self.captured_piece:
         self.captured_piece = game_state.board[rank][file]
+      if not self.score_guess:
         self.score_guess = self.guess_score()
 
   def __str__(self):
@@ -95,6 +104,9 @@ class Move:
     player = self.game_state.players[self.piece.player_color]
     if self.captured_piece:
       self.game_state.players[self.captured_piece.player_color].pieces[self.captured_piece.type].remove(self.captured_piece)
+      # do this explicitly to handle en passant captures (new piece doesn't cover captured square)
+      self.game_state.board[self.captured_piece.rank][self.captured_piece.file] = None
+    # todo: set game_state.en_passant_target_square if necessary
     self.piece.rank = self.rank
     self.piece.file = self.file
     if self.promote_type:
@@ -117,19 +129,22 @@ class Move:
     self.game_state.board.update_zobrist_key(self)
 
   def unapply(self):
-    if self.captured_piece:
-      self.game_state.players[self.captured_piece.player_color].pieces[self.captured_piece.type].add(self.captured_piece)
-    self.piece.rank = self.old_rank
-    self.piece.file = self.old_file
     if self.promote_type:
       self.piece.update_type(PieceType.PAWN, self.game_state.players[self.piece.player_color].pieces)
-    self.game_state.board[self.rank][self.file] = self.captured_piece
+    # return piece to starting square
+    self.piece.rank = self.old_rank
+    self.piece.file = self.old_file
+    self.game_state.board[self.rank][self.file] = None
     self.game_state.board[self.old_rank][self.old_file] = self.piece
+    # restore captured piece
+    if self.captured_piece:
+      self.game_state.players[self.captured_piece.player_color].pieces[self.captured_piece.type].add(self.captured_piece)
+      # do this explicitly to handle en passant captures (new piece doesn't cover captured square)
+      self.game_state.board[self.captured_piece.rank][self.captured_piece.file] = self.captured_piece
     self.piece.n_times_moved -= 1
     if self.castling_rook_move:
       self.castling_rook_move.unapply()
     # apply same update to key to revert move
-    # todo: verify this works
     self.game_state.board.update_zobrist_key(self)
 
   def guess_score(self):

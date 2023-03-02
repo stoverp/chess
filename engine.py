@@ -4,6 +4,7 @@ from core import Board
 from display import display_coords_to_screen, get_square
 from enums import PieceType, PlayerType, PlayerColor
 from move import Move
+from logging import debug
 
 
 class SelectedPiece:
@@ -20,6 +21,12 @@ class SelectedPiece:
 
   def update_screen_pos(self, display_pos):
     self.screen_pos = display_coords_to_screen(display_pos)
+
+  def lookup_legal_move(self, move):
+    for legal_move in self.legal_moves:
+      if move == legal_move:
+        return legal_move
+    return None
 
 
 class Engine:
@@ -78,10 +85,10 @@ class Engine:
             promote_type=self.get_user_promote_type())
         else:
           move = Move(self.game_state.selected_piece.piece, rank, file, self.game_state)
-        if move in self.game_state.selected_piece.legal_moves:
-          self.make_move(move)
+        if legal_move := self.game_state.selected_piece.lookup_legal_move(move):
+          self.make_move(legal_move)
         else:
-          print(f"attempted move to ({rank}, {file}) is illegal for {self.game_state.selected_piece}!")
+          debug(f"attempted move to ({rank}, {file}) is illegal for {self.game_state.selected_piece}!")
         self.game_state.selected_piece = None
     elif event.type == pg.MOUSEMOTION:
       if self.game_state.selected_piece:

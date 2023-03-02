@@ -14,7 +14,7 @@ from game_state import GameState
 
 
 class Globals:
-  quiet = False
+  verbose = False
 
 
 def san_to_index(rank_string, file_string):
@@ -78,6 +78,7 @@ def make_move(player_color, move_string, game_state, engine, openings, board_dis
   debug(f"found {player_color} move for string {move_string}:\n\t{move}")
   openings[game_state.board.zobrist_key].append((move_string, copy.deepcopy(move)))
   engine.make_move(move)
+  debug(f"FEN after move: {game_state.generate_fen()}")
   if board_display:
     return wait_for_key(board_display)
   else:
@@ -92,7 +93,7 @@ def start_game(interactive):
 
 
 def debug(message):
-  if not Globals.quiet:
+  if Globals.verbose:
     print(message)
 
 
@@ -110,17 +111,16 @@ def process_games(file, interactive):
         print(f"GAME #{n_games}")
         print("=======\n")
         game_state, board_display, engine = start_game(interactive)
-        # if n_games > 3:
-        #   return openings
-      move_tuples = re.findall(r"(\d+)\.([\w\-+]+) ([\w\-+]+)", text)
-      for move_number, white_move_string, black_move_string in move_tuples:
-        debug(f"\nMOVE #{move_number}")
-        if not make_move(PlayerColor.WHITE, white_move_string, game_state, engine, openings, board_display):
-          pg.quit()
-          return openings
-        if not make_move(PlayerColor.BLACK, black_move_string, game_state, engine, openings, board_display):
-          pg.quit()
-          return openings
+      if n_games == 25:
+        move_tuples = re.findall(r"(\d+)\.([\w\-+]+) ([\w\-+]+)", text)
+        for move_number, white_move_string, black_move_string in move_tuples:
+          debug(f"\nMOVE #{move_number}")
+          if not make_move(PlayerColor.WHITE, white_move_string, game_state, engine, openings, board_display):
+            pg.quit()
+            return openings
+          if not make_move(PlayerColor.BLACK, black_move_string, game_state, engine, openings, board_display):
+            pg.quit()
+            return openings
   return openings
 
 
@@ -139,9 +139,9 @@ if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("file")
   parser.add_argument("--interactive", action="store_true")
-  parser.add_argument("--quiet", action="store_true")
+  parser.add_argument("--verbose", action="store_true")
   args = parser.parse_args()
-  Globals.quiet = args.quiet
+  Globals.verbose = args.verbose
   openings = process_games(args.file, args.interactive)
   json_openings = to_json(openings)
   output_file = os.path.splitext(args.file)[0] + ".json"
