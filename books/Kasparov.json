@@ -454,5 +454,566 @@
       "score_guess": 0,
       "move_string": "c5"
     }
+  ],
+  "8176557340043171992": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 2
+      },
+      "score_guess": 800,
+      "move_string": "dxc6"
+    }
+  ],
+  "238212195283816061": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 6,
+        "file": 1
+      },
+      "rank": 5,
+      "file": 2,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 1,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 5,
+        "file": 2
+      },
+      "score_guess": 900,
+      "move_string": "bxc6"
+    }
+  ],
+  "15302367971145920144": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 1,
+        "file": 1
+      },
+      "rank": 3,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "b4"
+    }
+  ],
+  "8225820894029679006": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 7,
+        "file": 2
+      },
+      "rank": 5,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Be6"
+    }
+  ],
+  "4339794918077503982": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 0,
+        "file": 4
+      },
+      "rank": 0,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": {
+        "piece": {
+          "player_color": "white",
+          "type": "r",
+          "rank": 0,
+          "file": 7
+        },
+        "rank": 0,
+        "file": 5,
+        "promote_type": null,
+        "old_rank": 0,
+        "old_file": 7,
+        "move_type": 4,
+        "castling_rook_move": null,
+        "captured_piece": null,
+        "score_guess": 0
+      },
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "O-O"
+    }
+  ],
+  "8656693328487637757": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 7,
+        "file": 1
+      },
+      "rank": 6,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd7"
+    }
+  ],
+  "6475811441699571479": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 1,
+        "file": 3
+      },
+      "rank": 2,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nb3"
+    }
+  ],
+  "5375932651098092368": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 3,
+        "file": 6
+      },
+      "rank": 1,
+      "file": 7,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 6,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 1,
+        "file": 7
+      },
+      "score_guess": 700,
+      "move_string": "Nxh2"
+    }
+  ],
+  "6960611046428184357": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "k",
+        "rank": 0,
+        "file": 6
+      },
+      "rank": 1,
+      "file": 7,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 6,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 1,
+        "file": 7
+      },
+      "score_guess": 3000,
+      "move_string": "Kxh2"
+    }
+  ],
+  "15732350102460479112": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 5,
+        "file": 6
+      },
+      "rank": 4,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 6,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "g5"
+    }
+  ],
+  "6330482668431806453": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 2,
+        "file": 1
+      },
+      "rank": 4,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 1,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Na5"
+    }
+  ],
+  "14659071485016045845": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "n",
+        "rank": 6,
+        "file": 3
+      },
+      "rank": 7,
+      "file": 1,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nb8"
+    }
+  ],
+  "16902870716584975615": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 7
+      },
+      "rank": 2,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 7,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bg3"
+    }
+  ],
+  "8374615074155570005": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 7
+      },
+      "rank": 3,
+      "file": 7,
+      "promote_type": null,
+      "old_rank": 4,
+      "old_file": 7,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "h4"
+    }
+  ],
+  "16153015036159892564": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 1,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 4,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Bg4"
+    }
+  ],
+  "13904314528596049736": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 5,
+        "file": 4
+      },
+      "rank": 3,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 4,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 3,
+        "file": 6
+      },
+      "score_guess": 2880,
+      "move_string": "Bxg4"
+    }
+  ],
+  "4134346830009140496": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "q",
+        "rank": 0,
+        "file": 3
+      },
+      "rank": 3,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 3,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "b",
+        "rank": 3,
+        "file": 6
+      },
+      "score_guess": 2300,
+      "move_string": "Qxg4"
+    }
+  ],
+  "16180423111280488469": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 3,
+        "file": 7
+      },
+      "rank": 2,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 7,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "white",
+        "type": "b",
+        "rank": 2,
+        "file": 6
+      },
+      "score_guess": 3100,
+      "move_string": "hxg3+"
+    }
+  ],
+  "1217003947912956632": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 1,
+        "file": 5
+      },
+      "rank": 2,
+      "file": 6,
+      "promote_type": null,
+      "old_rank": 1,
+      "old_file": 5,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 2,
+        "file": 6
+      },
+      "score_guess": 900,
+      "move_string": "fxg3"
+    }
+  ],
+  "8197947321926858549": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 6,
+        "file": 0
+      },
+      "rank": 5,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 6,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "a6"
+    }
+  ],
+  "16701665132987396628": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 2,
+        "file": 2
+      },
+      "rank": 0,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 2,
+      "old_file": 2,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Nd1"
+    }
+  ],
+  "4982195218475990526": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 5,
+        "file": 3
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 5,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": -100,
+      "move_string": "d5"
+    }
+  ],
+  "546629584115630804": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "n",
+        "rank": 0,
+        "file": 3
+      },
+      "rank": 2,
+      "file": 4,
+      "promote_type": null,
+      "old_rank": 0,
+      "old_file": 3,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ne3"
+    }
+  ],
+  "12684357088495376988": [
+    {
+      "piece": {
+        "player_color": "black",
+        "type": "r",
+        "rank": 7,
+        "file": 0
+      },
+      "rank": 6,
+      "file": 0,
+      "promote_type": null,
+      "old_rank": 7,
+      "old_file": 0,
+      "move_type": 4,
+      "castling_rook_move": null,
+      "captured_piece": null,
+      "score_guess": 0,
+      "move_string": "Ra7"
+    }
+  ],
+  "13364634200862091432": [
+    {
+      "piece": {
+        "player_color": "white",
+        "type": "p",
+        "rank": 3,
+        "file": 2
+      },
+      "rank": 4,
+      "file": 3,
+      "promote_type": null,
+      "old_rank": 3,
+      "old_file": 2,
+      "move_type": 3,
+      "castling_rook_move": null,
+      "captured_piece": {
+        "player_color": "black",
+        "type": "p",
+        "rank": 4,
+        "file": 3
+      },
+      "score_guess": 900,
+      "move_string": "cxd5"
+    }
   ]
 }

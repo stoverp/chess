@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from math import copysign
 
-from core import Board, Piece
+from core import Board
 from enums import PieceType
 
 
@@ -36,6 +36,8 @@ class Move:
         self.captured_piece = game_state.board[rank][file]
       if not self.score_guess:
         self.score_guess = self.guess_score()
+    self.en_passant_target_square = self.compute_en_passant()
+    self.previous_en_passant_target_square = self.game_state.en_passant_target_square
 
   def __str__(self):
     return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file}, promote_type={self.promote_type})"
@@ -68,7 +70,6 @@ class Move:
   @staticmethod
   def from_json(json, game_state):
     return Move(
-      # Piece.from_json(json['piece']),
       game_state.board[json['old_rank']][json['old_file']],
       json['rank'],
       json['file'],
@@ -77,7 +78,6 @@ class Move:
       json['move_type'],
       game_state.board[json['captured_piece']['rank']][json['captured_piece']['file']]
           if json['captured_piece'] else None,
-      # Piece.from_json(json['captured_piece']) if json['captured_piece'] else None,
       json['score_guess'])
 
   def get_type(self):
@@ -98,11 +98,7 @@ class Move:
       # do this explicitly to handle en passant captures (new piece doesn't cover captured square)
       self.game_state.board[self.captured_piece.rank][self.captured_piece.file] = None
     # track en passant possibility
-    self.game_state.previous_move_en_passant_target_square = self.game_state.en_passant_target_square
-    if self.piece.type is PieceType.PAWN and abs(self.rank - self.old_rank) == 2:
-      self.game_state.en_passant_target_square = (self.rank - int(copysign(1, self.rank - self.old_rank)), self.file)
-    else:
-      self.game_state.en_passant_target_square = None
+    self.game_state.en_passant_target_square = self.en_passant_target_square
     self.piece.rank = self.rank
     self.piece.file = self.file
     if self.promote_type:
@@ -128,7 +124,7 @@ class Move:
     if self.promote_type:
       self.piece.update_type(PieceType.PAWN, self.game_state.players[self.piece.player_color].pieces)
     # revert en passant possibility
-    self.game_state.en_passant_target_square = self.game_state.previous_move_en_passant_target_square
+    self.game_state.en_passant_target_square = self.previous_en_passant_target_square
     # return piece to starting square
     self.piece.rank = self.old_rank
     self.piece.file = self.old_file
@@ -157,3 +153,9 @@ class Move:
     if self.game_state.players[self.piece.player_color.opponent].attack_board.pawn_board[self.rank][self.file]:
       score_guess -= self.piece.type.score
     return score_guess
+
+  def compute_en_passant(self):
+    if self.piece.type is PieceType.PAWN and abs(self.rank - self.old_rank) == 2:
+      return self.rank - int(copysign(1, self.rank - self.old_rank)), self.file
+    else:
+      return None
