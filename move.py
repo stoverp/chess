@@ -27,16 +27,6 @@ class Move:
     self.old_rank = piece.rank
     self.old_file = piece.file
     self.castling_rook_move = None
-    # if we already know the move type, we're initializing the move from a known board state
-    # if move_type:
-    #   self.move_type = move_type
-    #   self.captured_piece = captured_piece
-    #   self.score_guess = score_guess
-    # else:
-    #   self.move_type = self.get_type()
-    #   if self.move_type in MoveType.legal_types():
-    #     self.captured_piece = game_state.board[rank][file]
-    #     self.score_guess = self.guess_score()
     self.move_type = move_type or self.get_type()
     self.captured_piece = captured_piece
     self.score_guess = score_guess
@@ -48,7 +38,7 @@ class Move:
         self.score_guess = self.guess_score()
 
   def __str__(self):
-    return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file})"
+    return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file}, promote_type={self.promote_type})"
 
   def __repr__(self):
     return str(self)
@@ -56,7 +46,7 @@ class Move:
   def __eq__(self, other):
     if not other:
       return False
-    return self.piece == other.piece and self.rank == other.rank and self.file == other.file
+    return self.piece == other.piece and self.promote_type == other.promote_type and self.rank == other.rank and self.file == other.file
 
   def __hash__(self):
     return hash(repr(self))
