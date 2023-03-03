@@ -19,7 +19,6 @@ class Globals:
 
 
 def parse_move(move_string, game_state):
-  # todo: handle en passant and promotion
   piece_type_abbrs = ''.join(piece_types_by_san_format.keys())
   if move_string.startswith('O-O'):
     # castling! king-side is 'O-O', queen-side is 'O-O-O'
@@ -77,10 +76,7 @@ def make_move(player_color, move_string, game_state, engine, openings, board_dis
   openings[game_state.board.zobrist_key].append((move_string, copy.deepcopy(move)))
   engine.make_move(move)
   debug(f"FEN after move: {game_state.generate_fen()}")
-  if pause:
-    return wait_for_key(board_display)
-  else:
-    return True
+  return wait_for_key(board_display) if pause else True
 
 
 def start_game(pause_at_move, interactive):
@@ -109,7 +105,7 @@ def process_games(file, game, pause_at_move, interactive):
         print(f"GAME #{n_games}")
         print("=======\n")
         game_state, board_display, engine = start_game(pause_at_move, interactive)
-      if game is None or n_games == game:
+      if game is None or n_games >= game:
         print(text)
         move_tuples = re.findall(r"(\d+)\.([\w\-+=]+) ([\w\-+=]+)", text)
         for move_number_string, white_move_string, black_move_string in move_tuples:

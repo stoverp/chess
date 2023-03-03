@@ -17,7 +17,9 @@ class MoveGenerator:
   def include_promotion_moves(self, move):
     moves = set()
     if self.is_promoting_pawn(move.piece, move.rank):
-      for promote_type in [PieceType.QUEEN, PieceType.KNIGHT]:
+      # todo: generating all promotion pieces might cause performance issues
+      # we need to support it for rare book games, but could handle in book_processor only
+      for promote_type in [PieceType.QUEEN, PieceType.KNIGHT, PieceType.ROOK, PieceType.BISHOP]:
         moves.add(Move(move.piece, move.rank, move.file, self.game_state, promote_type=promote_type))
     else:
       moves.add(move)

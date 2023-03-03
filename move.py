@@ -121,6 +121,8 @@ class Move:
     self.game_state.board.update_zobrist_key(self)
 
   def unapply(self):
+    if self.castling_rook_move:
+      self.castling_rook_move.unapply()
     if self.promote_type:
       self.piece.update_type(PieceType.PAWN, self.game_state.players[self.piece.player_color].pieces)
     # revert en passant possibility
@@ -136,8 +138,6 @@ class Move:
       # do this explicitly to handle en passant captures (new piece doesn't cover captured square)
       self.game_state.board[self.captured_piece.rank][self.captured_piece.file] = self.captured_piece
     self.piece.n_times_moved -= 1
-    if self.castling_rook_move:
-      self.castling_rook_move.unapply()
     # apply same update to key to revert move
     self.game_state.board.update_zobrist_key(self)
 
