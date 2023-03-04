@@ -1,8 +1,8 @@
 from sortedcontainers import SortedList
 
-from enums import PieceType
+from enums import PieceType, PlayerColor
 from move import Move, MoveType
-
+from logging import Logging
 
 ROOK_DIRECTIONS = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 BISHOP_DIRECTIONS = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
@@ -91,6 +91,7 @@ class MoveGenerator:
     return moves
 
   def castling_moves(self, king, filter_checks):
+    Logging.debug("finding legal castle moves")
     moves = set()
     if king.n_times_moved == 0:
       player = self.game_state.players[king.player_color]
@@ -99,13 +100,18 @@ class MoveGenerator:
           can_castle = True
           new_file = king.file + 2 if rook.file - king.file > 0 else king.file - 2
           small_file, big_file = sorted([king.file, rook.file])
+          move = Move(king, king.rank, new_file, self.game_state)
           for file_between in range(small_file + 1, big_file):
             if self.game_state.board[king.rank][file_between]:
+              Logging.debug(f"piece between king and rook, castle move invalid:\n\t{move}")
               can_castle = False
               break
           if can_castle:
             if filter_checks:
               if player.in_check():
+                print('hi')
+                Logging.debug(f"player currently in check, castle move invalid:\n\t{move}")
+                # self.game_state.players[PlayerColor.WHITE].refresh_attack_board()
                 can_castle = False
               else:
                 # make a fake king move to the space between
@@ -117,10 +123,11 @@ class MoveGenerator:
                 fake_move.apply()
                 if player.in_check():
                   # player would be castling through check
+                  Logging.debug(f"middle square in check, castle move invalid:\n\t{move}")
                   can_castle = False
                 fake_move.unapply()
             if can_castle:
-              moves.add(Move(king, king.rank, new_file, self.game_state))
+              moves.add(move)
     return moves
 
   def generate_king_moves(self, king, filter_checks=True, captures_only=False):
@@ -150,8 +157,7 @@ class MoveGenerator:
       for move in moves:
         move.apply()
         if filter_checks and player.in_check():
-          # print(f"{move} not legal, puts {player.player_color} in check!")
-          pass
+          Logging.debug(f"{move} not legal, puts {player.player_color} in check!")
         else:
           legal_moves.append(move)
         move.unapply()

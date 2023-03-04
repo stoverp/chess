@@ -4,7 +4,7 @@ from core import Board
 from display import display_coords_to_screen, get_square
 from enums import PieceType, PlayerType, PlayerColor
 from move import Move
-from logging import debug, Logging
+from logging import Logging
 
 
 class SelectedPiece:
@@ -37,11 +37,11 @@ class Engine:
   def make_move(self, move):
     move.apply()
     self.game_state.move_history.append(move)
-    # todo: this call is just to update the last player's attack map, so it's correct for the opponent
     # Globals.active_player().refresh_legal_moves()
-    self.game_state.active_player().refresh_attack_board()
     self.game_state.active_player_color = self.game_state.active_player_color.opponent
     self.game_state.active_player().refresh_legal_moves()
+    # todo: this call is just to update the last player's attack map, so it's correct for the opponent
+    self.game_state.active_player().opponent().refresh_attack_board()
     if Logging.verbose:
       self.print_stats()
 
@@ -89,7 +89,7 @@ class Engine:
         if legal_move := self.game_state.selected_piece.lookup_legal_move(move):
           self.make_move(legal_move)
         else:
-          debug(f"attempted move to ({rank}, {file}) is illegal for {self.game_state.selected_piece}!")
+          Logging.debug(f"attempted move to ({rank}, {file}) is illegal for {self.game_state.selected_piece}!")
         self.game_state.selected_piece = None
     elif event.type == pg.MOUSEMOTION:
       if self.game_state.selected_piece:

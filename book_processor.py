@@ -12,22 +12,28 @@ from display import BoardDisplay
 from engine import Engine
 from enums import PlayerType, piece_types_by_san_format, PieceType, PlayerColor
 from game_state import GameState
+from logging import Logging
 
 
-class Globals:
-  verbose = False
+def find_legal_castles(king_side, game_state):
+  king = game_state.active_player().find(PieceType.KING)
+  rook = game_state.active_player().find_rook(king_side=king_side)
+  for move in game_state.generate_legal_moves(king):
+    if move.castling_rook_move and move.castling_rook_move.piece == rook:
+      return move
+  return None
 
 
 def parse_move(move_string, game_state):
   piece_type_abbrs = ''.join(piece_types_by_san_format.keys())
   if move_string.startswith('O-O'):
     # castling! king-side is 'O-O', queen-side is 'O-O-O'
-    king = game_state.active_player().find(PieceType.KING)
-    rook = game_state.active_player().find_rook(king_side=move_string == 'O-O')
-    for move in game_state.generate_legal_moves(king):
-      if move.castling_rook_move and move.castling_rook_move.piece == rook:
-        return move
-    raise Exception(f"can't find valid move for move string: {move_string}")
+    move = find_legal_castles(move_string == 'O-O', game_state)
+    if not move:
+      # find_legal_castles(move_string == 'O-O', game_state)
+      raise Exception(f"can't find valid move for move string: {move_string}")
+    else:
+      return move
   elif match := re.match(rf"([{piece_type_abbrs}]?)([a-h]?)(\d?)x?([a-h])(\d)\+?(=[{piece_type_abbrs}])?", move_string):
     piece_type = piece_types_by_san_format.get(match.group(1), None)
     from_rank, from_file = san_to_index(match.group(3), match.group(2))
@@ -49,7 +55,7 @@ def parse_move(move_string, game_state):
     if len(candidates) == 0:
       raise Exception(f"can't find valid move for move string: {move_string}")
     elif len(candidates) > 1:
-      debug(f"move string {move_string} has more than one candidate: {candidates}")
+      Logging.debug(f"move string {move_string} has more than one candidate: {candidates}")
       for candidate in candidates:
         if candidate.piece.type is PieceType.PAWN:
           return candidate
@@ -71,11 +77,13 @@ def wait_for_key(board_display):
 
 
 def make_move(player_color, move_string, game_state, engine, openings, board_display, pause=False):
+  # todo: this is a hack to resolve rare case where castling is disallowed due to erroneous "king in check" state
+  # game_state.active_player().opponent().refresh_attack_board()
   move = parse_move(move_string, game_state)
-  debug(f"found {player_color} move for string {move_string}:\n\t{move}")
+  Logging.debug(f"found {player_color} move for string {move_string}:\n\t{move}")
   openings[game_state.board.zobrist_key].append((move_string, copy.deepcopy(move)))
   engine.make_move(move)
-  debug(f"FEN after move: {game_state.generate_fen()}")
+  Logging.debug(f"FEN after move: {game_state.generate_fen()}")
   return wait_for_key(board_display) if pause else True
 
 
@@ -84,11 +92,6 @@ def start_game(pause_at_move, interactive):
   board_display = BoardDisplay(game_state) if (pause_at_move is not None or interactive) else None
   engine = Engine(game_state, board_display)
   return game_state, board_display, engine
-
-
-def debug(message):
-  if Globals.verbose:
-    print(message)
 
 
 def process_games(file, game, pause_at_move, interactive):
@@ -110,7 +113,7 @@ def process_games(file, game, pause_at_move, interactive):
         move_tuples = re.findall(r"(\d+)\.([\w\-+=]+) ([\w\-+=]+)", text)
         for move_number_string, white_move_string, black_move_string in move_tuples:
           move_number = int(move_number_string)
-          debug(f"\nMOVE #{move_number}")
+          Logging.debug(f"\nMOVE #{move_number}")
           pause = interactive or (pause_at_move is not None and move_number >= pause_at_move)
           if not make_move(PlayerColor.WHITE, white_move_string, game_state, engine, openings, board_display, pause):
             pg.quit()
@@ -139,9 +142,14 @@ if __name__ == "__main__":
   parser.add_argument("--pause-at-move", type=int)
   parser.add_argument("--interactive", action="store_true")
   parser.add_argument("--verbose", action="store_true")
+  parser.add_argument("--repeat-forever", action="store_true")
   args = parser.parse_args()
-  Globals.verbose = args.verbose
-  openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
+  Logging.verbose = args.verbose
+  if args.repeat_forever:
+    while True:
+      openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
+  else:
+    openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
   json_openings = to_json(openings)
   output_file = os.path.splitext(args.file)[0] + ".json"
   with open(output_file, "w") as f:
