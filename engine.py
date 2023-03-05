@@ -39,8 +39,6 @@ class Engine:
     self.game_state.move_history.append(move)
     self.game_state.active_player_color = self.game_state.active_player_color.opponent
     self.game_state.active_player().refresh_legal_moves()
-    if Logging.verbose:
-      self.print_stats()
 
   def undo_last_move(self):
     if self.game_state.move_history:
@@ -83,6 +81,7 @@ class Engine:
           move = Move(self.game_state.selected_piece.piece, rank, file, self.game_state)
         if legal_move := self.game_state.selected_piece.lookup_legal_move(move):
           self.make_move(legal_move)
+          self.print_stats()
         else:
           Logging.debug(f"attempted move to ({rank}, {file}) is illegal for {self.game_state.selected_piece}!")
         self.game_state.selected_piece = None

@@ -6,6 +6,7 @@ from enums import PlayerColor, PieceType
 def random_64bits():
   return random.getrandbits(64)
 
+EN_PASSANT_DISALLOWED_INDEX = 8
 
 class Zobrist:
   random.seed(2361912)
@@ -14,7 +15,8 @@ class Zobrist:
     for piece_type in PieceType:
       pieces[color][piece_type] = [[random_64bits() for _ in range(8)] for _ in range(8)]
   black_to_move = random_64bits()
-  castling_rights = [random_64bits() for _ in range(12)]
+  castling_rights = [random_64bits() for _ in range(16)]
+  # 8 files + one more to represent "en passant disallowed"
   en_passant_file = [random_64bits() for _ in range(9)]
 
   @classmethod
@@ -46,5 +48,27 @@ class Zobrist:
     # add new piece position
     key ^= Zobrist.get_piece_hash(move.piece, move.rank, move.file)
     key ^= Zobrist.black_to_move
-    # todo: handle castling rights and en passant
+    key ^= Zobrist.en_passant_file_hash(move.previous_en_passant_target_square)
+    key ^= Zobrist.en_passant_file_hash(move.en_passant_target_square)
+    key ^= Zobrist.castling_hash(move.original_castling_fen)
+    key ^= Zobrist.castling_hash(move.castling_fen_after_move)
     return key
+
+  @classmethod
+  def en_passant_file_hash(cls, square):
+    return Zobrist.en_passant_file[square[1]] if square is not None else \
+      Zobrist.en_passant_file[EN_PASSANT_DISALLOWED_INDEX]
+
+  @classmethod
+  def castling_hash(cls, castle_fen):
+    if castle_fen == "-":
+      return Zobrist.castling_rights[0]
+    fen_index = 0
+    result = 0
+    for right_index, right in enumerate("KQkq"):
+      if castle_fen[fen_index] == right:
+        result += 2 ** right_index
+        fen_index += 1
+        if fen_index == len(castle_fen):
+          return Zobrist.castling_rights[result]
+    return Zobrist.castling_rights[result]

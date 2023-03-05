@@ -164,16 +164,12 @@ class MoveGenerator:
       return moves
 
   def generate_and_mark_all_legal_moves(self, active_player_color, filter_checks=True, captures_only=False):
-    # todo: try going back to this approach; it's cleaner and attack maps currently aren't handling stuff like pins
-    # player.reset_attack_maps()
     player = self.game_state.players[active_player_color]
     # keep move list in sorted order by score guess
     all_legal_moves = SortedList(key=lambda t: t[0])
     for pieces in player.pieces.values():
       for piece in pieces:
         for move in self.generate_legal_moves(piece, filter_checks, captures_only):
-          # if piece.type is not PieceType.PAWN or move.move_type is MoveType.CAPTURE:
-          #   player.attack_board[move.rank][move.file] = True
           all_legal_moves.add((move.score_guess, move))
     # return high scores first
     return [move for score_guess, move in reversed(all_legal_moves)]

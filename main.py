@@ -14,6 +14,7 @@ def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, 
   board_display = BoardDisplay(game_state)
   engine = Engine(game_state, board_display)
   running = True
+  engine.print_stats()
   while running:
     if not game_state.active_player().legal_moves:
       engine.endgame()
@@ -21,6 +22,7 @@ def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, 
     if game_state.active_player().player_type is PlayerType.ROBOT:
       move = game_state.best_move()
       engine.make_move(move)
+      engine.print_stats()
     else:
       for event in pg.event.get():
         if not engine.handle_event(event):

@@ -64,14 +64,14 @@ class GameState:
         # king definitely hasn't moved
         self.players[piece_color].find(PieceType.KING).n_times_moved = 0
         # find and mark appropriate rook ("k"-side or "q"-side)
-        self.players[piece_color].find_rook(king_side=piece_type is PieceType.KING).n_times_moved = 0
+        self.players[piece_color].find_castling_rook(king_side=piece_type is PieceType.KING).n_times_moved = 0
 
   def generate_castling_ability_fen(self):
     castling_ability = ""
     for color in PlayerColor:
       if self.players[color].find(PieceType.KING).n_times_moved == 0:
         for char, king_side in [("k", True), ("q", False)]:
-          rook = self.players[color].find_rook(king_side)
+          rook = self.players[color].find_castling_rook(king_side)
           if rook and rook.n_times_moved == 0:
             castling_ability += char.upper() if color is PlayerColor.WHITE else char
     return castling_ability or "-"

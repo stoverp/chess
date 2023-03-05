@@ -18,7 +18,7 @@ from logging import Logging
 
 def find_legal_castles(king_side, game_state):
   king = game_state.active_player().find(PieceType.KING)
-  rook = game_state.active_player().find_rook(king_side=king_side)
+  rook = game_state.active_player().find_castling_rook(king_side=king_side)
   for move in game_state.generate_legal_moves(king):
     if move.castling_rook_move and move.castling_rook_move.piece == rook:
       return move
@@ -80,14 +80,15 @@ def wait_for_key(board_display):
 
 
 def make_move(player_color, move_string, game_state, engine, openings, board_display, pause=False):
-  # todo: this is a hack to resolve rare case where castling is disallowed due to erroneous "king in check" state
-  # game_state.active_player().opponent().refresh_attack_board()
+  if pause:
+    if not wait_for_key(board_display):
+      return False
   move = parse_move(move_string, game_state)
   Logging.debug(f"found {player_color} move for string {move_string}:\n\t{move}")
   openings[game_state.board.zobrist_key].append((move_string, copy.deepcopy(move)))
   engine.make_move(move)
-  Logging.debug(f"FEN after move: {game_state.generate_fen()}")
-  return wait_for_key(board_display) if pause else True
+  # engine.print_stats()
+  return True
 
 
 def start_game(pause_at_move, interactive):
@@ -97,7 +98,7 @@ def start_game(pause_at_move, interactive):
   return game_state, board_display, engine
 
 
-def process_games(file, game, pause_at_move, interactive):
+def process_games(file, game, limit, pause_at_move, interactive):
   openings = defaultdict(list)
   skipped_games = 0
   n_games = 0
@@ -109,11 +110,14 @@ def process_games(file, game, pause_at_move, interactive):
           continue
         elif text.startswith("1."):
           n_games += 1
+          if n_games > limit:
+            break
           print(f"\nCURRENT TIME: {time.time() - start_time} SECONDS")
           print("=======")
           print(f"GAME #{n_games}")
           print("=======\n")
           game_state, board_display, engine = start_game(pause_at_move, interactive)
+          # engine.print_stats()
         if game is None or n_games >= game:
           print(text)
           move_tuples = re.findall(r"(\d+)\.([\w\-+=]+) ([\w\-+=]+)", text)
@@ -148,6 +152,7 @@ if __name__ == "__main__":
   parser = ArgumentParser()
   parser.add_argument("file")
   parser.add_argument("--game", type=int)
+  parser.add_argument("--limit", type=int)
   parser.add_argument("--pause-at-move", type=int)
   parser.add_argument("--interactive", action="store_true")
   parser.add_argument("--verbose", action="store_true")
@@ -157,9 +162,9 @@ if __name__ == "__main__":
   start_time = time.time()
   if args.repeat_forever:
     while True:
-      _, openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
+      _, openings = process_games(args.file, args.game, args.limit, args.pause_at_move, args.interactive)
   else:
-    skipped_games, openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
+    skipped_games, openings = process_games(args.file, args.game, args.limit, args.pause_at_move, args.interactive)
   print(f"\nFINISHED PROCESSING GAMES. SKIPPED {skipped_games} GAMES.")
   json_openings = to_json(openings)
   output_file = os.path.splitext(args.file)[0] + ".json"

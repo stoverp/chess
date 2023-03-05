@@ -38,6 +38,8 @@ class Move:
         self.score_guess = self.guess_score()
     self.en_passant_target_square = self.compute_en_passant()
     self.previous_en_passant_target_square = self.game_state.en_passant_target_square
+    self.original_castling_fen = self.game_state.generate_castling_ability_fen()
+    self.castling_fen_after_move = None
 
   def __str__(self):
     return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file}, promote_type={self.promote_type})"
@@ -111,12 +113,13 @@ class Move:
     if self.piece.type is PieceType.KING and abs(file_diff) == 2:
       is_king_side = file_diff == 2  # king moving two to the right
       self.castling_rook_move = Move(
-        player.find_rook(king_side=is_king_side),
+        player.find_castling_rook(king_side=is_king_side),
         self.piece.rank,
         self.piece.file - 1 if is_king_side else self.piece.file + 1,
         self.game_state
       )
       self.castling_rook_move.apply()
+    self.castling_fen_after_move = self.game_state.generate_castling_ability_fen()
     player.opponent().refresh_attack_board()
     self.game_state.board.update_zobrist_key(self)
 

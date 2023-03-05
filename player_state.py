@@ -17,9 +17,7 @@ class PlayerState:
     king = self.find(PieceType.KING)
     return self.game_state.players[self.player_color.opponent].attack_board[king.rank][king.file]
 
-  def find_rook(self, king_side: bool):
-    # warning: this currently returns None if a rook has been moved out of its home
-    # todo: okay for now since this method is only used for castling rights, but perhaps revisit
+  def find_castling_rook(self, king_side):
     for rook in self.pieces[PieceType.ROOK]:
       if king_side:
         if rook.file == 7:
