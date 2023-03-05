@@ -37,11 +37,8 @@ class Engine:
   def make_move(self, move):
     move.apply()
     self.game_state.move_history.append(move)
-    # Globals.active_player().refresh_legal_moves()
     self.game_state.active_player_color = self.game_state.active_player_color.opponent
     self.game_state.active_player().refresh_legal_moves()
-    # todo: this call is just to update the last player's attack map, so it's correct for the opponent
-    self.game_state.active_player().opponent().refresh_attack_board()
     if Logging.verbose:
       self.print_stats()
 
@@ -49,9 +46,6 @@ class Engine:
     if self.game_state.move_history:
       move = self.game_state.move_history.pop()
       move.unapply()
-      # todo: next line might be unnecessary
-      # self.active_player().refresh_legal_moves()
-      self.game_state.active_player().refresh_attack_board()
       self.game_state.active_player_color = self.game_state.active_player_color.opponent
       self.game_state.active_player().refresh_legal_moves()
       print(f"zobrist key after undo move: {self.game_state.board.zobrist_key}")
@@ -61,6 +55,7 @@ class Engine:
     print(f"\tzobrist key: {self.game_state.board.zobrist_key}")
     print(f"\tfen string: {self.game_state.generate_fen()}")
     print(f"\ttranspositions evaluated: {self.game_state.ai.transposition_table.n_transpositions_evaluated}")
+    # todo: print move history
 
   def get_user_promote_type(self):
     # todo: prompt for piece type
@@ -116,3 +111,18 @@ class Engine:
         self.board_display.toggle_pawn_attack_display(PlayerColor.BLACK)
     return True
 
+  def endgame(self):
+    print(f"GAME OVER!")
+    if self.game_state.active_player().in_check():
+      print(f"CHECKMATE: {self.game_state.active_player_color.opponent}")
+    else:
+      print(f"STALEMATE")
+    waiting = True
+    print("Press any key to exit.")
+    while waiting:
+      for event in pg.event.get():
+        if event.type == pg.KEYDOWN:
+          waiting = False
+        if event.type == pg.QUIT:
+          waiting = False
+        self.board_display.refresh()

@@ -2,6 +2,7 @@ import copy
 import json
 import os
 import re
+import time
 from argparse import ArgumentParser
 from collections import defaultdict
 
@@ -25,6 +26,7 @@ def find_legal_castles(king_side, game_state):
 
 
 def parse_move(move_string, game_state):
+  Logging.debug(f"evaluating {move_string} ...")
   piece_type_abbrs = ''.join(piece_types_by_san_format.keys())
   if move_string.startswith('O-O'):
     # castling! king-side is 'O-O', queen-side is 'O-O-O'
@@ -53,6 +55,7 @@ def parse_move(move_string, game_state):
             if promote_type is None or promote_type == move.promote_type:
               candidates.append(move)
     if len(candidates) == 0:
+      game_state.generate_all_legal_moves(game_state.active_player_color)
       raise Exception(f"can't find valid move for move string: {move_string}")
     elif len(candidates) > 1:
       Logging.debug(f"move string {move_string} has more than one candidate: {candidates}")
@@ -96,32 +99,38 @@ def start_game(pause_at_move, interactive):
 
 def process_games(file, game, pause_at_move, interactive):
   openings = defaultdict(list)
+  skipped_games = 0
   n_games = 0
   with open(file, "r") as f:
     for line in f.readlines():
-      text = line.strip()
-      if not text or text.startswith("["):
-        continue
-      elif text.startswith("1."):
-        n_games += 1
-        print("\n=======")
-        print(f"GAME #{n_games}")
-        print("=======\n")
-        game_state, board_display, engine = start_game(pause_at_move, interactive)
-      if game is None or n_games >= game:
-        print(text)
-        move_tuples = re.findall(r"(\d+)\.([\w\-+=]+) ([\w\-+=]+)", text)
-        for move_number_string, white_move_string, black_move_string in move_tuples:
-          move_number = int(move_number_string)
-          Logging.debug(f"\nMOVE #{move_number}")
-          pause = interactive or (pause_at_move is not None and move_number >= pause_at_move)
-          if not make_move(PlayerColor.WHITE, white_move_string, game_state, engine, openings, board_display, pause):
-            pg.quit()
-            return openings
-          if not make_move(PlayerColor.BLACK, black_move_string, game_state, engine, openings, board_display, pause):
-            pg.quit()
-            return openings
-  return openings
+      try:
+        text = line.strip()
+        if not text or text.startswith("["):
+          continue
+        elif text.startswith("1."):
+          n_games += 1
+          print(f"\nCURRENT TIME: {time.time() - start_time} SECONDS")
+          print("=======")
+          print(f"GAME #{n_games}")
+          print("=======\n")
+          game_state, board_display, engine = start_game(pause_at_move, interactive)
+        if game is None or n_games >= game:
+          print(text)
+          move_tuples = re.findall(r"(\d+)\.([\w\-+=]+) ([\w\-+=]+)", text)
+          for move_number_string, white_move_string, black_move_string in move_tuples:
+            move_number = int(move_number_string)
+            Logging.debug(f"\nMOVE #{move_number}")
+            pause = interactive or (pause_at_move is not None and move_number >= pause_at_move)
+            if not make_move(PlayerColor.WHITE, white_move_string, game_state, engine, openings, board_display, pause):
+              pg.quit()
+              return openings
+            if not make_move(PlayerColor.BLACK, black_move_string, game_state, engine, openings, board_display, pause):
+              pg.quit()
+              return openings
+      except Exception as e:
+        print(e)
+        skipped_games += 1
+  return skipped_games, openings
 
 
 def to_json(openings):
@@ -145,12 +154,15 @@ if __name__ == "__main__":
   parser.add_argument("--repeat-forever", action="store_true")
   args = parser.parse_args()
   Logging.verbose = args.verbose
+  start_time = time.time()
   if args.repeat_forever:
     while True:
-      openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
+      _, openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
   else:
-    openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
+    skipped_games, openings = process_games(args.file, args.game, args.pause_at_move, args.interactive)
+  print(f"\nFINISHED PROCESSING GAMES. SKIPPED {skipped_games} GAMES.")
   json_openings = to_json(openings)
   output_file = os.path.splitext(args.file)[0] + ".json"
   with open(output_file, "w") as f:
     json.dump(json_openings, f, default=lambda x: x.value, indent=2)
+  print(f"\n--- COMPLETED IN {time.time() - start_time} SECONDS ---")

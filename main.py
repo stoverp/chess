@@ -9,23 +9,6 @@ from game_state import GameState
 from logging import Logging
 
 
-def endgame(game_state, board_display):
-  print(f"GAME OVER!")
-  if game_state.active_player().in_check():
-    print(f"CHECKMATE: {game_state.active_player_color.opponent}")
-  else:
-    print(f"STALEMATE")
-  waiting = True
-  print("Press any key to exit.")
-  while waiting:
-    for event in pg.event.get():
-      if event.type == pg.KEYDOWN:
-        waiting = False
-      if event.type == pg.QUIT:
-        waiting = False
-      board_display.refresh()
-
-
 def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, book_file):
   game_state = GameState(white_player_type, black_player_type, search_depth, bonuses_file, fen, book_file)
   board_display = BoardDisplay(game_state)
@@ -33,7 +16,7 @@ def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, 
   running = True
   while running:
     if not game_state.active_player().legal_moves:
-      endgame(game_state, board_display)
+      engine.endgame()
       running = False
     if game_state.active_player().player_type is PlayerType.ROBOT:
       move = game_state.best_move()

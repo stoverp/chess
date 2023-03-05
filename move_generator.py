@@ -109,9 +109,7 @@ class MoveGenerator:
           if can_castle:
             if filter_checks:
               if player.in_check():
-                print('hi')
                 Logging.debug(f"player currently in check, castle move invalid:\n\t{move}")
-                # self.game_state.players[PlayerColor.WHITE].refresh_attack_board()
                 can_castle = False
               else:
                 # make a fake king move to the space between

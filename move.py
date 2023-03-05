@@ -138,6 +138,7 @@ class Move:
       # do this explicitly to handle en passant captures (new piece doesn't cover captured square)
       self.game_state.board[self.captured_piece.rank][self.captured_piece.file] = self.captured_piece
     self.piece.n_times_moved -= 1
+    self.game_state.players[self.piece.player_color].opponent().refresh_attack_board()
     # apply same update to key to revert move
     self.game_state.board.update_zobrist_key(self)
 
