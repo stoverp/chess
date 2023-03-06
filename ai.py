@@ -2,6 +2,7 @@ import math
 import random
 import time
 
+from enums import PlayerColor
 from transpositions import TranspositionTable, EvalType
 
 
@@ -19,8 +20,10 @@ class AI:
       for pieces in player.pieces.values():
         for piece in pieces:
           score += perspective * piece.type.score
-          square_bonus = self.game_state.lookup_bonus(piece.type, player.player_color, piece.rank, piece.file)
+          square_bonus = self.game_state.board.lookup_bonus(piece.type, player.player_color, piece.rank, piece.file)
           score += perspective * square_bonus
+    # todo: for debugging, ensure full computation equals incremental score
+    assert score == (1 if active_player_color is PlayerColor.WHITE else -1) * self.game_state.board.evaluation
     return score
 
   def quiesce(self, active_player_color, alpha, beta):

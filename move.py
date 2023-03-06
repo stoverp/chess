@@ -40,6 +40,7 @@ class Move:
     self.previous_en_passant_target_square = self.game_state.en_passant_target_square
     self.original_castling_fen = self.game_state.generate_castling_ability_fen()
     self.castling_fen_after_move = None
+    self.evaluation = None
 
   def __str__(self):
     return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file}, promote_type={self.promote_type})"
@@ -121,7 +122,8 @@ class Move:
       self.castling_rook_move.apply()
     self.castling_fen_after_move = self.game_state.generate_castling_ability_fen()
     player.opponent().refresh_attack_board()
-    self.game_state.board.update_zobrist_key(self)
+    self.evaluation = self.game_state.board.evaluate(self)
+    self.game_state.board.track(self)
 
   def unapply(self):
     if self.castling_rook_move:
@@ -143,7 +145,7 @@ class Move:
     self.piece.n_times_moved -= 1
     self.game_state.players[self.piece.player_color].opponent().refresh_attack_board()
     # apply same update to key to revert move
-    self.game_state.board.update_zobrist_key(self)
+    self.game_state.board.track(self, unapply=True)
 
   def guess_score(self):
     score_guess = 0

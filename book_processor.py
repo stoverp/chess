@@ -32,7 +32,6 @@ def parse_move(move_string, game_state):
     # castling! king-side is 'O-O', queen-side is 'O-O-O'
     move = find_legal_castles(move_string == 'O-O', game_state)
     if not move:
-      # find_legal_castles(move_string == 'O-O', game_state)
       raise Exception(f"can't find valid move for move string: {move_string}")
     else:
       return move
@@ -110,7 +109,7 @@ def process_games(file, game, limit, pause_at_move, interactive):
           continue
         elif text.startswith("1."):
           n_games += 1
-          if n_games > limit:
+          if limit is not None and n_games > limit:
             break
           print(f"\nCURRENT TIME: {time.time() - start_time} SECONDS")
           print("=======")

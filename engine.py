@@ -52,6 +52,7 @@ class Engine:
     print("\nCURRENT STATE")
     print(f"\tzobrist key: {self.game_state.board.zobrist_key}")
     print(f"\tfen string: {self.game_state.generate_fen()}")
+    print(f"\tboard eval: {self.game_state.board.evaluation}")
     print(f"\ttranspositions evaluated: {self.game_state.ai.transposition_table.n_transpositions_evaluated}")
     # todo: print move history
 

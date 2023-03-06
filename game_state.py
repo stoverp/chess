@@ -16,8 +16,7 @@ class GameState:
       PlayerColor.WHITE: PlayerState(PlayerColor.WHITE, white_player_type, self),
       PlayerColor.BLACK: PlayerState(PlayerColor.BLACK, black_player_type, self)
     }
-    self.board = Board()
-    self.bonuses = self.read_square_bonuses(bonuses_file) if bonuses_file else None
+    self.board = Board(bonuses_file, self)
     self.active_player_color = PlayerColor.WHITE
     self.selected_piece = None
     self.en_passant_target_square = None
@@ -51,6 +50,7 @@ class GameState:
     self.active_player_color = PlayerColor.WHITE if side_to_move == "w" else PlayerColor.BLACK
     self.init_castling_ability(castling_ability)
     self.init_en_passant_target_square(en_passant_target_square)
+    self.board.full_evaluation()
 
   def init_castling_ability(self, castling_ability):
     # first assume that nobody can castle by setting the king and rook move counts to something nonzero
@@ -101,33 +101,6 @@ class GameState:
   def parse_piece_char(self, piece_char):
     return PieceType(piece_char.lower()), PlayerColor.WHITE if piece_char.isupper() else PlayerColor.BLACK
 
-  def read_square_bonuses(self, square_bonuses_file):
-    current_piece = None
-    piece_bonuses = dict()
-    with open(square_bonuses_file, "r") as f:
-      for line in f.readlines():
-        text = line.strip()
-        if not text:
-          continue
-        if text.isalpha():
-          current_piece = PieceType(text)
-          piece_bonuses[current_piece] = []
-        else:
-          rank = [int(v) for v in re.split(r",\s*", text)]
-          piece_bonuses[current_piece].append(rank)
-    piece_bonuses_for_color = dict()
-    for piece, bonus_board in piece_bonuses.items():
-      piece_bonuses_for_color[piece] = dict()
-      piece_bonuses_for_color[piece][PlayerColor.BLACK] = piece_bonuses[piece]
-      piece_bonuses_for_color[piece][PlayerColor.WHITE] = self.flip_board(piece_bonuses[piece])
-    return piece_bonuses_for_color
-
-  def flip_board(self, board):
-    flipped_board = []
-    for rank in reversed(board):
-      flipped_board.append(rank)
-    return flipped_board
-
   def read_opening_book(self, book_file):
     print(f"loading opening book from '{book_file}' ...")
     opening_book = dict()
@@ -147,11 +120,6 @@ class GameState:
 
   def best_move(self):
     return self.ai.best_move()
-
-  def lookup_bonus(self, piece_type, player_color, rank, file):
-    if not self.bonuses:
-      return 0
-    return self.bonuses[piece_type][player_color][rank][file]
 
   def opening_moves(self):
     moves = []
