@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 
 import pygame as pg
+import pygame.display
 
 from display import BoardDisplay
 from engine import Engine
@@ -23,6 +24,7 @@ def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, 
       move = game_state.best_move()
       engine.make_move(move)
       engine.print_stats()
+      pygame.display.update()
     else:
       for event in pg.event.get():
         if not engine.handle_event(event):

@@ -14,17 +14,18 @@ class AI:
     self.n_moves_searched = 0
 
   def evaluate_board(self, active_player_color):
-    score = 0
-    for player in self.game_state.players.values():
-      perspective = 1 if player.player_color == active_player_color else -1
-      for pieces in player.pieces.values():
-        for piece in pieces:
-          score += perspective * piece.type.score
-          square_bonus = self.game_state.board.lookup_bonus(piece.type, player.player_color, piece.rank, piece.file)
-          score += perspective * square_bonus
-    # todo: for debugging, ensure full computation equals incremental score
-    assert score == (1 if active_player_color is PlayerColor.WHITE else -1) * self.game_state.board.evaluation
-    return score
+    # score = 0
+    # for player in self.game_state.players.values():
+    #   perspective = 1 if player.player_color == active_player_color else -1
+    #   for pieces in player.pieces.values():
+    #     for piece in pieces:
+    #       score += perspective * piece.type.score
+    #       square_bonus = self.game_state.board.lookup_bonus(piece.type, player.player_color, piece.rank, piece.file)
+    #       score += perspective * square_bonus
+    # # todo: for debugging, ensure full computation equals incremental score
+    # assert score == (1 if active_player_color is PlayerColor.WHITE else -1) * self.game_state.board.evaluation
+    # return score
+    return (1 if active_player_color is PlayerColor.WHITE else -1) * self.game_state.board.evaluation
 
   def quiesce(self, active_player_color, alpha, beta):
     score = self.evaluate_board(active_player_color)

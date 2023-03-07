@@ -123,6 +123,8 @@ class GameState:
 
   def opening_moves(self):
     moves = []
+    if not self.opening_book:
+      return moves
     for opening_move_json in self.opening_book.get(self.board.zobrist_key, []):
       moves.append(Move.from_json(opening_move_json, self))
     return moves

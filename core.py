@@ -86,6 +86,7 @@ class Board:
   def track(self, move, unapply=False):
     self.zobrist_key = Zobrist.update_key(self.zobrist_key, move)
     self.evaluation += (-1 if unapply else 1) * move.evaluation
+    # print(f"eval after {'un' if unapply else ''}applying move: {self.evaluation}\n\t{move}")
 
   # evaluate board score for white (take negative for black)
   def full_evaluation(self):
@@ -110,8 +111,9 @@ class Board:
     return self.piecewise_evaluation(piece.type, piece.player_color, piece.rank, piece.file)
 
   def evaluate(self, move):
+    old_type = PieceType.PAWN if move.promote_type else move.piece.type
     return self.piece_evaluation(move.piece) - \
-           self.piecewise_evaluation(move.piece.type, move.piece.player_color, move.old_rank, move.old_file) - \
+           self.piecewise_evaluation(old_type, move.piece.player_color, move.old_rank, move.old_file) - \
            self.piece_evaluation(move.captured_piece)
 
   @classmethod
