@@ -54,7 +54,7 @@ class Engine:
     print(f"\tfen string: {self.game_state.generate_fen()}")
     print(f"\tboard eval: {self.game_state.board.evaluation}")
     print(f"\ttranspositions evaluated: {self.game_state.ai.transposition_table.n_transpositions_evaluated}")
-    # todo: print move history
+    print(f"\tmove history: {self.format_move_history()}")
 
   def get_user_promote_type(self):
     # todo: prompt for piece type
@@ -126,3 +126,11 @@ class Engine:
         if event.type == pg.QUIT:
           waiting = False
         self.board_display.refresh()
+
+  def format_move_history(self):
+    result = ""
+    for move_index, half_move in enumerate(self.game_state.move_history):
+      if move_index % 2 == 0:
+        result += str((move_index // 2) + 1) + "."
+      result += half_move.san + " "
+    return result

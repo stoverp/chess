@@ -8,5 +8,13 @@ def san_to_index(rank_string, file_string):
   return rank, file
 
 
+def file_to_san(file):
+  return chr(ord('a') + file) if file is not None else ''
+
+
+def rank_to_san(rank):
+  return (rank + 1) if rank is not None else ''
+
+
 def index_to_san(rank, file):
-  return f"{chr(ord('a') + file)}{rank + 1}"
+  return f"{file_to_san(file)}{rank_to_san(rank)}"

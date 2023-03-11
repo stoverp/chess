@@ -2,6 +2,7 @@ from enum import Enum, auto
 from math import copysign
 
 from board import Board
+from core import index_to_san, file_to_san
 from enums import PieceType
 
 
@@ -41,6 +42,7 @@ class Move:
     self.original_castling_fen = self.game_state.generate_castling_ability_fen()
     self.castling_fen_after_move = None
     self.evaluation = None
+    self.san = None
 
   def __str__(self):
     return f"Move(piece={self.piece}, rank={self.rank}, file={self.file}, captured_piece={self.captured_piece}, old_rank={self.old_rank}, old_file={self.old_file}, promote_type={self.promote_type})"
@@ -55,6 +57,29 @@ class Move:
 
   def __hash__(self):
     return hash(repr(self))
+
+  def to_san(self, player):
+    n_legal_from_rank = 0
+    n_legal_from_file = 0
+    print_piece_symbol = self.captured_piece is not None
+    # todo: this needs to be rewritten around pawns
+    for legal_move in player.legal_moves:
+      if (self.rank, self.file) == (legal_move.rank, legal_move.file):
+        if self.piece.type != legal_move.piece.type:
+          print_piece_symbol = True
+        if self.old_rank == legal_move.old_rank:
+          n_legal_from_rank += 1
+        if self.old_file == legal_move.old_file:
+          n_legal_from_file += 1
+    from_san = index_to_san(
+      self.old_rank if n_legal_from_rank > 1 else None,
+      self.old_file if n_legal_from_file > 1 else None)
+    return (self.format_piece_symbol(self.old_file) if print_piece_symbol else '') + \
+           from_san + \
+           ('x' if self.captured_piece else '') + \
+           index_to_san(self.rank, self.file) + \
+           (('=' + self.promote_type.value.upper()) if self.promote_type else '')
+
 
   def to_json(self):
     return {
@@ -96,6 +121,8 @@ class Move:
 
   def apply(self):
     player = self.game_state.players[self.piece.player_color]
+    if not self.san:
+      self.san = self.to_san(player)
     if self.captured_piece:
       self.game_state.players[self.captured_piece.player_color].pieces[self.captured_piece.type].remove(self.captured_piece)
       # do this explicitly to handle en passant captures (new piece doesn't cover captured square)
@@ -165,3 +192,6 @@ class Move:
       return self.rank - int(copysign(1, self.rank - self.old_rank)), self.file
     else:
       return None
+
+  def format_piece_symbol(self, from_file):
+    return file_to_san(from_file) if self.piece.type is PieceType.PAWN else self.piece.type.value.upper()
