@@ -1,6 +1,6 @@
 import pygame as pg
 
-from core import Board
+from board import Board
 from display import display_coords_to_screen, get_square
 from enums import PieceType, PlayerType, PlayerColor
 from move import Move

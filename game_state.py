@@ -2,7 +2,9 @@ import json
 import re
 
 from ai import AI
-from core import Board, Piece, san_to_index, index_to_san
+from core import san_to_index, index_to_san
+from board import Board
+from piece import Piece
 from enums import PlayerColor, PieceType
 from move import Move
 from move_generator import MoveGenerator

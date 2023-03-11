@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from math import copysign
 
-from core import Board
+from board import Board
 from enums import PieceType
 
 

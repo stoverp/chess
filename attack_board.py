@@ -1,4 +1,5 @@
-from core import Board, empty_board_array
+from core import empty_board_array
+from board import Board
 from enums import PieceType
 from move_generator import ROOK_DIRECTIONS, BISHOP_DIRECTIONS
 
