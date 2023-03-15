@@ -2,7 +2,7 @@ from enum import Enum, auto
 from math import copysign
 
 from board import Board
-from core import index_to_san, file_to_san
+from core import index_to_san, file_to_san, rank_to_san
 from enums import PieceType
 
 
@@ -59,27 +59,11 @@ class Move:
     return hash(repr(self))
 
   def to_san(self, player):
-    n_legal_from_rank = 0
-    n_legal_from_file = 0
-    print_piece_symbol = self.captured_piece is not None
-    # todo: this needs to be rewritten around pawns
-    for legal_move in player.legal_moves:
-      if (self.rank, self.file) == (legal_move.rank, legal_move.file):
-        if self.piece.type != legal_move.piece.type:
-          print_piece_symbol = True
-        if self.old_rank == legal_move.old_rank:
-          n_legal_from_rank += 1
-        if self.old_file == legal_move.old_file:
-          n_legal_from_file += 1
-    from_san = index_to_san(
-      self.old_rank if n_legal_from_rank > 1 else None,
-      self.old_file if n_legal_from_file > 1 else None)
-    return (self.format_piece_symbol(self.old_file) if print_piece_symbol else '') + \
-           from_san + \
-           ('x' if self.captured_piece else '') + \
-           index_to_san(self.rank, self.file) + \
-           (('=' + self.promote_type.value.upper()) if self.promote_type else '')
-
+    if self.piece.type is PieceType.PAWN:
+      san = self.to_pawn_san()
+    else:
+      san = self.to_non_pawn_san(player)
+    return san + ('+' if player.opponent().in_check() else '')
 
   def to_json(self):
     return {
@@ -121,8 +105,6 @@ class Move:
 
   def apply(self):
     player = self.game_state.players[self.piece.player_color]
-    if not self.san:
-      self.san = self.to_san(player)
     if self.captured_piece:
       self.game_state.players[self.captured_piece.player_color].pieces[self.captured_piece.type].remove(self.captured_piece)
       # do this explicitly to handle en passant captures (new piece doesn't cover captured square)
@@ -149,8 +131,12 @@ class Move:
       self.castling_rook_move.apply()
     self.castling_fen_after_move = self.game_state.generate_castling_ability_fen()
     player.opponent().refresh_attack_board()
+    # todo: doing this for SAN in-check notation only, do we need it?
+    # player.refresh_attack_board()
     self.evaluation = self.game_state.board.evaluate(self)
     self.game_state.board.track(self)
+    if not self.san:
+      self.san = self.to_san(player)
 
   def unapply(self):
     if self.castling_rook_move:
@@ -193,5 +179,28 @@ class Move:
     else:
       return None
 
-  def format_piece_symbol(self, from_file):
-    return file_to_san(from_file) if self.piece.type is PieceType.PAWN else self.piece.type.value.upper()
+  def to_pawn_san(self):
+    return (file_to_san(self.old_file) if self.captured_piece else '') + \
+           ('x' if self.captured_piece else '') + \
+           index_to_san(self.rank, self.file) + \
+           (('=' + self.promote_type.value.upper()) if self.promote_type else '')
+
+  def to_non_pawn_san(self, player):
+    n_legal_from_rank = 1
+    n_legal_from_file = 1
+    for legal_move in player.legal_moves:
+      if legal_move.piece.type == self.piece.type and (self.rank, self.file) == (legal_move.rank, legal_move.file):
+        if self.old_rank != legal_move.old_rank:
+          n_legal_from_rank += 1
+        if self.old_file != legal_move.old_file:
+          n_legal_from_file += 1
+    if n_legal_from_file > 1:
+      from_san = file_to_san(self.old_file)
+    elif n_legal_from_rank > 1:
+      from_san = rank_to_san(self.old_rank)
+    else:
+      from_san = ''
+    return self.piece.type.value.upper() + \
+           from_san + \
+           ('x' if self.captured_piece else '') + \
+           index_to_san(self.rank, self.file)

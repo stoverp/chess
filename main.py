@@ -40,7 +40,6 @@ if __name__ == "__main__":
   parser.add_argument("--black-player", type=PlayerType, default=PlayerType.ROBOT)
   parser.add_argument("--square-bonuses-file", default="resources/piece_square_bonuses.txt")
   parser.add_argument("--fen")
-  # todo: book size causing OOM; limit book size
   parser.add_argument("--book-file")
   parser.add_argument("--verbose", action="store_true")
   args = parser.parse_args()

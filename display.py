@@ -37,7 +37,6 @@ class PieceSprites:
     return cls.sprites[piece.type][piece.player_color]
 
 
-# todo: display board coordinates
 class BoardDisplay:
   def __init__(self, game_state):
     pg.init()
@@ -73,7 +72,7 @@ class BoardDisplay:
             self.game_state.players[self.display_player_attacking].attack_board[rank][file]:
           color = ATTACKING_COLORS[square_type]
         elif self.display_pawn_attacks and \
-            self.game_state.players[self.display_pawn_attacks].pawn_attack_board[rank][file]:
+            self.game_state.players[self.display_pawn_attacks].attack_board.pawn_board[rank][file]:
           color = ATTACKING_COLORS[square_type]
         else:
           color = BACKGROUND_COLORS[square_type]
