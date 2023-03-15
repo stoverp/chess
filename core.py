@@ -13,7 +13,7 @@ def file_to_san(file):
 
 
 def rank_to_san(rank):
-  return (rank + 1) if rank is not None else ''
+  return str(rank + 1) if rank is not None else ''
 
 
 def index_to_san(rank, file):

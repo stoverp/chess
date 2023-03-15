@@ -6,6 +6,7 @@ from pygame.display import set_mode
 from pygame.image import load
 from pygame.rect import Rect
 
+from core import rank_to_san, file_to_san
 from enums import PieceType, PlayerColor
 from move import Move
 
@@ -39,15 +40,17 @@ class PieceSprites:
 # todo: display board coordinates
 class BoardDisplay:
   def __init__(self, game_state):
-    self.game_state = game_state
     pg.init()
+    self.game_state = game_state
     self.displayed_screen = set_mode((DISPLAY_WIDTH, DISPLAY_WIDTH), pg.RESIZABLE)
     self.screen = pg.Surface((BOARD_PIXEL_WIDTH, BOARD_PIXEL_WIDTH))
     self.display_player_attacking = None
     self.display_pawn_attacks = None
+    self.font = pg.font.SysFont(None, 18)
 
   def refresh(self):
     self.draw_squares()
+    self.draw_coordinates()
     self.draw_pieces()
     self.displayed_screen.blit(pg.transform.scale(self.screen, pg.display.get_window_size()), (0, 0))
     pg.display.flip()
@@ -56,7 +59,7 @@ class BoardDisplay:
     last_move = self.game_state.move_history[-1] if self.game_state.move_history else None
     for rank in range(8):
       for file in range(8):
-        square_type = (rank + file) % 2
+        square_type = (rank + file + 1) % 2
         if self.game_state.selected_piece:
           if (rank, file) == (self.game_state.selected_piece.piece.rank, self.game_state.selected_piece.piece.file):
             color = SELECTED_SQUARE_COLOR
@@ -105,6 +108,15 @@ class BoardDisplay:
       self.display_pawn_attacks = player_color
       print(f"\nDISPLAYING {player_color.name.upper()} PAWN ATTACK MAP.")
 
+  def draw_coordinates(self):
+    for rank in range(8):
+      x, y = get_screen_pos(rank, 0)
+      self.screen.blit(self.font.render(rank_to_san(rank), True, BACKGROUND_COLORS[rank % 2]),
+        (x + 5, y + 5))
+    for file in range(8):
+      x, y = get_screen_pos(0, file)
+      self.screen.blit(self.font.render(file_to_san(file), True, BACKGROUND_COLORS[file % 2]),
+        (x + SQUARE_WIDTH - 12, y + SQUARE_WIDTH - 15))
 
 def get_square(display_pos):
   screen_pos = display_coords_to_screen(display_pos)
