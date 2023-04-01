@@ -1,8 +1,8 @@
 from sortedcontainers import SortedList
 
-from enums import PieceType, PlayerColor
+from enums import PieceType
 from move import Move, MoveType
-from logging import Logging
+from chess_logger import Logging
 
 ROOK_DIRECTIONS = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 BISHOP_DIRECTIONS = [(1, 1), (1, -1), (-1, 1), (-1, -1)]

@@ -13,7 +13,7 @@ from display import BoardDisplay
 from engine import Engine
 from enums import PlayerType, piece_types_by_san_format, PieceType, PlayerColor
 from game_state import GameState
-from logging import Logging
+from chess_logger import Logging
 
 
 def find_legal_castles(king_side, game_state):

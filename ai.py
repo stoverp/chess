@@ -81,7 +81,7 @@ class AI:
     else:
       move, score = self.search_moves(self.game_state.active_player_color, self.search_depth, -math.inf, math.inf)
       print(
-        f"evaluated score {score} by searching {self.n_moves_searched} moves in {time.time() - start_time} seconds:\n\t{move}")
+        f"evaluated score {score} by searching {self.n_moves_searched} moves in {time.time() - start_time:.2f} seconds:\n\t{move}")
     if move:
       return move
     else:
