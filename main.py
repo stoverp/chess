@@ -58,7 +58,7 @@ def make_uci_move(move_string):
         # pygame.display.update()
         move = game_state.best_move()
         engine.make_move(move)
-        return f"made human move: {move_string}, computer move: {move.to_uci()}\n"
+        return move.to_uci()
     return f"move {move_string} is not legal", 400
   else:
     return f"invalid move: {move_string}", 400
