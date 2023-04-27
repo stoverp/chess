@@ -1,3 +1,4 @@
+import re
 from argparse import ArgumentParser
 
 import yappi
@@ -5,6 +6,7 @@ import yappi
 import pygame as pg
 import pygame.display
 
+from core import san_to_index
 from display import BoardDisplay
 from engine import Engine
 from enums import PlayerType
@@ -28,8 +30,8 @@ def home():
   return "Welcome to PNS Chess!\n"
 
 
-@app.route("/move/<move_string>")
-def make_move(move_string):
+@app.route("/san_move/<move_string>")
+def make_san_move(move_string):
   move = parse_move(move_string, Globals.game_state)
   print(f"parsed move string {move_string} to {move}, making move ...")
   Globals.engine.make_move(move)
@@ -38,9 +40,33 @@ def make_move(move_string):
   return f"processed move: {move_string}\n"
 
 
+@app.route("/move/<move_string>")
+def make_uci_move(move_string):
+  game_state = Globals.game_state
+  engine = Globals.engine
+  if match := re.match(r"([a-h])([1-8])([a-h])([1-8])", move_string):
+    print(match.group(1), match.group(2), match.group(3), match.group(4))
+    print(f"parsed move {move_string}, finding legal moves ...")
+    legal_moves = game_state.generate_all_legal_moves(game_state.active_player_color)
+    print("legal moves:", legal_moves)
+    for move in legal_moves:
+      if (san_to_index(match.group(2), match.group(1)), san_to_index(match.group(4), match.group(3))) == \
+          ((move.old_rank, move.old_file), (move.rank, move.file)):
+        print(f"making legal move: {move} ...")
+        engine.make_move(move)
+        # Globals.board_display.refresh()
+        # pygame.display.update()
+        move = game_state.best_move()
+        engine.make_move(move)
+        return f"made human move: {move_string}, computer move: {move.to_uci()}\n"
+    return f"move {move_string} is not legal", 400
+  else:
+    return f"invalid move: {move_string}", 400
+
+
 def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, book_file):
   Globals.game_state = GameState(white_player_type, black_player_type, search_depth, bonuses_file, fen, book_file)
-  Globals.board_display = BoardDisplay(Globals.game_state)
+  # Globals.board_display = BoardDisplay(Globals.game_state)
   Globals.engine = Engine(Globals.game_state, Globals.board_display)
   Globals.engine.print_stats()
   # running = True
@@ -61,7 +87,7 @@ def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, 
   #       if not engine.handle_event(event):
   #         running = False
   #   board_display.refresh()
-  Globals.board_display.refresh()
+  # Globals.board_display.refresh()
   app.run(debug=True, host="0.0.0.0") #, port=80)
   pg.quit()
 

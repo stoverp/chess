@@ -65,6 +65,9 @@ class Move:
       san = self.to_non_pawn_san(player)
     return san + ('+' if player.opponent().in_check() else '')
 
+  def to_uci(self):
+    return index_to_san(self.old_rank, self.old_file) + index_to_san(self.rank, self.file)
+
   def to_json(self):
     return {
       'piece': self.piece.to_json(),
