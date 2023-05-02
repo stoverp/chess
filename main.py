@@ -58,10 +58,26 @@ def make_uci_move(move_string):
         # pygame.display.update()
         move = game_state.best_move()
         engine.make_move(move)
+        engine.print_stats()
         return move.to_uci()
     return f"move {move_string} is not legal", 400
   else:
     return f"invalid move: {move_string}", 400
+
+
+@app.route("/reset")
+def reset():
+  game_state = Globals.game_state
+  Globals.game_state = GameState(
+    game_state.white_player_type,
+    game_state.black_player_type,
+    game_state.search_depth,
+    game_state.bonuses_file,
+    game_state.fen,
+    game_state.book_file)
+  Globals.engine = Engine(Globals.game_state, Globals.board_display)
+  Globals.engine.print_stats()
+  return "reset board state"
 
 
 def main(search_depth, white_player_type, black_player_type, bonuses_file, fen, book_file):

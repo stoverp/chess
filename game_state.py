@@ -14,6 +14,12 @@ START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 class GameState:
   def __init__(self, white_player_type, black_player_type, search_depth=1, bonuses_file=None, fen=START_FEN, book_file=None):
+    self.white_player_type = white_player_type
+    self.black_player_type = black_player_type
+    self.search_depth = search_depth
+    self.bonuses_file = bonuses_file
+    self.fen = fen
+    self.book_file = book_file
     self.players = {
       PlayerColor.WHITE: PlayerState(PlayerColor.WHITE, white_player_type, self),
       PlayerColor.BLACK: PlayerState(PlayerColor.BLACK, black_player_type, self)
